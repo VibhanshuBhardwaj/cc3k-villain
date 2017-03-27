@@ -38,23 +38,23 @@ Floor::Floor(string file, string pRace){
 	//spawn all characters and items randomly on the floor randomly
 	spawnPlayer();
 	spawnStairs();
-	//spawnPotions();
-	//spawnGold();
-	//spawnEnemies();
+	spawnPotions();
+	spawnGold();
+	spawnEnemies();
 }
 
 void Floor::insert(int x, int y, char ch){
 
-	cout << "inserting "<< "x "<< x << " y " << y <<endl;
+	//cout << "inserting "<< "x "<< x << " y " << y <<endl;
 	maps[y][x] = ch;
 }
 
 bool Floor::isValid(int x, int y){ //y is row and x is column 
-	cout << maps[y][x] << endl;
+
 	if(maps[y][x] == '.'){
-		cout <<"true"<< endl;
 		return true;
 	}
+
 	return false;
 }
 
@@ -63,13 +63,11 @@ vector<int> Floor::getRandPos(int chamberId){
 	vector<int> pos = chambers[chamberId].generateRandPos();
 	int x = pos[0];
 	int y = pos[1];
-	cout <<"chamber: " << chamberId<<" "<< x << " " << y << endl;
-	while(!isValid(x, y)){
-		int n = rand() % 5;
-		getRandPos(n);
-		cout <<"herer" << endl;
+
+	if(isValid(x, y)){ 
+		return pos;
 	}
-	return pos;
+	return getRandPos(chamberId);
 }
 
 void Floor::spawnPlayer(){
@@ -77,7 +75,6 @@ void Floor::spawnPlayer(){
 	//we will have a pointer to player character
 	int id = rand() % 5; //generates random number between 0 to 5. 
 	vector<int> pos = getRandPos(id);
-	//cout << "id chamber: "<< id << " x: "<< position[0] << " y : " <<position[1]<< endl;
 	insert(pos[0], pos[1], '@'); //playerrace is a string/character. will be replaced with 'player character'
 }
 

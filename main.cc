@@ -8,21 +8,6 @@
 class Game;
 
 using namespace std;
-/*
-void firstMessage(){
-    cout << "WeLcOmE tO tHe wOrLd oF MoNsTeRs!"<<endl;
-    cout << "PlAy ThE GaMe Of ChAmBeRcRaWlEr3000!!"<<endl;
-    cout << endl;
-    cout << "CoMmAnDs: " <<endl;
-    cout << "MoVe: no (north), so (south), ea (east), we (west), ne (north-east), nw (north-west), se (south-east), sw (south-west)"<<endl;
-    cout << "To UsE nEaR-bY PoTiOn: u <direction> "<<endl;
-    cout << "To AtTaCk nEaR-bY EneMy: a <direction> "<< endl;
-    cout << "RaCeS oF PlAyErS: s (shade), d (Drow), v (Vampire), g (goblin), t (Troll)"
-    cout << "f - sToP EneMy MoVeMenT" <<endl;
-    cout << "r - ReStArT GaMe" <<endl;
-    cout << "q - QuIt GaMe" <<endl <<endl;
-}
-*/
 
 void printRaces(){
     cout << "please choose a race: "<< endl;

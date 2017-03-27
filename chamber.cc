@@ -54,15 +54,10 @@ bool Chamber::posValid(int x, int y){
 Chamber::~Chamber(){}
 
 vector<int> Chamber::generateRandPos(){
-	cout <<"id: " << id<< endl;
 
 	int x = rand() % width;
 	int y = rand() % height;
 
-	/*while(!posValid(x+leftMargin, y+upMargin)){
-		x = rand() % width;
-		y = rand() % height;
-	}*/
 	x += leftMargin;
 	y += upMargin;
 
