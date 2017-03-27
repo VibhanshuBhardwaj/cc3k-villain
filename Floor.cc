@@ -50,7 +50,9 @@ void Floor::insert(int x, int y, char ch){
 }
 
 bool Floor::isValid(int x, int y){ //y is row and x is column 
+	cout << maps[y][x] << endl;
 	if(maps[y][x] == '.'){
+		cout <<"true"<< endl;
 		return true;
 	}
 	return false;
