@@ -17,10 +17,11 @@ Game::Game(string playerRace, string fileName): playerRace{playerRace}, fileName
 void Game::printGame(){
 	floor->printFloor();
 }
-/*
-void Game::playerMove(string dir){
-	floor->playerMove(dir);
 
+void Game::playerMove(string dir){ //no ,so, ea, we, ne, nw, se, sw
+	floor->playerMove(dir);
+}
+/*
 void Game::usePotion(string dir){
 	floor->usePotion(dir);
 }

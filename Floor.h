@@ -3,12 +3,14 @@
 #include <string>
 #include <vector>
 #include "Chamber.h"
+#include "Cell.h"
 
 class Game;
 
 class Floor{
-	std::string maps[25]; // map is a 2d array of characters 
+	//std::string maps[25]; // map is a 2d array of characters 
 					     // map accurately represents the Floor 
+	std::vector<std::vector < Cell* > > grid;
 	//Player *player; //pointer to player object
 	//Enemy enemies[20]; //array of 20 enemies
 	//potions 10
@@ -19,8 +21,8 @@ class Floor{
   public:
 	Floor(std::string file, std::string playerRace); //replace string playerRace with Player reference
 	void printFloor();
-	/*void playerMove(std::string dir);
-	void usePotion(std::string dir);
+	void playerMove(std::string dir);
+	/*void usePotion(std::string dir);
 	void atkDirection(std::string dir);
 	void freezeEnemy();
 	void unfreezeEnemy();*/

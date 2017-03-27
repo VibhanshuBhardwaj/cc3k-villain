@@ -11,20 +11,19 @@ using namespace std;
 
 string getPlayerRace(){
     cout << "please choose a race: "<< endl;
-    cout << "s - shade" << endl <<"d - Drow" << endl << "v - vampire" << endl << "g - Goblin" << endl <<"t - Troll" << endl;
+    cout << "s - Shade" << endl <<"d - Drow" << endl << "v - Vampire" << endl << "g - Goblin" << endl <<"t - Troll" << endl;
     string input;
     cin >> input;
-    if(input != "s" && input != "d"  && input != "v"  && input != "g"  && input != "t" ){
+    if(input == "q"){
+        return "q";
+    }
+    else if(input != "s" && input != "d"  && input != "v"  && input != "g"  && input != "t" ){
         cout << "invalid player race selcted. "<< endl; //not a valid player race selected
         getPlayerRace();
     }
     return input;
 }
 
-void printRaces(){
-    cout << "please choose a race: "<< endl;
-    cout << "s - shade" << endl <<"d - Drow" << endl << "v - vampire" << endl << "g - Goblin" << endl <<"t - Troll" << endl;
-}
 
 int main(int argc, char *argv[]){
     std::string fileName = "board.txt";
@@ -36,8 +35,12 @@ int main(int argc, char *argv[]){
     srand(seed);
     string playerRace;
     playerRace = getPlayerRace();
-
+    if(playerRace == "q"){
+        cout << "Game quit..." <<endl;
+        return 0;
+    }
     Game *game = new Game(playerRace, fileName); 
+    game->printGame();
     bool freezeEnemy = false;
     string input;
 
@@ -58,7 +61,12 @@ int main(int argc, char *argv[]){
         else if(input == "r"){
             delete game;
             playerRace = getPlayerRace();
+            if(playerRace == "q"){
+                cout << "Game quit..." <<endl;
+                return 0;
+            }
             game = new Game(playerRace, fileName);
+            game->printGame();
             freezeEnemy = false;
         }
         else if(input == "u"){ //use Potion
@@ -98,6 +106,4 @@ int main(int argc, char *argv[]){
         }
     }
     delete game;
-    //Floor *floor = new Floor(fileName);   //generating a new Floor
-    //floor->printFloor();  //prints the generated floor 
 }
