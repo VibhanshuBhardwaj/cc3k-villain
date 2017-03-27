@@ -3,6 +3,7 @@
 #include "Floor.h"
 #include "Game.h"
 #include <fstream>
+#include <sstream>
 #include <cstdlib>
 
 class Game;
@@ -27,11 +28,15 @@ string getPlayerRace(){
 
 int main(int argc, char *argv[]){
     std::string fileName = "board.txt";
-
-    if(argc == 2){
+    int seed = 197;
+    if(argc >= 2){
         fileName = argv[1];   // changing the fileName to the given argument 
+
+        if(argc == 3){
+            istringstream ss(argv[2]);
+            ss >> seed;
+        }
     }
-    int seed = 111;
     srand(seed);
     string playerRace;
     playerRace = getPlayerRace();
@@ -89,11 +94,11 @@ int main(int argc, char *argv[]){
                 //game->freezeEnemy();
             }
         }
-        //cout << input <<endl;
-        //else if((input == "no") || (input == "so") || (input == "we") || (input == "ea") || (input == "nw") || (input == "ne") || (input == "se") || (input = "sw")){
-            //valid direction
-            //game->playerMove(input);
-        //}
+
+        else if((input == "no") || (input == "so") || (input == "we") || (input == "ea") || (input == "nw") || (input == "ne") || (input == "se") || (input == "sw")){
+            game->playerMove(input);
+            game->printGame();
+        }
         //if(game->isWon()){ //to check if the game is won. Runs after every user input.
         //    cout << "Congratulations you've won the Game!!"<< endl<< "Well Played!!" << endl;
         //    delete game;

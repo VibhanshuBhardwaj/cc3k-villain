@@ -3,13 +3,14 @@
 
 #include <iostream>
 #include <map>
+#include <string>
 
 class Cell {
 
 	  int row;
 	  int col;
+    char symbol;
 	  std::string type; // TILE / PATHWAY / STAIR / HWALL / VWALL / DOOR 
-	  char symbol;
 	  bool occupied;
     char whoOccupied; 
 
@@ -22,8 +23,8 @@ class Cell {
   	bool setOccupied(bool ev);
   	void setType(std::string t);
     char getSymbol();
-    bool playerMovePossible();
-    bool enemyMovePossible();
+    bool playerMoveValid();
+    bool enemyMoveValid();
 };
 
 

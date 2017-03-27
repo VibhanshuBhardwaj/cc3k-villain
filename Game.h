@@ -8,8 +8,8 @@
 //class Chamber;
 
 class Game{
-	std::string fileName;
 	std::string playerRace;
+	std::string fileName;
 	int floorLevel;
 	Floor *floor;
 	//Player *player; //reference to a player object

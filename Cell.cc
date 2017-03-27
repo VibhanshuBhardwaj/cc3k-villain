@@ -31,14 +31,14 @@ char Cell::getSymbol(){
 	return symbol;
 }
 
-bool Cell::playerMovePossible(){ // TILE / PATHWAY / STAIR / HWALL / VWALL / DOOR 
+bool Cell::playerMoveValid(){ // TILE / PATHWAY / STAIR / HWALL / VWALL / DOOR 
 	if((type == "TILE" || type == "PATHWAY" || type == "STAIR" || type == "DOOR") && !isOccupied()){
 		return true;
 	}
 	return false;
 }
 
-bool Cell::enemyMovePossible(){
+bool Cell::enemyMoveValid(){
 	if(type == "TILE" && !isOccupied()){
 		return true;
 	}
