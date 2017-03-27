@@ -9,6 +9,18 @@ class Game;
 
 using namespace std;
 
+string getPlayerRace(){
+    cout << "please choose a race: "<< endl;
+    cout << "s - shade" << endl <<"d - Drow" << endl << "v - vampire" << endl << "g - Goblin" << endl <<"t - Troll" << endl;
+    string input;
+    cin >> input;
+    if(input != "s" && input != "d"  && input != "v"  && input != "g"  && input != "t" ){
+        cout << "invalid player race selcted. "<< endl; //not a valid player race selected
+        getPlayerRace();
+    }
+    return input;
+}
+
 void printRaces(){
     cout << "please choose a race: "<< endl;
     cout << "s - shade" << endl <<"d - Drow" << endl << "v - vampire" << endl << "g - Goblin" << endl <<"t - Troll" << endl;
@@ -23,21 +35,11 @@ int main(int argc, char *argv[]){
     int seed = 111;
     srand(seed);
     string playerRace;
-    string input;
-
-    printRaces();
-    cin >> input;
-//while loop 
-    if(input != "s" && input != "d"  && input != "v"  && input != "g"  && input != "t" ){
-          cout << "invalid player race selcted. Exiting.."<< endl; //not a valid player race selected
-          return 0;
-    }
-
-    playerRace = input; //player race is selected properly
+    playerRace = getPlayerRace();
 
     Game *game = new Game(playerRace, fileName); 
     bool freezeEnemy = false;
-    
+    string input;
 
     while(game->isAlive()){
         cin >>input;
@@ -46,9 +48,7 @@ int main(int argc, char *argv[]){
             delete game;
             break;
         }
-        
         //check if health is 0 or won
-
         else if(input == "q"){
             delete game;
             cout << "Game quit..." <<endl;
@@ -57,29 +57,20 @@ int main(int argc, char *argv[]){
         else if(input == "p"){game->printGame();}
         else if(input == "r"){
             delete game;
-            printRaces();
-            cin >> input;
-            if(input != "s" && input != "d"  && input != "v"  && input != "g"  && input != "t" ){
-                cout << "invalid player race selcted. Exiting.."<< endl; //not a valid player race selected
-                return 0;
-            }
-            playerRace = input;
+            playerRace = getPlayerRace();
             game = new Game(playerRace, fileName);
             freezeEnemy = false;
         }
-
         else if(input == "u"){ //use Potion
             string potionDir; //potion direction 
             cin >> potionDir;
             //game->usePotion(potionDir);
         }
-
         else if(input == "a"){ //attack 
             string atkDir;
             cin >> atkDir;
             //game->atkDirection(atkDir);
         }
-        
         else if(input == "f"){ //freeze enemy
             if(freezeEnemy){
                 freezeEnemy = false;
@@ -105,11 +96,8 @@ int main(int argc, char *argv[]){
             //invalid input
             cout << "Invalid input. Please enter a valid input"<<endl;
         }
-
     }
-
     delete game;
-    
     //Floor *floor = new Floor(fileName);   //generating a new Floor
     //floor->printFloor();  //prints the generated floor 
 }
