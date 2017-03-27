@@ -6,9 +6,7 @@ using namespace std;
 
 //class Floor;
 //class Chamber;
-Game::Game(){
-	delete floor;
-}
+Game::Game(){}
 
 Game::Game(string playerRace, string fileName): playerRace{playerRace}, fileName{fileName}{ //initialize a new game 
 	floorLevel = 0; //
@@ -54,5 +52,3 @@ bool Game::isAlive(){
 }
 
 Game::~Game(){}
-
-
