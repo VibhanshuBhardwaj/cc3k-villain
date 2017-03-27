@@ -12,7 +12,7 @@ class Game{
 	std::string playerRace;
 	int floorLevel;
 	Floor *floor;
-	//Player *player; //reference to a player object 
+	//Player *player; //reference to a player object
 
   public:
   	Game(){}
