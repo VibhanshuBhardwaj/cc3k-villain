@@ -20,7 +20,8 @@ int main(int argc, char *argv[]){
     if(argc == 2){
         fileName = argv[1];   // changing the fileName to the given argument 
     }
-    srand(time(NULL));
+    int seed = 111;
+    srand(seed);
     string playerRace;
     string input;
 
