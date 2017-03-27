@@ -15,7 +15,7 @@ class Game{
 	//Player *player; //reference to a player object
 
   public:
-  	Game(){}
+  	Game();
 	Game(std::string playerRace, std::string fileName);
 	//void playerMove(std::string dir); //move the player to a given direction
 	//void usePotion(std::string dir); //use potion if it exists at the given direction
