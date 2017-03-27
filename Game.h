@@ -8,8 +8,8 @@
 //class Chamber;
 
 class Game{
-	std::string fileName;
 	std::string playerRace;
+	std::string fileName;
 	int floorLevel;
 	Floor *floor;
 	//Player *player; //pointer to a player object 
@@ -17,7 +17,7 @@ class Game{
   public:
   	Game();
 	Game(std::string playerRace, std::string fileName);
-	//void playerMove(std::string dir); //move the player to a given direction
+	void playerMove(std::string dir); //move the player to a given direction
 	//void usePotion(std::string dir); //use potion if it exists at the given direction
 	//void atkDirection(std::string dir); //attack the player if it exists at the given direction
 	void printGame();
