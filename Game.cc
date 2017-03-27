@@ -8,10 +8,15 @@ using namespace std;
 //class Chamber;
 Game::Game(){}
 
-Game::Game(string playerRace, string fileName): playerRace{playerRace}, fileName{fileName}{ //initialize a new game 
+Game::Game(string pRace, string fName){ //initialize a new game 
 	floorLevel = 0; //
-	//cout <<"Game ctor" <<endl;
-	floor = new Floor(fileName, playerRace); //(fileName, replace with player*) 
+	fileName = fName;
+	if(pRace == "s"){playerRace = "Shade";}
+	else if(pRace == "d"){playerRace = "Drow";}
+	else if(pRace == "v"){ playerRace = "Vampire";}
+	else if(pRace == "t"){playerRace = "Troll";}
+	else {playerRace = "Goblin";}
+	floor = new Floor(fileName, playerRace, floorLevel); //(fileName, replace with player*) 
 }
 
 void Game::printGame(){
@@ -29,15 +34,15 @@ void Game::usePotion(string dir){
 void Game::atkDirection(string dir){
 	floor->atkDirection(dir);
 }
-
+*/
 void Game::freezeEnemy(){
 	floor->freezeEnemy();
 }
 
-void Game::unfreezeEnemy(){
+void Game::unFreezeEnemy(){
 	floor->unfreezeEnemy();
 }
-*/
+
 bool Game::isWon(){
 	if(floorLevel > 4){
 		//above 5th Floor

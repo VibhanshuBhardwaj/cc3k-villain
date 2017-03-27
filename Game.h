@@ -16,17 +16,16 @@ class Game{
 
   public:
   	Game();
-	Game(std::string playerRace, std::string fileName);
+	Game(std::string pRace, std::string fName);
 	void playerMove(std::string dir); //move the player to a given direction
 	//void usePotion(std::string dir); //use potion if it exists at the given direction
 	//void atkDirection(std::string dir); //attack the player if it exists at the given direction
 	void printGame();
-	//void freezeEnemy(); //stop the enemies from moving
-	//void unFreezeEnemy(); //free the enemies. Allow them to move freely
+	void freezeEnemy(); //stop the enemies from moving
+	void unFreezeEnemy(); //free the enemies. Allow them to move freely
 	bool isWon(); // player has won the game.
 	~Game();
 	bool isAlive();
-	//friend class Floor; //giving access to all fields to Floor class
 };
 
 #endif
