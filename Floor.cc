@@ -6,6 +6,7 @@
 #include <cstdlib>
 #include "Chamber.h"
 #include <ctime>
+#include "Cell.h"
 
 class Chamber;
 
@@ -14,20 +15,36 @@ using namespace std;
 
 Floor::Floor(string file, string pRace){
 	playerRace = pRace;
-	string row;
+	string line;
 	ifstream infile(file);
 	if(!infile){
 		cout<< "cannot open the given file."<< endl;
 	}
 
 	for(int i = 0; i < 25; i++){
-		getline(infile, row);
-		//cout << row << endl;
-		maps[i] = row;
-		
-		//cout << maps[i] << endl;
-		
-		row = "";
+		getline(infile, line);
+		vector<Cell*> row;
+		for(int j = 0; j < 79; j++){
+			if(line[j] == '|'){
+				row.emplace_back(new Cell(i, j, '|', "VWALL"));
+			}
+			else if(line[j] == '-'){
+				row.emplace_back(new Cell(i, j, '-', "HWALL"));
+			}
+			else if(line[j] == '.'){
+				row.emplace_back(new Cell(i, j, '.', "TILE"));
+			}
+			else if(line[j] == '+'){
+				row.emplace_back(new Cell(i, j, '+', "DOOR"));
+			}
+			else if(line[j] == '#'){
+				row.emplace_back(new Cell(i, j, '#', "PATHWAY"));
+			}
+			else{ //emplty space
+				row.emplace_back(new Cell(i, j, ' ', "SPACE"));
+			}
+		}
+		grid.emplace_back(row);
 	}
 
 	//initialize chambers
@@ -35,7 +52,7 @@ Floor::Floor(string file, string pRace){
 		chambers[i] = Chamber(i);
 	}
 
-	//spawn all characters and items randomly on the floor randomly
+	//spawn all characters and items randomly on the floor
 	spawnPlayer();
 	spawnStairs();
 	spawnPotions();
@@ -43,20 +60,23 @@ Floor::Floor(string file, string pRace){
 	spawnEnemies();
 }
 
-void Floor::insert(int x, int y, char ch){
+void Floor::playerMove(string dir){ //no ,so, ea, we, ne, nw, se, sw
 
-	//cout << "inserting "<< "x "<< x << " y " << y <<endl;
-	maps[y][x] = ch;
 }
+
+
+void Floor::insert(int x, int y, char ch){ //x is left margin, y is Top margin
+	grid[y][x]->occupy(ch);
+}
+
 
 bool Floor::isValid(int x, int y){ //y is row and x is column 
-
-	if(maps[y][x] == '.'){
+	if(grid[y][x]->getSymbol() == '.'){
 		return true;
 	}
-
 	return false;
 }
+
 
 vector<int> Floor::getRandPos(int chamberId){
 
@@ -85,7 +105,6 @@ void Floor::spawnStairs(){
 }
 
 void Floor::spawnPotions(){
-
 	for(int i = 0; i < 10; i++){
 		int id = rand() % 5;
 		vector<int> pos = getRandPos(id);
@@ -93,8 +112,8 @@ void Floor::spawnPotions(){
 	}
 }
 
-void Floor::spawnGold(){
 
+void Floor::spawnGold(){
 	for(int i = 0; i < 10; i++){
 		int id = rand() % 5;
 		vector<int> pos = getRandPos(id);
@@ -102,8 +121,8 @@ void Floor::spawnGold(){
 	}
 }
 
-void Floor::spawnEnemies(){
 
+void Floor::spawnEnemies(){
 	for(int i = 0; i < 20; i++){
 		int rn = rand() % 18; //generating random enemy
 		int id = rand()% 5; //generating random chamber 
@@ -134,6 +153,9 @@ Floor::~Floor(){ //once we have a player pointer, delete it while destructing}
 
 void Floor::printFloor(){
 	for(int i = 0; i < 25; i++ ){
-		cout << maps[i] << endl;
+		for(int j = 0; j < 79; j++){
+			cout << grid[i][j]->getSymbol() ;
+		}
+		cout << endl;
 	}
 }
