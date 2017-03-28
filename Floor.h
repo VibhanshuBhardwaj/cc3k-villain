@@ -2,27 +2,27 @@
 #define __FLOOR_H__
 #include <iostream>
 #include <string>
-#include <vector> 
+#include <vector>
 #include <fstream>
 #include <cstdlib>
 #include <ctime>
 #include "Chamber.h"
 #include "Cell.h"
-#include "character/Player.h"
-#include "character/Enemy.h"
+#include "Player.h"
+#include "Enemy.h"
 
 class Game;
 
 class Floor{
-	//std::string maps[25]; // map is a 2d array of characters 
-					     // map accurately represents the Floor 
+	//std::string maps[25]; // map is a 2d array of characters
+					     // map accurately represents the Floor
 	std::vector<std::vector < Cell* > > grid;
 	Player *player; //pointer to player object
 	std::vector<Enemy*> enemies; //vector of 20 enemies
 	//potions 10
 	//gold 10
 	std::string action;
-	std::string playerRace; 
+	std::string playerRace;
 	Chamber chambers[5]; //array of 5 chambers
 
   public:
