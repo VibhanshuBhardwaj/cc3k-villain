@@ -28,7 +28,7 @@ string getPlayerRace(){
 
 int main(int argc, char *argv[]){
     std::string fileName = "board.txt";
-    int seed = 197;
+    int seed = 12390;
     if(argc >= 2){
         fileName = argv[1];   // changing the fileName to the given argument 
 
@@ -62,7 +62,9 @@ int main(int argc, char *argv[]){
             cout << "Game quit..." <<endl;
             return 0;
         }
-        else if(input == "p"){game->printGame();}
+        else if(input == "p"){
+            game->printGame();
+        }
         else if(input == "r"){
             delete game;
             playerRace = getPlayerRace();
@@ -95,7 +97,7 @@ int main(int argc, char *argv[]){
             }
             game->printGame();
         }
-        
+
         else if((input == "no") || (input == "so") || (input == "we") || (input == "ea") || (input == "nw") || (input == "ne") || (input == "se") || (input == "sw")){
             game->playerMove(input);
             game->printGame();

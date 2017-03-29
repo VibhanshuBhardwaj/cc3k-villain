@@ -147,7 +147,7 @@ void Floor::playerMove(string dir){ //no ,so, ea, we, ne, nw, se, sw
 	else if(dir == "sw" && !playerMoved(y+1, x-1, y, x, "South-West")){ //SOUTH-WEST
 		action = "Cannot move there! " ;
 	}
-	if(!freeze){
+	if(!freeze){ //Always runs
 		enemyMove(); //MOVE ENEMIES
 	}
 }
@@ -217,7 +217,7 @@ void Floor::freezeEnemy(){
 }
 
 void Floor::unfreezeEnemy(){
-	action = "eNeMiEs aRe FrEe NoW! ";
+	action = "eNeMiEs aRe FrEe tO MoVe NoW! ";
 	freeze = false;
 }
 
@@ -260,6 +260,7 @@ Floor::~Floor(){ //once we have a player pointer, delete it while destructing}
 	delete player;
 }
 
+//PRINTS LAST 5 LINES OF THE DISPLAY
 void Floor::printStats(){
 	cout << "Race: "<<playerRace << " Gold: "<< player->getScore() ;
 	for(int i = 0; i< 50; i++){cout << " ";}
@@ -271,6 +272,7 @@ void Floor::printStats(){
 	action = "";
 }
 
+//PRINTS THE GRID
 void Floor::printFloor(){
 	for(int i = 0; i < 25; i++ ){
 		for(int j = 0; j < 79; j++){
