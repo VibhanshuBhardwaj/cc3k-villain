@@ -7,14 +7,15 @@ class Player;
 using namespace std;
 
 
-Floor::Floor(string file, string pRace){
+Floor::Floor(string file, string pRace, int fLevel){
 	playerRace = pRace;
+	floorLevel = fLevel;
 	string line;
+	cout << file << endl;
 	ifstream infile(file);
 	if(!infile){
 		cout<< "cannot open the given file."<< endl;
 	}
-
 	for(int i = 0; i < 25; i++){
 		getline(infile, line);
 		vector<Cell*> row;
@@ -40,7 +41,7 @@ Floor::Floor(string file, string pRace){
 		}
 		grid.emplace_back(row);
 	}
-
+	freeze = false;
 	//initialize chambers
 	for(int i = 0; i < 5; i ++){
 		chambers[i] = Chamber(i);
@@ -53,8 +54,10 @@ Floor::Floor(string file, string pRace){
 	spawnPotions();
 	spawnGold();
 	spawnEnemies();
+	action = playerRace + " EnTeRs tHe DuNgEoN!";
 }
 
+<<<<<<< HEAD
 Cell* Floor::findCell(int row, int col) { //there has to be a better way...
 	for (int i = 0; i < 25; ++i) {
 		for (int j = 0; j < 79; ++j) {
@@ -65,6 +68,9 @@ Cell* Floor::findCell(int row, int col) { //there has to be a better way...
 	}
 	return nullptr; //should we be using this
 }
+=======
+// ENEMY MOVEMENT
+>>>>>>> 2d8de858834758a88882a759b17f7899ead9249b
 bool Floor::enemyMoved(int row, int col, int prevRow, int prevCol, int eIndex){
 	//cout << "enemy move called" << endl;
 	//cout << "row, col: " << row <<" "<< col<< endl;
@@ -97,8 +103,7 @@ void Floor::enemyMove(){
 				continue;
 			}
 			else if(dir == 1){//NORTH
-				//cout <<  "north" << endl;
-				if(!enemyMoved(y-1, x, y, x, i)){	i--;}
+				if(!enemyMoved(y-1, x, y, x, i)){i--;}
 			}
 			else if(dir == 2){//SOUTH
 				if(!enemyMoved(y+1, x, y, x, i)){i--;}
@@ -128,17 +133,21 @@ void Floor::enemyMove(){
 	//cout <<"end enemyMove" << endl;
 }
 
-bool Floor::playerMoved(int row, int col, int prevRow, int prevCol){
+
+//PLAYER MOVEMENT
+bool Floor::playerMoved(int row, int col, int prevRow, int prevCol, string dir){
 	if(grid[row][col]->playerMoveValid()){
 		grid[row][col]->occupy(player);
 		player->setCurrCell(grid[row][col]);
 		grid[prevRow][prevCol]->leave();
+		action = playerRace + " moves " + dir;
 		return true;
 	}
 	return false;
 }
 
 void Floor::playerMove(string dir){ //no ,so, ea, we, ne, nw, se, sw
+<<<<<<< HEAD
 	//cout <<"player move" << endl;
 	Cell* currCell = player->getCurrCell();
 	int x = currCell->getCol();
@@ -146,32 +155,40 @@ void Floor::playerMove(string dir){ //no ,so, ea, we, ne, nw, se, sw
 	//cout <<"before if" << endl;
 	if(dir == "no" && !playerMoved(y-1, x, y, x)){
 	//	cout << "inside no" << endl;
+=======
+	vector<int> playerPos = player->getPos();
+	int x = playerPos[0];
+	int y = playerPos[1];
+
+	if(dir == "no" && !playerMoved(y-1, x, y, x, "North")){ //NORTH
+>>>>>>> 2d8de858834758a88882a759b17f7899ead9249b
 		action = "Cannot move there! " ;
 	}
-	else if(dir == "so" && !playerMoved(y+1, x, y, x)){
+	else if(dir == "so" && !playerMoved(y+1, x, y, x, "South")){ //SOUTH
 		action = "Cannot move there! " ;
 	}
-	else if(dir == "ea" && !playerMoved(y, x+1, y, x)){
+	else if(dir == "ea" && !playerMoved(y, x+1, y, x, "East")){ //EAST
 		action = "Cannot move there! " ;
 	}
-	else if(dir == "we" && !playerMoved(y, x-1, y, x)){
+	else if(dir == "we" && !playerMoved(y, x-1, y, x, "West")){ //WEST
 		action = "Cannot move there! " ;
 	}
-	else if(dir == "ne" && !playerMoved(y-1, x+1, y, x)){ //NORTH-EAST
+	else if(dir == "ne" && !playerMoved(y-1, x+1, y, x, "North-East")){ //NORTH-EAST
 		action = "Cannot move there! " ;
 	}
-	else if(dir == "nw" && !playerMoved(y-1, x-1, y, x)){ //NORTH-WEST
+	else if(dir == "nw" && !playerMoved(y-1, x-1, y, x, "North-West")){ //NORTH-WEST
 		action = "Cannot move there! " ;
 	}
-	else if(dir == "se" && !playerMoved(y+1, x+1, y, x)){ //SOUTH-EAST
+	else if(dir == "se" && !playerMoved(y+1, x+1, y, x, "South-East")){ //SOUTH-EAST
 		action = "Cannot move there! " ;
 	}
-	else if(dir == "sw" && !playerMoved(y+1, x-1, y, x)){ //SOUTH-WEST
+	else if(dir == "sw" && !playerMoved(y+1, x-1, y, x, "South-West")){ //SOUTH-WEST
 		action = "Cannot move there! " ;
 	}
-	else{
-		action = "Cannot move there! " ;
+	if(!freeze){
+		enemyMove(); //MOVE ENEMIES
 	}
+<<<<<<< HEAD
 	//cout << "enemy move" << endl;
 	enemyMove(); //MOVE ENEMIES
 }
@@ -190,13 +207,24 @@ void Floor::insertCharacter(int x, int y, Character* ch){ //x is left margin, y 
 }
 
 bool Floor::isValid(int x, int y){ //y is row and x is column
+=======
+}
+
+// INSERT TO THE GRID
+void Floor::insert(int x, int y, char ch){ //x is left margin, y is Top margin
+	grid[y][x]->occupy(ch);
+}
+
+// CHECKS IF A CHARACTER OR AN ITEM CAN BE SPAWNED AT (X, Y) ON GRID
+bool Floor::isValid(int x, int y){ //y is row and x is column
+>>>>>>> 2d8de858834758a88882a759b17f7899ead9249b
 	if(grid[y][x]->getSymbol() == '.'){
 		return true;
 	}
 	return false;
 }
 
-
+//GENERATES A RANDOM VALID POSITION
 vector<int> Floor::getRandPos(int chamberId){
 	vector<int> pos = chambers[chamberId].generateRandPos();
 	int x = pos[0];
@@ -207,22 +235,32 @@ vector<int> Floor::getRandPos(int chamberId){
 	return getRandPos(chamberId);
 }
 
+// CREATE PLAYER CHARACTER AND SPAWNS ON THE GRID
 void Floor::spawnPlayer(){
 	//after character class is completely initialized,
 	//we will have a pointer to player character
+<<<<<<< HEAD
 	int id = rand() % 5; //generates random number between 0 to 5.
 	vector<int> pos = getRandPos(id);
 	player = new Player(100, 100, 100, "test");
 	insertCharacter(pos[0], pos[1], player); //playerrace is a string/character. will be replaced with 'player character'
 
+=======
+	int id = rand() % 5;
+	vector<int> pos = getRandPos(id);
+	insert(pos[0], pos[1], '@');
+	player = new Player(pos[1], pos[0]);
+>>>>>>> 2d8de858834758a88882a759b17f7899ead9249b
 }
 
+//CREATES AND INSERT STAIR ON THE GRID
 void Floor::spawnStairs(){
 	int id = rand() % 5;
 	vector<int> pos = getRandPos(id);
 	insertSymbol(pos[0], pos[1], '/');
 }
 
+//CREATE AND INSERTS POTIONS ON THE GRID
 void Floor::spawnPotions(){
 	for(int i = 0; i < 10; i++){
 		int id = rand() % 5;
@@ -231,7 +269,7 @@ void Floor::spawnPotions(){
 	}
 }
 
-
+//CREATE AND INSERTS GOLD ON THE GRID
 void Floor::spawnGold(){
 	for(int i = 0; i < 10; i++){
 		int id = rand() % 5;
@@ -240,7 +278,17 @@ void Floor::spawnGold(){
 	}
 }
 
+void Floor::freezeEnemy(){
+	action = "EnEmIeS FrEeZeD! ";
+	freeze = true;
+}
 
+void Floor::unfreezeEnemy(){
+	action = "eNeMiEs aRe FrEe NoW! ";
+	freeze = false;
+}
+
+//CREATES AND INTERTS ENEMIES ON THE GRID
 void Floor::spawnEnemies(){
 	for(int i = 0; i < 20; i++){
 		int rn = rand() % 18; //generating random enemy
@@ -281,6 +329,17 @@ Floor::~Floor(){ //once we have a player pointer, delete it while destructing}
 	delete player;
 }
 
+void Floor::printStats(){
+	cout << "Race: "<<playerRace << " Gold: "<< player->getScore() ;
+	for(int i = 0; i< 50; i++){cout << " ";}
+	cout <<"Floor " << floorLevel+1 <<endl;
+	cout <<"HP: " << player->getHp() << endl;
+	cout <<"Atk: "<< player->getAtk() << endl;
+	cout <<"Def: "<<player->getDef() << endl;
+	cout << "Action: " << action << endl;
+	action = "";
+}
+
 void Floor::printFloor(){
 	for(int i = 0; i < 25; i++ ){
 		for(int j = 0; j < 79; j++){
@@ -288,4 +347,5 @@ void Floor::printFloor(){
 		}
 		cout << endl;
 	}
+	printStats();
 }

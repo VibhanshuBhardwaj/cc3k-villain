@@ -87,14 +87,15 @@ int main(int argc, char *argv[]){
         else if(input == "f"){ //freeze enemy
             if(freezeEnemy){
                 freezeEnemy = false;
-                //game->unFreezeEnemy();
+                game->unFreezeEnemy();
             }
             else{ //freezeenemy is false
                 freezeEnemy = true;
-                //game->freezeEnemy();
+                game->freezeEnemy();
             }
+            game->printGame();
         }
-
+        
         else if((input == "no") || (input == "so") || (input == "we") || (input == "ea") || (input == "nw") || (input == "ne") || (input == "se") || (input == "sw")){
             game->playerMove(input);
             game->printGame();
