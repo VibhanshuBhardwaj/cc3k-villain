@@ -57,7 +57,6 @@ Floor::Floor(string file, string pRace, int fLevel){
 	action = playerRace + " EnTeRs tHe DuNgEoN!";
 }
 
-<<<<<<< HEAD
 Cell* Floor::findCell(int row, int col) { //there has to be a better way...
 	for (int i = 0; i < 25; ++i) {
 		for (int j = 0; j < 79; ++j) {
@@ -68,9 +67,8 @@ Cell* Floor::findCell(int row, int col) { //there has to be a better way...
 	}
 	return nullptr; //should we be using this
 }
-=======
 // ENEMY MOVEMENT
->>>>>>> 2d8de858834758a88882a759b17f7899ead9249b
+
 bool Floor::enemyMoved(int row, int col, int prevRow, int prevCol, int eIndex){
 	//cout << "enemy move called" << endl;
 	//cout << "row, col: " << row <<" "<< col<< endl;
@@ -147,21 +145,16 @@ bool Floor::playerMoved(int row, int col, int prevRow, int prevCol, string dir){
 }
 
 void Floor::playerMove(string dir){ //no ,so, ea, we, ne, nw, se, sw
-<<<<<<< HEAD
+
 	//cout <<"player move" << endl;
 	Cell* currCell = player->getCurrCell();
 	int x = currCell->getCol();
 	int y = currCell->getRow();
 	//cout <<"before if" << endl;
-	if(dir == "no" && !playerMoved(y-1, x, y, x)){
 	//	cout << "inside no" << endl;
-=======
-	vector<int> playerPos = player->getPos();
-	int x = playerPos[0];
-	int y = playerPos[1];
+
 
 	if(dir == "no" && !playerMoved(y-1, x, y, x, "North")){ //NORTH
->>>>>>> 2d8de858834758a88882a759b17f7899ead9249b
 		action = "Cannot move there! " ;
 	}
 	else if(dir == "so" && !playerMoved(y+1, x, y, x, "South")){ //SOUTH
@@ -188,7 +181,7 @@ void Floor::playerMove(string dir){ //no ,so, ea, we, ne, nw, se, sw
 	if(!freeze){
 		enemyMove(); //MOVE ENEMIES
 	}
-<<<<<<< HEAD
+
 	//cout << "enemy move" << endl;
 	enemyMove(); //MOVE ENEMIES
 }
@@ -206,18 +199,11 @@ void Floor::insertCharacter(int x, int y, Character* ch){ //x is left margin, y 
 
 }
 
-bool Floor::isValid(int x, int y){ //y is row and x is column
-=======
-}
 
-// INSERT TO THE GRID
-void Floor::insert(int x, int y, char ch){ //x is left margin, y is Top margin
-	grid[y][x]->occupy(ch);
-}
 
 // CHECKS IF A CHARACTER OR AN ITEM CAN BE SPAWNED AT (X, Y) ON GRID
 bool Floor::isValid(int x, int y){ //y is row and x is column
->>>>>>> 2d8de858834758a88882a759b17f7899ead9249b
+
 	if(grid[y][x]->getSymbol() == '.'){
 		return true;
 	}
@@ -239,18 +225,11 @@ vector<int> Floor::getRandPos(int chamberId){
 void Floor::spawnPlayer(){
 	//after character class is completely initialized,
 	//we will have a pointer to player character
-<<<<<<< HEAD
 	int id = rand() % 5; //generates random number between 0 to 5.
 	vector<int> pos = getRandPos(id);
 	player = new Player(100, 100, 100, "test");
 	insertCharacter(pos[0], pos[1], player); //playerrace is a string/character. will be replaced with 'player character'
 
-=======
-	int id = rand() % 5;
-	vector<int> pos = getRandPos(id);
-	insert(pos[0], pos[1], '@');
-	player = new Player(pos[1], pos[0]);
->>>>>>> 2d8de858834758a88882a759b17f7899ead9249b
 }
 
 //CREATES AND INSERT STAIR ON THE GRID
@@ -330,7 +309,8 @@ Floor::~Floor(){ //once we have a player pointer, delete it while destructing}
 }
 
 void Floor::printStats(){
-	cout << "Race: "<<playerRace << " Gold: "<< player->getScore() ;
+	//cout << "Race: "<<playerRace << " Gold: "<< player->getScore() ;
+	cout << "Race: "<<playerRace << " Gold: "<< 0 ; //for now
 	for(int i = 0; i< 50; i++){cout << " ";}
 	cout <<"Floor " << floorLevel+1 <<endl;
 	cout <<"HP: " << player->getHp() << endl;
