@@ -2,30 +2,32 @@
 #define __FLOOR_H__
 #include <iostream>
 #include <string>
-#include <vector> 
+#include <vector>
 #include <fstream>
 #include <cstdlib>
 #include <ctime>
 #include "Chamber.h"
 #include "Cell.h"
-#include "character/Player.h"
-#include "character/Enemy.h"
+#include "Player.h"
+#include "Enemy.h"
+#include "Character.h"
 
 class Game;
 
 class Floor{
-	//std::string maps[25]; // map is a 2d array of characters 
-					     // map accurately represents the Floor 
+	//std::string maps[25]; // map is a 2d array of characters
+					     // map accurately represents the Floor
 	std::vector<std::vector < Cell* > > grid;
 	Player *player; //pointer to player object
 	std::vector<Enemy*> enemies; //vector of 20 enemies
 	//potions 10
 	//gold 10
 	std::string action;
-	std::string playerRace; 
+	std::string playerRace;
 	int floorLevel;
 	bool freeze;
 	Chamber chambers[5]; //array of 5 chambers
+	Cell* findCell(int row, int col);
 
   public:
 	Floor(std::string file, std::string playerRace, int fLevel); //replace string playerRace with Player reference
@@ -39,7 +41,8 @@ class Floor{
 	void unfreezeEnemy();
 	std::vector<int> getRandPos(int chamberId);
 	bool isValid(int x, int y);
-	void insert(int x, int y, char ch);
+	void insertSymbol(int x, int y, char ch);
+	void insertCharacter(int x, int y, Character* ch);
 	void spawnPlayer();
 	void spawnStairs();
 	void spawnPotions();
