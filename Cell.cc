@@ -2,7 +2,7 @@
 #include <string>
 #include <iostream>
 
-#include "character.h"
+#include "Character.h"
 
 using namespace std;
 
