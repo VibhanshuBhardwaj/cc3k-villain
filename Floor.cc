@@ -124,7 +124,7 @@ void Floor::enemyMove(){
 			else{ //SOUTH-WEST
 				//cout << "else block" << endl;
 				//cout << enemies[i]->getSymbol() << endl;
-				if(!enemyMoved(y+1, x-1, y, x, i)){ cout <<"else in" << endl; i--;}
+				if(!enemyMoved(y+1, x-1, y, x, i)){ i--;}
 			}
 		}
 	}

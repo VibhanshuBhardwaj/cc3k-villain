@@ -4,7 +4,7 @@
 #include <iostream>
 #include <map>
 #include <string>
-#include "Character.h"
+#include "Character/Character.h"
 
 class Character;
 

@@ -3,7 +3,7 @@
 #include <vector>
 #include <string>
 #include <iostream>
-#include "Cell.h"
+#include "../Cell.h"
 class Cell;
 
 class Character {

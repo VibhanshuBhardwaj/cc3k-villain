@@ -8,9 +8,9 @@
 #include <ctime>
 #include "Chamber.h"
 #include "Cell.h"
-#include "Player.h"
-#include "Enemy.h"
-#include "Character.h"
+#include "Character/Player.h"
+#include "Character/Enemy.h"
+#include "Character/Character.h"
 
 class Game;
 
