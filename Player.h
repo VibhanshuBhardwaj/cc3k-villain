@@ -2,7 +2,7 @@
 #define _PLAYER_H_
 
 #include <vector>
-#include "character.h"
+#include "Character.h"
 #include <string>
 
 class Player: public Character {

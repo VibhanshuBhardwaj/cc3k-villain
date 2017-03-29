@@ -4,20 +4,25 @@
 #include <iostream>
 #include <map>
 #include <string>
+#include "Character.h"
+
+class Character;
 
 class Cell {
 
 	  int row;
 	  int col;
     char symbol;
-	  std::string type; // TILE / PATHWAY / STAIR / HWALL / VWALL / DOOR 
+	  std::string type; // TILE / PATHWAY / STAIR / HWALL / VWALL / DOOR
 	  bool occupied;
-    char whoOccupied; 
+    //char whoOccupied;
+    Character * whoOccupied;
+
 
   public:
     Cell();
   	Cell(int row, int col, char sym, std::string type);
-    void occupy(char ch);
+    void occupy(Character * whoOccupied);
     void leave();
   	bool isOccupied();
   	bool setOccupied(bool ev);
@@ -25,6 +30,9 @@ class Cell {
     char getSymbol();
     bool playerMoveValid();
     bool enemyMoveValid();
+    int getRow();
+    int getCol();
+    void setSymbol(char ch);
 };
 
 

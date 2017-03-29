@@ -1,8 +1,8 @@
 #include <iostream>
 #include <string>
 #include <vector>
-
-#include "character.h"
+#include "Cell.h"
+#include "Character.h"
 
 using namespace std;
 
@@ -21,5 +21,13 @@ void Character::setHp(int newHp) { hp = newHp; }
 void Character::setAtk(int newAtk) { atk = newAtk; }
 
 void Character::setDef(int newDef) { def = newDef; }
+
+char Character::getSymbol() { return symbol; }
+
+Cell* Character::getCurrCell() { return currCell; }
+
+void Character::setCurrCell(Cell* newCell) {
+	currCell = newCell;
+}
 
 Character::~Character() {}

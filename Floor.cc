@@ -47,6 +47,7 @@ Floor::Floor(string file, string pRace){
 	}
 
 	//spawn all characters and items randomly on the floor
+	//cout << "before spawn player" << endl;
 	spawnPlayer();
 	spawnStairs();
 	spawnPotions();
@@ -54,27 +55,49 @@ Floor::Floor(string file, string pRace){
 	spawnEnemies();
 }
 
+Cell* Floor::findCell(int row, int col) { //there has to be a better way...
+	for (int i = 0; i < 25; ++i) {
+		for (int j = 0; j < 79; ++j) {
+			if ((grid[i][j]->getRow()==row) && (grid[i][j]->getCol()==col)) {
+				return grid[i][j];
+			}
+		}
+	}
+	return nullptr; //should we be using this
+}
 bool Floor::enemyMoved(int row, int col, int prevRow, int prevCol, int eIndex){
+	//cout << "enemy move called" << endl;
+	//cout << "row, col: " << row <<" "<< col<< endl;
 	if(grid[row][col]->enemyMoveValid()){
-		grid[row][col]->occupy(enemies[eIndex]->getSymbol());
-		enemies[eIndex]->posUpdate(row, col);
+	//	cout << "inside enemy moved if" << endl;
+		grid[row][col]->occupy(enemies[eIndex]);
+		enemies[eIndex]->setCurrCell(grid[row][col]);
 		grid[prevRow][prevCol]->leave();
+	//	cout << "ret true" << endl;
 		return true;
 	}
+	//cout << "ret false" << endl;
 	return false;
 }
 
 void Floor::enemyMove(){
 	for(int i = 0; i < 20; i++){
+	//	cout << "ith enemy sym: " << enemies[i]->getSymbol() << endl;
 		if(enemies[i]->isAlive()){
-			vector<int> enemyPos = enemies[i]->getPos();
-			int x = enemyPos[0];
-			int y = enemyPos[1];
-			int dir = rand() % 8 + 1; //generates random number from 1 to 8 
+			Cell* currCell = enemies[i]->getCurrCell();
+			int x = currCell->getCol();
+			int y = currCell->getRow();
+		//	cout << " x " << x << endl;
+		//	cout << " y " << y<< endl;
+			int dir = rand() % 8 + 1; //generates random number from 1 to 8
+		//	cout << "dir" << dir << endl;
+			//cout << grid[y+1][x-1]->isOccupied()<<endl;
 			if(grid[y-1][x]->isOccupied() && grid[y+1][x]->isOccupied() && grid[y][x+1]->isOccupied() && grid[y][x-1]->isOccupied() && grid[y-1][x+1]->isOccupied() && grid[y-1][x-1]->isOccupied() && grid[y+1][x+1]->isOccupied() && grid[y+1][x-1]->isOccupied()){
+			//	cout << "first if" << endl;
 				continue;
-			} 
-			else if(dir == 1){//NORTH 
+			}
+			else if(dir == 1){//NORTH
+				//cout <<  "north" << endl;
 				if(!enemyMoved(y-1, x, y, x, i)){	i--;}
 			}
 			else if(dir == 2){//SOUTH
@@ -96,16 +119,19 @@ void Floor::enemyMove(){
 				if(!enemyMoved(y+1, x+1, y, x, i)){i--;}
 			}
 			else{ //SOUTH-WEST
-				if(!enemyMoved(y+1, x-1, y, x, i)){i--;}
+				//cout << "else block" << endl;
+				//cout << enemies[i]->getSymbol() << endl;
+				if(!enemyMoved(y+1, x-1, y, x, i)){ cout <<"else in" << endl; i--;}
 			}
 		}
 	}
+	//cout <<"end enemyMove" << endl;
 }
 
 bool Floor::playerMoved(int row, int col, int prevRow, int prevCol){
 	if(grid[row][col]->playerMoveValid()){
-		grid[row][col]->occupy('@');
-		player->posUpdate(row, col);
+		grid[row][col]->occupy(player);
+		player->setCurrCell(grid[row][col]);
 		grid[prevRow][prevCol]->leave();
 		return true;
 	}
@@ -113,11 +139,13 @@ bool Floor::playerMoved(int row, int col, int prevRow, int prevCol){
 }
 
 void Floor::playerMove(string dir){ //no ,so, ea, we, ne, nw, se, sw
-	vector<int> playerPos = player->getPos();
-	int x = playerPos[0];
-	int y = playerPos[1];
-
+	//cout <<"player move" << endl;
+	Cell* currCell = player->getCurrCell();
+	int x = currCell->getCol();
+	int y = currCell->getRow();
+	//cout <<"before if" << endl;
 	if(dir == "no" && !playerMoved(y-1, x, y, x)){
+	//	cout << "inside no" << endl;
 		action = "Cannot move there! " ;
 	}
 	else if(dir == "so" && !playerMoved(y+1, x, y, x)){
@@ -144,16 +172,24 @@ void Floor::playerMove(string dir){ //no ,so, ea, we, ne, nw, se, sw
 	else{
 		action = "Cannot move there! " ;
 	}
+	//cout << "enemy move" << endl;
 	enemyMove(); //MOVE ENEMIES
 }
 
 
-void Floor::insert(int x, int y, char ch){ //x is left margin, y is Top margin
-	grid[y][x]->occupy(ch);
+void Floor::insertSymbol(int x, int y, char ch){ //x is left margin, y is Top margin
+
+	grid[y][x]->setSymbol(ch);
+
 }
 
+void Floor::insertCharacter(int x, int y, Character* ch){ //x is left margin, y is Top margin
+	//cout << ch->getSymbol() << endl;
+	if (ch) grid[y][x]->occupy(ch);
 
-bool Floor::isValid(int x, int y){ //y is row and x is column 
+}
+
+bool Floor::isValid(int x, int y){ //y is row and x is column
 	if(grid[y][x]->getSymbol() == '.'){
 		return true;
 	}
@@ -165,32 +201,33 @@ vector<int> Floor::getRandPos(int chamberId){
 	vector<int> pos = chambers[chamberId].generateRandPos();
 	int x = pos[0];
 	int y = pos[1];
-	if(isValid(x, y)){ 
+	if(isValid(x, y)){
 		return pos;
 	}
 	return getRandPos(chamberId);
 }
 
 void Floor::spawnPlayer(){
-	//after character class is completely initialized, 
+	//after character class is completely initialized,
 	//we will have a pointer to player character
-	int id = rand() % 5; //generates random number between 0 to 5. 
+	int id = rand() % 5; //generates random number between 0 to 5.
 	vector<int> pos = getRandPos(id);
-	insert(pos[0], pos[1], '@'); //playerrace is a string/character. will be replaced with 'player character'
-	player = new Player(pos[1], pos[0]);
+	player = new Player(100, 100, 100, "test");
+	insertCharacter(pos[0], pos[1], player); //playerrace is a string/character. will be replaced with 'player character'
+
 }
 
 void Floor::spawnStairs(){
 	int id = rand() % 5;
 	vector<int> pos = getRandPos(id);
-	insert(pos[0], pos[1], '/');
+	insertSymbol(pos[0], pos[1], '/');
 }
 
 void Floor::spawnPotions(){
 	for(int i = 0; i < 10; i++){
 		int id = rand() % 5;
 		vector<int> pos = getRandPos(id);
-		insert(pos[0], pos[1], 'P');
+		insertSymbol(pos[0], pos[1], 'P');
 	}
 }
 
@@ -199,7 +236,7 @@ void Floor::spawnGold(){
 	for(int i = 0; i < 10; i++){
 		int id = rand() % 5;
 		vector<int> pos = getRandPos(id);
-		insert(pos[0], pos[1], 'G');
+		insertSymbol(pos[0], pos[1], 'G');
 	}
 }
 
@@ -207,32 +244,34 @@ void Floor::spawnGold(){
 void Floor::spawnEnemies(){
 	for(int i = 0; i < 20; i++){
 		int rn = rand() % 18; //generating random enemy
-		int id = rand()% 5; //generating random chamber 
+		int id = rand()% 5; //generating random chamber
 		vector<int> pos = getRandPos(id);
 		Enemy *thisEnemy;
 		if(rn >= 1 && rn <= 4){
-			insert(pos[0], pos[1], 'H'); //Human
-			thisEnemy = new Enemy(pos[1], pos[0], 'H');
+			thisEnemy = new Enemy(100, 100, 100, 'H', true);
+			insertCharacter(pos[0], pos[1], thisEnemy); //Human
 		}
 		else if(rn >= 5 && rn <= 7){
-			insert(pos[0], pos[1], 'W'); //Dwarf
-			thisEnemy = new Enemy(pos[1], pos[0], 'W');
+			thisEnemy = new Enemy(100, 100, 100, 'W', true);
+			insertCharacter(pos[0], pos[1], thisEnemy); //Dwarf
 		}
 		else if(rn >= 8 && rn <= 12){
-			insert(pos[0], pos[1], 'L'); //HalfLing
-			thisEnemy = new Enemy(pos[1], pos[0], 'L');
+			//cout << "pos: "<< pos[0] << " " << pos[1] << endl;
+			thisEnemy = new Enemy(100, 100, 100, 'L', true); //halfling
+			insertCharacter(pos[0], pos[1], thisEnemy);
 		}
 		else if(rn >= 13 && rn <= 14){
-			insert(pos[0], pos[1], 'E'); //Elf
-			thisEnemy = new Enemy(pos[1], pos[0], 'E');
+
+			thisEnemy = new Enemy(100, 100, 100, 'E', true); //elf
+			insertCharacter(pos[0], pos[1], thisEnemy);
 		}
 		else if(rn >= 15 && rn <= 16){
-			insert(pos[0], pos[1], 'O'); //orc
-			thisEnemy = new Enemy(pos[1], pos[0], 'O');
+			thisEnemy = new Enemy(100, 100, 100, 'O', true); //orc
+			insertCharacter(pos[0], pos[1], thisEnemy);
 		}
 		else{
-			insert(pos[0], pos[1], 'M'); //Merchant
-			thisEnemy = new Enemy(pos[1], pos[0], 'M');
+			thisEnemy = new Enemy(100, 100, 100, 'M', false); //merchant
+			insertCharacter(pos[0], pos[1], thisEnemy);
 		}
 		enemies.emplace_back(thisEnemy);
 	}
