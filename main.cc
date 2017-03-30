@@ -100,7 +100,6 @@ int main(int argc, char *argv[]){
         else if((input == "no") || (input == "so") || (input == "we") || (input == "ea") || (input == "nw") || (input == "ne") || (input == "se") || (input == "sw")){
             game->playerMove(input);
             if(game->isWon()){ //to check if the game is won. Runs after every user input.
-        //    cout << "Congratulations you've won the Game!!"<< endl<< "Well Played!!" << endl;
                 cout << "ending..." << endl;
                 break;
             }
