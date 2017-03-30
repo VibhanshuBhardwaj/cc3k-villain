@@ -5,7 +5,7 @@
 
 class Troll: public Player {
 public:
-	Troll(int hp = 150, int atk = 25, int def = 15);
+	Troll(int hp = 120, int atk = 25, int def = 15);
 };
 
 #endif
