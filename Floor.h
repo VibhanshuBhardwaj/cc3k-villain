@@ -22,6 +22,7 @@ class Floor{
 	std::vector<Enemy*> enemies; //vector of 20 enemies
 	//potions 10
 	//gold 10
+	int playerSpawnedChamber;
 	std::string action;
 	std::string playerRace;
 	int floorLevel;

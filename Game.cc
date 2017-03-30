@@ -33,21 +33,21 @@ void Game::playerMove(string dir){ //no ,so, ea, we, ne, nw, se, sw
 		cout << "at stairs" << endl;
 		cout << floorLevel << endl;
 		//player reached the stairs
-		if(floorLevel < 5){
+		if(floorLevel < 6){
 			floorLevel++;
 			delete floor;
 			string s = to_string(floorLevel);
 			action = "Floor " + s + " Generated! ";
 			floor = new Floor(fileName, playerRace, floorLevel);
 		}
-		if(floorLevel == 5){
+		if(floorLevel == 6){
 			//reached the stairs of last level; 
 			cout << "Cc3K GaMe WoN. " << endl;
 			cout << "CoNgRaTuLaTiOnS!!!"<< endl;
 		}
 
 	}
-	if(floorLevel < 5){
+	if(floorLevel < 6){
 		printGame();
 		action = "";
 	}
@@ -74,7 +74,7 @@ void Game::unFreezeEnemy(){
 }
 
 bool Game::isWon(){
-	if(floorLevel == 5){
+	if(floorLevel == 6){
 		//above 5th Floor
 		return true;
 	}

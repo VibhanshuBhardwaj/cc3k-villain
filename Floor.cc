@@ -231,13 +231,17 @@ void Floor::spawnPlayer(){
 	vector<int> pos = getRandPos(id);
 	player = pf.generatePlayer(playerRace);
 	insertCharacter(pos[0], pos[1], player); //playerrace is a string/character. will be replaced with 'player character'
-
+	playerSpawnedChamber = id;
 }
 
 //CREATES AND INSERT STAIR ON THE GRID
 void Floor::spawnStairs(){
 	int id = rand() % 5;
+	while(id == playerSpawnedChamber){
+		id = rand() % 5;
+	}
 	vector<int> pos = getRandPos(id);
+
 	insertSymbol(pos[0], pos[1], '/');
 }
 
