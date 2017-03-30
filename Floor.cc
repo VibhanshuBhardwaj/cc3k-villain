@@ -1,9 +1,11 @@
 
 #include "Floor.h"
-#include "Character/PlayerFactory.h"
+#include "Character/Player/PlayerFactory.h"
+#include "Character/Enemy/EnemyFactory.h"
 
 class Chamber;
 class PlayerFactory;
+class EnemyFactory;
 
 using namespace std;
 
@@ -272,36 +274,13 @@ void Floor::unfreezeEnemy(){
 //CREATES AND INTERTS ENEMIES ON THE GRID
 void Floor::spawnEnemies(){
 	for(int i = 0; i < 20; i++){
-		int rn = rand() % 18; //generating random enemy
+		EnemyFactory ef = EnemyFactory();
+		//int rn = rand() % 18; //generating random enemy
 		int id = rand()% 5; //generating random chamber
 		vector<int> pos = getRandPos(id);
-		Enemy *thisEnemy;
-		if(rn >= 1 && rn <= 4){
-			thisEnemy = new Enemy(100, 100, 100, 'H', true);
-			insertCharacter(pos[0], pos[1], thisEnemy); //Human
-		}
-		else if(rn >= 5 && rn <= 7){
-			thisEnemy = new Enemy(100, 100, 100, 'W', true);
-			insertCharacter(pos[0], pos[1], thisEnemy); //Dwarf
-		}
-		else if(rn >= 8 && rn <= 12){
-			//cout << "pos: "<< pos[0] << " " << pos[1] << endl;
-			thisEnemy = new Enemy(100, 100, 100, 'L', true); //halfling
-			insertCharacter(pos[0], pos[1], thisEnemy);
-		}
-		else if(rn >= 13 && rn <= 14){
+		Enemy *thisEnemy = ef.generateEnemy(); //factory method call
 
-			thisEnemy = new Enemy(100, 100, 100, 'E', true); //elf
-			insertCharacter(pos[0], pos[1], thisEnemy);
-		}
-		else if(rn >= 15 && rn <= 16){
-			thisEnemy = new Enemy(100, 100, 100, 'O', true); //orc
-			insertCharacter(pos[0], pos[1], thisEnemy);
-		}
-		else{
-			thisEnemy = new Enemy(100, 100, 100, 'M', false); //merchant
-			insertCharacter(pos[0], pos[1], thisEnemy);
-		}
+		insertCharacter(pos[0], pos[1], thisEnemy);
 		enemies.emplace_back(thisEnemy);
 	}
 }

@@ -8,8 +8,8 @@
 #include <ctime>
 #include "Chamber.h"
 #include "Cell.h"
-#include "Character/Player.h"
-#include "Character/Enemy.h"
+#include "Character/Player/Player.h"
+#include "Character/Enemy/Enemy.h"
 #include "Character/Character.h"
 
 class Game;

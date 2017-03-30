@@ -1,10 +1,10 @@
 #include <iostream>
 #include "Player.h"
-#include "Character.h"
+#include "../Character.h"
 
 using namespace std;
 
-Player::Player(int hp, int atk, int def, string race): Character(hp, atk, def, '@'), race(race), levelDef(0), levelAtk(0) {}
+Player::Player(int hp, int atk, int def, string race): Character(atk, def, hp, '@'), race(race), levelDef(0), levelAtk(0) {}
 
 int Player::getLevelDef()  { return levelDef; }
 
