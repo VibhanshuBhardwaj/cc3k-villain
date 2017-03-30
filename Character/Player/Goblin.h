@@ -5,7 +5,7 @@
 
 class Goblin: public Player {
 public:
-	Goblin(int hp = 150, int atk = 25, int def = 15);
+	Goblin(int hp = 110, int atk = 15, int def = 20);
 };
 
 #endif
