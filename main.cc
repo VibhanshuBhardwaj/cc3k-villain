@@ -47,7 +47,6 @@ int main(int argc, char *argv[]){
         return 0;
     }
     Game *game = new Game(playerRace, fileName);
-    game->printGame();
     bool freezeEnemy = false;
     string input;
 
@@ -75,7 +74,6 @@ int main(int argc, char *argv[]){
                 return 0;
             }
             game = new Game(playerRace, fileName);
-            game->printGame();
             freezeEnemy = false;
         }
         else if(input == "u"){ //use Potion
@@ -97,19 +95,17 @@ int main(int argc, char *argv[]){
                 freezeEnemy = true;
                 game->freezeEnemy();
             }
-            game->printGame();
         }
 
         else if((input == "no") || (input == "so") || (input == "we") || (input == "ea") || (input == "nw") || (input == "ne") || (input == "se") || (input == "sw")){
             game->playerMove(input);
-            game->printGame();
-        }
-        //if(game->isWon()){ //to check if the game is won. Runs after every user input.
+            if(game->isWon()){ //to check if the game is won. Runs after every user input.
         //    cout << "Congratulations you've won the Game!!"<< endl<< "Well Played!!" << endl;
-        //    delete game;
-        //    break;
-        //}
-
+                cout << "ending..." << endl;
+                break;
+            }
+        }
+        
         else{
             //invalid input
             cout << "Invalid input. Please enter a valid input"<<endl;

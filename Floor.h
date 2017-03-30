@@ -35,6 +35,7 @@ class Floor{
 	bool playerMoved(int row, int col, int prevRow, int prevCol, std::string dir);
 	void playerMove(std::string dir);
 	void enemyMove();
+	bool atStairs();
 	/*void usePotion(std::string dir);
 	void atkDirection(std::string dir);*/
 	void freezeEnemy();
@@ -49,6 +50,8 @@ class Floor{
 	void spawnGold();
 	void spawnEnemies();
 	void printStats();
+	std::string getAction();
+	void setAction(std::string ac);
 	void printFloor();
 	~Floor();
 };

@@ -12,6 +12,7 @@ class Game{
 	std::string fileName;
 	int floorLevel;
 	Floor *floor;
+	std::string action;
 	//Player *player; //reference to a player object
 
   public:

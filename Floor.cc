@@ -14,7 +14,7 @@ Floor::Floor(string file, string pRace, int fLevel){
 	playerRace = pRace;
 	floorLevel = fLevel;
 	string line;
-	cout << file << endl;
+	//cout << file << endl;
 	ifstream infile(file);
 	if(!infile){
 		cout<< "cannot open the given file."<< endl;
@@ -60,18 +60,7 @@ Floor::Floor(string file, string pRace, int fLevel){
 	action = playerRace + " EnTeRs tHe DuNgEoN!";
 }
 
-Cell* Floor::findCell(int row, int col) { //there has to be a better way...
-	for (int i = 0; i < 25; ++i) {
-		for (int j = 0; j < 79; ++j) {
-			if ((grid[i][j]->getRow()==row) && (grid[i][j]->getCol()==col)) {
-				return grid[i][j];
-			}
-		}
-	}
-	return nullptr; //should we be using this
-}
 // ENEMY MOVEMENT
-
 bool Floor::enemyMoved(int row, int col, int prevRow, int prevCol, int eIndex){
 	//cout << "enemy move called" << endl;
 	//cout << "row, col: " << row <<" "<< col<< endl;
@@ -181,14 +170,23 @@ void Floor::playerMove(string dir){ //no ,so, ea, we, ne, nw, se, sw
 	else if(dir == "sw" && !playerMoved(y+1, x-1, y, x, "South-West")){ //SOUTH-WEST
 		action = "Cannot move there! " ;
 	}
+
 	if(!freeze){ //Always runs
 		enemyMove(); //MOVE ENEMIES
 	}
 
 	//cout << "enemy move" << endl;
-	enemyMove(); //MOVE ENEMIES
+	//enemyMove(); //MOVE ENEMIES
 }
 
+//TRUE IF THE PLAYER HAS REACHED THE STAIRS
+bool Floor::atStairs(){
+	Cell* currCell = player->getCurrCell();
+	if(currCell->atStairs()){
+		return true;
+	}
+	return false;
+}
 
 void Floor::insertSymbol(int x, int y, char ch){ //x is left margin, y is Top margin
 
@@ -294,12 +292,19 @@ void Floor::printStats(){
 	//cout << "Race: "<<playerRace << " Gold: "<< player->getScore() ;
 	cout << "Race: "<<playerRace << " Gold: "<< 0 ; //for now
 	for(int i = 0; i< 50; i++){cout << " ";}
-	cout <<"Floor " << floorLevel+1 <<endl;
+	cout <<"Floor " << floorLevel <<endl;
 	cout <<"HP: " << player->getHp() << endl;
 	cout <<"Atk: "<< player->getAtk() << endl;
 	cout <<"Def: "<<player->getDef() << endl;
-	cout << "Action: " << action << endl;
-	action = "";
+	//cout << "Action: " << action << endl;
+}
+
+string Floor::getAction(){
+	return action;
+}
+
+void Floor::setAction(string ac){
+	action = ac;
 }
 
 //PRINTS THE GRID
@@ -310,5 +315,4 @@ void Floor::printFloor(){
 		}
 		cout << endl;
 	}
-	printStats();
 }
