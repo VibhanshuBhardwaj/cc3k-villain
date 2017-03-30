@@ -1,8 +1,11 @@
 
 #include "Floor.h"
+#include "Character/Player/PlayerFactory.h"
+#include "Character/Enemy/EnemyFactory.h"
 
 class Chamber;
-class Player;
+class PlayerFactory;
+class EnemyFactory;
 
 using namespace std;
 
@@ -124,7 +127,7 @@ void Floor::enemyMove(){
 			else{ //SOUTH-WEST
 				//cout << "else block" << endl;
 				//cout << enemies[i]->getSymbol() << endl;
-				if(!enemyMoved(y+1, x-1, y, x, i)){ cout <<"else in" << endl; i--;}
+				if(!enemyMoved(y+1, x-1, y, x, i)){ i--;}
 			}
 		}
 	}
@@ -226,8 +229,9 @@ void Floor::spawnPlayer(){
 	//after character class is completely initialized,
 	//we will have a pointer to player character
 	int id = rand() % 5; //generates random number between 0 to 5.
+	PlayerFactory pf = PlayerFactory();
 	vector<int> pos = getRandPos(id);
-	player = new Player(100, 100, 100, "test");
+	player = pf.generatePlayer(playerRace);
 	insertCharacter(pos[0], pos[1], player); //playerrace is a string/character. will be replaced with 'player character'
 
 }
@@ -270,36 +274,13 @@ void Floor::unfreezeEnemy(){
 //CREATES AND INTERTS ENEMIES ON THE GRID
 void Floor::spawnEnemies(){
 	for(int i = 0; i < 20; i++){
-		int rn = rand() % 18; //generating random enemy
+		EnemyFactory ef = EnemyFactory();
+		//int rn = rand() % 18; //generating random enemy
 		int id = rand()% 5; //generating random chamber
 		vector<int> pos = getRandPos(id);
-		Enemy *thisEnemy;
-		if(rn >= 1 && rn <= 4){
-			thisEnemy = new Enemy(100, 100, 100, 'H', true);
-			insertCharacter(pos[0], pos[1], thisEnemy); //Human
-		}
-		else if(rn >= 5 && rn <= 7){
-			thisEnemy = new Enemy(100, 100, 100, 'W', true);
-			insertCharacter(pos[0], pos[1], thisEnemy); //Dwarf
-		}
-		else if(rn >= 8 && rn <= 12){
-			//cout << "pos: "<< pos[0] << " " << pos[1] << endl;
-			thisEnemy = new Enemy(100, 100, 100, 'L', true); //halfling
-			insertCharacter(pos[0], pos[1], thisEnemy);
-		}
-		else if(rn >= 13 && rn <= 14){
+		Enemy *thisEnemy = ef.generateEnemy(); //factory method call
 
-			thisEnemy = new Enemy(100, 100, 100, 'E', true); //elf
-			insertCharacter(pos[0], pos[1], thisEnemy);
-		}
-		else if(rn >= 15 && rn <= 16){
-			thisEnemy = new Enemy(100, 100, 100, 'O', true); //orc
-			insertCharacter(pos[0], pos[1], thisEnemy);
-		}
-		else{
-			thisEnemy = new Enemy(100, 100, 100, 'M', false); //merchant
-			insertCharacter(pos[0], pos[1], thisEnemy);
-		}
+		insertCharacter(pos[0], pos[1], thisEnemy);
 		enemies.emplace_back(thisEnemy);
 	}
 }

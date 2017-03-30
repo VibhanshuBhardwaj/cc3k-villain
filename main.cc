@@ -1,10 +1,11 @@
-#include <iostream> 
+#include <iostream>
 #include <string>
 #include "Floor.h"
 #include "Game.h"
 #include <fstream>
 #include <sstream>
 #include <cstdlib>
+#include <time.h>
 
 class Game;
 
@@ -30,21 +31,22 @@ int main(int argc, char *argv[]){
     std::string fileName = "board.txt";
     int seed = 12390;
     if(argc >= 2){
-        fileName = argv[1];   // changing the fileName to the given argument 
+        fileName = argv[1];   // changing the fileName to the given argument
 
         if(argc == 3){
             istringstream ss(argv[2]);
             ss >> seed;
         }
     }
-    srand(seed);
+    //srand(seed);
+    srand(time(NULL));
     string playerRace;
     playerRace = getPlayerRace();
     if(playerRace == "q"){
         cout << "Game quit..." <<endl;
         return 0;
     }
-    Game *game = new Game(playerRace, fileName); 
+    Game *game = new Game(playerRace, fileName);
     game->printGame();
     bool freezeEnemy = false;
     string input;
@@ -77,11 +79,11 @@ int main(int argc, char *argv[]){
             freezeEnemy = false;
         }
         else if(input == "u"){ //use Potion
-            string potionDir; //potion direction 
+            string potionDir; //potion direction
             cin >> potionDir;
             //game->usePotion(potionDir);
         }
-        else if(input == "a"){ //attack 
+        else if(input == "a"){ //attack
             string atkDir;
             cin >> atkDir;
             //game->atkDirection(atkDir);
@@ -107,7 +109,7 @@ int main(int argc, char *argv[]){
         //    delete game;
         //    break;
         //}
-      
+
         else{
             //invalid input
             cout << "Invalid input. Please enter a valid input"<<endl;

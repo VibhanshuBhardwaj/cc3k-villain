@@ -1,7 +1,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include "Cell.h"
+#include "../Cell.h"
 #include "Character.h"
 
 using namespace std;

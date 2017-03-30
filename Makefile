@@ -3,9 +3,10 @@ CXXFLAGS = -std=c++14 -Wall -MMD
 EXEC = cc3k
 MAINOBJ = main.o
 FLOOROBJ = Cell.o Chamber.o  Game.o Floor.o
-PLAYEROBJ = Player.o
-ENEMYOBJ = Enemy.o
-CHAROBJ = Character.o
+PLAYEROBJ = Character/Player/Player.o Character/Player/Shade.o Character/Player/Drow.o Character/Player/Vampire.o Character/Player/Troll.o Character/Player/Goblin.o Character/Player/PlayerFactory.o
+
+ENEMYOBJ = Character/Enemy/Enemy.o Character/Enemy/Human.o Character/Enemy/Dwarf.o Character/Enemy/Elf.o Character/Enemy/EnemyFactory.o Character/Enemy/Halfling.o Character/Enemy/Orc.o
+CHAROBJ = Character/Character.o
 OBJECTS = ${MAINOBJ} ${FLOOROBJ} ${CHAROBJ} ${PLAYEROBJ} ${ENEMYOBJ} ${ITEMOBJ}
 DEPENDS = ${OBJECTS:.o=.d}
 
