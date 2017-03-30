@@ -5,7 +5,7 @@
 
 class Vampire: public Player {
 public:
-	Vampire(int hp = 150, int atk = 25, int def = 15);
+	Vampire(int hp = 50, int atk = 25, int def = 25);
 };
 
 #endif
