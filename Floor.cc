@@ -1,8 +1,9 @@
 
 #include "Floor.h"
+#include "Character/Shade.h"
 
 class Chamber;
-class Player;
+class Shade;
 
 using namespace std;
 
@@ -227,7 +228,7 @@ void Floor::spawnPlayer(){
 	//we will have a pointer to player character
 	int id = rand() % 5; //generates random number between 0 to 5.
 	vector<int> pos = getRandPos(id);
-	player = new Player(100, 100, 100, "test");
+	player = new Shade();
 	insertCharacter(pos[0], pos[1], player); //playerrace is a string/character. will be replaced with 'player character'
 
 }
