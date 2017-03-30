@@ -26,13 +26,14 @@ class Cell {
     void leave();
   	bool isOccupied();
   	bool setOccupied(bool ev);
+    bool atStairs();
   	void setType(std::string t);
     char getSymbol();
+    void setSymbol(char ch);
     bool playerMoveValid();
     bool enemyMoveValid();
     int getRow();
     int getCol();
-    void setSymbol(char ch);
 };
 
 

@@ -29,6 +29,13 @@ void Cell::leave(){
 	occupied = false;
 }
 
+bool Cell::atStairs(){
+	if(symbol == '/'){
+		return true;
+	}
+	return false;
+}
+
 char Cell::getSymbol(){
 	if(occupied){
 		return whoOccupied->getSymbol();

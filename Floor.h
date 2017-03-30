@@ -22,6 +22,7 @@ class Floor{
 	std::vector<Enemy*> enemies; //vector of 20 enemies
 	//potions 10
 	//gold 10
+	int playerSpawnedChamber;
 	std::string action;
 	std::string playerRace;
 	int floorLevel;
@@ -35,6 +36,7 @@ class Floor{
 	bool playerMoved(int row, int col, int prevRow, int prevCol, std::string dir);
 	void playerMove(std::string dir);
 	void enemyMove();
+	bool atStairs();
 	/*void usePotion(std::string dir);
 	void atkDirection(std::string dir);*/
 	void freezeEnemy();
@@ -49,6 +51,8 @@ class Floor{
 	void spawnGold();
 	void spawnEnemies();
 	void printStats();
+	std::string getAction();
+	void setAction(std::string ac);
 	void printFloor();
 	~Floor();
 };
