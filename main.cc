@@ -84,7 +84,8 @@ int main(int argc, char *argv[]){
         else if(input == "a"){ //attack
             string atkDir;
             cin >> atkDir;
-            //game->atkDirection(atkDir);
+            //cout << "calling game->atkDirection with " << atkDir << endl;
+            game->atkDirection(atkDir);
         }
         else if(input == "f"){ //freeze enemy
             if(freezeEnemy){
@@ -104,7 +105,7 @@ int main(int argc, char *argv[]){
                 break;
             }
         }
-        
+
         else{
             //invalid input
             cout << "Invalid input. Please enter a valid input"<<endl;

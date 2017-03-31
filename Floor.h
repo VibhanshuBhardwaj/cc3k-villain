@@ -37,8 +37,8 @@ class Floor{
 	void playerMove(std::string dir);
 	void enemyMove();
 	bool atStairs();
-	/*void usePotion(std::string dir);
-	void atkDirection(std::string dir);*/
+	/*void usePotion(std::string dir);*/
+	void atkDirection(std::string dir);
 	void freezeEnemy();
 	void unfreezeEnemy();
 	std::vector<int> getRandPos(int chamberId);
@@ -51,6 +51,7 @@ class Floor{
 	void spawnGold();
 	void spawnEnemies();
 	void printStats();
+	bool canEnemyAttackPlayer(Enemy *);
 	std::string getAction();
 	void setAction(std::string ac);
 	void printFloor();

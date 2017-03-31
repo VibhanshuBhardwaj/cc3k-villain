@@ -19,7 +19,7 @@ public:
 
 	void setLevelAtk(int levelAtk);
 	void setLevelDef(int levelDef);
-
+	virtual void attack(Character* victim);
 	void reset(); // when new level begins
 	std::string getRace();
 

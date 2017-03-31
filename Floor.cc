@@ -2,6 +2,7 @@
 #include "Floor.h"
 #include "Character/Player/PlayerFactory.h"
 #include "Character/Enemy/EnemyFactory.h"
+#include <cmath>
 
 class Chamber;
 class PlayerFactory;
@@ -64,6 +65,8 @@ Floor::Floor(string file, string pRace, int fLevel){
 bool Floor::enemyMoved(int row, int col, int prevRow, int prevCol, int eIndex){
 	//cout << "enemy move called" << endl;
 	//cout << "row, col: " << row <<" "<< col<< endl;
+	//cout << "can enemy attack" << canEnemyAttackPlayer(enemies[eIndex]) << endl;
+	if (canEnemyAttackPlayer(enemies[eIndex])) {enemies[eIndex]->attackPlayer(player); return true;}
 	if(grid[row][col]->enemyMoveValid()){
 	//	cout << "inside enemy moved if" << endl;
 		grid[row][col]->occupy(enemies[eIndex]);
@@ -76,10 +79,15 @@ bool Floor::enemyMoved(int row, int col, int prevRow, int prevCol, int eIndex){
 	return false;
 }
 
+bool Floor::canEnemyAttackPlayer(Enemy* enemy) {
+	//distance formula between 2 points. checks if player is within attack range
+	return pow((enemy->getCurrCell()->getRow() - player->getCurrCell()->getRow()), 2) + pow((enemy->getCurrCell()->getCol() - player->getCurrCell()->getCol()), 2) <= 2;
+}
 void Floor::enemyMove(){
 	for(int i = 0; i < 20; i++){
 	//	cout << "ith enemy sym: " << enemies[i]->getSymbol() << endl;
 		if(enemies[i]->isAlive()){
+			//cout << "can enemy attack" << canEnemyAttackPlayer(enemies[i]) << endl;
 			Cell* currCell = enemies[i]->getCurrCell();
 			int x = currCell->getCol();
 			int y = currCell->getRow();
@@ -136,6 +144,25 @@ bool Floor::playerMoved(int row, int col, int prevRow, int prevCol, string dir){
 	return false;
 }
 
+void Floor::atkDirection(string dir) {
+	//cout << "inside floor atkDirection with " << dir << endl;
+	//cout <<"tryna print player currCell" << player->getCurrCell() << endl;
+	Cell* currCell = player->getCurrCell();
+	//cout << "after currcell" << endl;
+	int x = currCell->getCol();
+	int y = currCell->getRow();
+	//cout << "x : " << x << "y :" << y << endl;
+	//cout << "before ifs" << endl;
+	//cout << "character: " << grid[y-1][x]->getCharacter() << endl;
+	if (dir == "no") player->attack(grid[y-1][x]->getCharacter());
+	else if (dir == "so") player->attack(grid[y+1][x]->getCharacter());
+	else if (dir == "ea") player->attack(grid[y][x+1]->getCharacter());
+	else if (dir == "we") player->attack(grid[y][x-1]->getCharacter());
+	else if (dir == "ne") player->attack(grid[y-1][x+1]->getCharacter());
+	else if (dir == "nw") player->attack(grid[y-1][x-1]->getCharacter());
+	else if (dir == "se") player->attack(grid[y+1][x+1]->getCharacter());
+	else if (dir == "sw") player->attack(grid[y+1][x-1]->getCharacter());
+}
 void Floor::playerMove(string dir){ //no ,so, ea, we, ne, nw, se, sw
 
 	//cout <<"player move" << endl;
@@ -310,6 +337,7 @@ string Floor::getAction(){
 void Floor::setAction(string ac){
 	action = ac;
 }
+
 
 //PRINTS THE GRID
 void Floor::printFloor(){

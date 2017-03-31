@@ -22,4 +22,16 @@ void Player::reset() {
 	levelDef = 0;
 }
 
+void Player::attack(Character* victim) {
+	if (!victim) cout << "No enemy to attack at that position!" << endl;
+	else {
+		float damageDealt = (100/(100 + float(victim->getDef())))* float(this->getAtk());
+		cout << "damage done by " << this->getRace() << " to "<< victim->getSymbol() << " :" << damageDealt << endl;
+		//cout << "old victim hp" << victim->getHp() << endl;
+		victim->setHp(victim->getHp() - damageDealt );
+		//cout << "new victim hp" << victim->getHp() << endl;
+
+	}
+}
+
 Player::~Player() {}

@@ -20,7 +20,7 @@ class Game{
 	Game(std::string pRace, std::string fName);
 	void playerMove(std::string dir); //move the player to a given direction
 	//void usePotion(std::string dir); //use potion if it exists at the given direction
-	//void atkDirection(std::string dir); //attack the player if it exists at the given direction
+	void atkDirection(std::string dir); //attack the player if it exists at the given direction
 	void printGame();
 	void freezeEnemy(); //stop the enemies from moving
 	void unFreezeEnemy(); //free the enemies. Allow them to move freely

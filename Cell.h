@@ -34,6 +34,7 @@ class Cell {
     bool enemyMoveValid();
     int getRow();
     int getCol();
+    Character* getCharacter();
 };
 
 

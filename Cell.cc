@@ -17,16 +17,17 @@ bool Cell::isOccupied(){
 	return occupied;
 }
 
-
+Character* Cell::getCharacter() { if (whoOccupied) return whoOccupied; else return nullptr;}
 void Cell::occupy(Character* ch){
 	//cout << "cell occupied" << endl;
 	occupied = true;
-	ch->setCurrCell(this); //cell should 'have a' character
+	ch->setCurrCell(this); //player should 'have a' cell
 	whoOccupied = ch;
 }
 
 void Cell::leave(){
 	occupied = false;
+	whoOccupied =  nullptr; //nobody's occupying that cell now
 }
 
 bool Cell::atStairs(){

@@ -3,6 +3,7 @@
 #include <vector>
 #include <string>
 #include <iostream>
+#include <cmath>
 #include "../Cell.h"
 class Cell;
 
