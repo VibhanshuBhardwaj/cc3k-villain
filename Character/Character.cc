@@ -14,7 +14,7 @@ int Character::getHp() { return hp; }
 int Character::getAtk() { return atk; }
 int Character::getDef() { return def; }
 
-bool Character::isAlive() { return hp != 0; }
+bool Character::isAlive() { return hp > 0; }
 
 void Character::setHp(int newHp) { hp = newHp; }
 

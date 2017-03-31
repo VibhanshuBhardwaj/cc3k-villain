@@ -62,7 +62,7 @@ Floor::Floor(string file, string pRace, int fLevel){
 }
 
 // ENEMY MOVEMENT
-bool Floor::enemyMoved(int row, int col, int prevRow, int prevCol, int eIndex){
+bool Floor::enemyMoved(int row, int col, int prevRow, int prevCol, int eIndex){ //rename this to sth more appropriate
 	//cout << "enemy move called" << endl;
 	//cout << "row, col: " << row <<" "<< col<< endl;
 	//cout << "can enemy attack" << canEnemyAttackPlayer(enemies[eIndex]) << endl;
@@ -162,6 +162,7 @@ void Floor::atkDirection(string dir) {
 	else if (dir == "nw") player->attack(grid[y-1][x-1]->getCharacter());
 	else if (dir == "se") player->attack(grid[y+1][x+1]->getCharacter());
 	else if (dir == "sw") player->attack(grid[y+1][x-1]->getCharacter());
+	enemyMove();
 }
 void Floor::playerMove(string dir){ //no ,so, ea, we, ne, nw, se, sw
 
@@ -223,7 +224,8 @@ void Floor::insertSymbol(int x, int y, char ch){ //x is left margin, y is Top ma
 
 void Floor::insertCharacter(int x, int y, Character* ch){ //x is left margin, y is Top margin
 	//cout << ch->getSymbol() << endl;
-	if (ch) grid[y][x]->occupy(ch);
+	if (ch && ch->isAlive()) grid[y][x]->occupy(ch);
+	//else if (!ch->isAlive()) {cout << "enemy died" << endl; grid[y][x]->leave(); insertSymbol(x, y, 'G'); }//maybe add the dropped gold here
 
 }
 
@@ -347,4 +349,8 @@ void Floor::printFloor(){
 		}
 		cout << endl;
 	}
+}
+
+bool Floor::isPlayerAlive() {
+	return player->getHp() > 0;
 }

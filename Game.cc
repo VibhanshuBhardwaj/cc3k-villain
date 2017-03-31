@@ -60,6 +60,7 @@ void Game::usePotion(string dir){
 */
 void Game::atkDirection(string dir){
 	floor->atkDirection(dir);
+	printGame(); //NOT SURE!!!!!!!! ATTENTION
 }
 
 
@@ -83,8 +84,10 @@ bool Game::isWon(){
 
 bool Game::isAlive(){
 	//To Implement after character class is completed *******<<< . >>>***
-	//if(player->getHp > 0): true else{false;}
-	return true;
+	return floor->isPlayerAlive();
+	// if(floor > 0)return true;
+	// else return false;
+	//return true;
 }
 
 Game::~Game(){

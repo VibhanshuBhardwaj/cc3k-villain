@@ -111,5 +111,6 @@ int main(int argc, char *argv[]){
             cout << "Invalid input. Please enter a valid input"<<endl;
         }
     }
+    if (!game->isAlive()) cout << "Player died! Game over. Press r to start over." << endl;
     delete game;
 }

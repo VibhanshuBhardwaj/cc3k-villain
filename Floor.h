@@ -41,6 +41,7 @@ class Floor{
 	void atkDirection(std::string dir);
 	void freezeEnemy();
 	void unfreezeEnemy();
+	bool isPlayerAlive();
 	std::vector<int> getRandPos(int chamberId);
 	bool isValid(int x, int y);
 	void insertSymbol(int x, int y, char ch);

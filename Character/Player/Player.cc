@@ -27,9 +27,10 @@ void Player::attack(Character* victim) {
 	else {
 		float damageDealt = (100/(100 + float(victim->getDef())))* float(this->getAtk());
 		cout << "damage done by " << this->getRace() << " to "<< victim->getSymbol() << " :" << damageDealt << endl;
-		//cout << "old victim hp" << victim->getHp() << endl;
-		victim->setHp(victim->getHp() - damageDealt );
-		//cout << "new victim hp" << victim->getHp() << endl;
+		cout << "old victim hp" << victim->getHp() << endl;
+		victim->setHp(victim->getHp() - damageDealt - 50 ); //the 20 is temporary to fasten the death of victim
+		cout << "new victim hp" << victim->getHp() << endl;
+		if (!victim->isAlive()) {cout << "enemy died" << endl; victim->getCurrCell()->leave();}
 
 	}
 }
