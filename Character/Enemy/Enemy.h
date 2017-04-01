@@ -2,9 +2,9 @@
 #define _ENEMY_H_
 #include "../Character.h"
 
-#include "string"
+#include <string>
 #include "../Player/Player.h"
-#include "vector"
+#include <vector>
 
 class Enemy : public Character {
 	bool isHostile;
