@@ -5,9 +5,11 @@
 #include <iostream>
 #include <cmath>
 #include "../Cell.h"
+
 class Cell;
 
 class Character {
+	int maxHp;
 	int atk;
 	int def;
 	int hp;

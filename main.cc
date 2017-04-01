@@ -79,7 +79,7 @@ int main(int argc, char *argv[]){
         else if(input == "u"){ //use Potion
             string potionDir; //potion direction
             cin >> potionDir;
-            //game->usePotion(potionDir);
+            game->usePotion(potionDir);
         }
         else if(input == "a"){ //attack
             string atkDir;

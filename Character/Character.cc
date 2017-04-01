@@ -1,14 +1,13 @@
-#include <iostream>
-#include <string>
-#include <vector>
-#include "../Cell.h"
+
 #include "Character.h"
 
 using namespace std;
 
 Character::Character() {}
 
-Character::Character(int atk, int def, int hp, char symbol): atk{atk}, def{def}, hp{hp}, symbol{symbol} {}
+Character::Character(int atk, int def, int hp, char symbol): atk{atk}, def{def}, hp{hp}, symbol{symbol} {
+	maxHp = hp;
+}
 
 int Character::getHp() { return hp; }
 int Character::getAtk() { return atk; }
@@ -16,7 +15,17 @@ int Character::getDef() { return def; }
 
 bool Character::isAlive() { return hp > 0; }
 
-void Character::setHp(int newHp) { hp = newHp; }
+void Character::setHp(int newHp) { 
+	if(newHp > maxHp){
+		hp = maxHp;
+	}
+	else if( newHp < 0){
+		hp = 0;
+	}
+	else{
+		hp = newHp;
+	}
+}
 
 void Character::setAtk(int newAtk) { atk = newAtk; }
 
