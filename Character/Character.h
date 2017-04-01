@@ -18,7 +18,7 @@ public:
 	Character(int atk, int def, int hp, char symbol);
 	bool isAlive();
 	char getSymbol();
-	void setHp(int newHp);
+	void setHp(int newHp, bool isVampire = false);
 	void setAtk(int newAtk);
 	void setDef(int newDef);
 	int getHp();
@@ -28,6 +28,7 @@ public:
 	void setCurrCell(Cell* newCell);
 	//virtual void move(std::string dir) = 0;
 	virtual ~Character();
+	virtual std::string getRace() = 0;
 
 };
 

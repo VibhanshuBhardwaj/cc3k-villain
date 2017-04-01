@@ -8,10 +8,10 @@
 class Enemy : public Character {
 	bool isHostile;
 	public:
-		void attackPlayer(Player *);
+		virtual void attackPlayer(Player *);
 		Enemy(int atk, int def, int hp, char symbol, bool isHostile);
 		//bool isPlayerNearby();
-
+		std::string getRace();
 		virtual bool isEnemyHostile();
 		virtual ~Enemy();
 };

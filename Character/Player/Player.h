@@ -23,6 +23,8 @@ public:
 	virtual void attack(Character* victim);
 	void reset(); // when new level begins
 	void setAction(std::string newAction);
+	virtual void onMove();
+	virtual void onAttack();
 	std::string getAction();
 	std::string getRace();
 

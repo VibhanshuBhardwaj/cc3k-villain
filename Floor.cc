@@ -146,7 +146,8 @@ bool Floor::playerMoved(int row, int col, int prevRow, int prevCol, string dir){
 		grid[row][col]->occupy(player);
 		player->setCurrCell(grid[row][col]);
 		grid[prevRow][prevCol]->leave();
-		action = playerRace + " moves " + dir;
+		action = playerRace + " moves " + dir + ". ";
+		player->onMove();
 		return true;
 	}
 	return false;

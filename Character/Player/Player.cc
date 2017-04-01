@@ -29,7 +29,10 @@ void Player::reset() {
 }
 
 void Player::attack(Character* victim) {
-	if (!victim) cout << "No enemy to attack at that position!" << endl;
+	int i = rand() % 2;
+	if (!victim) action = getAction() + "No enemy to attack at that position! ";
+
+	else if (victim->getSymbol() == 'L' && i) {action = getAction() + "Player missed its attack on Halfling"; return; }
 	else {
 		int damageDealt = ceil((100/(100 + float(victim->getDef())))* float(this->getAtk()));
 		action = getAction() + "Damage done by " + this->getRace() + " to " +victim->getSymbol()+ ": " + to_string(damageDealt) + "HP. ";
@@ -40,5 +43,9 @@ void Player::attack(Character* victim) {
 
 	}
 }
+void Player::onMove() {
+
+}
+void Player::onAttack() {}
 
 Player::~Player() {}

@@ -25,4 +25,7 @@ void Enemy::attackPlayer(Player* player) {
 	}
 
 }
+string Enemy::getRace() {
+	return "Enemy";
+}
 Enemy::~Enemy() {}

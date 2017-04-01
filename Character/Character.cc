@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <algorithm>
 #include "../Cell.h"
 #include "Character.h"
 
@@ -16,7 +17,24 @@ int Character::getDef() { return def; }
 
 bool Character::isAlive() { return hp > 0; }
 
-void Character::setHp(int newHp) { hp = newHp; }
+void Character::setHp(int newHp, bool isVampire) {
+	if (currCell->getCharacter()->getRace() == "Vampire") {
+		hp = newHp;
+		//cout << "is Vampire. new hp: " << hp << endl;
+	}
+	else {
+		hp = min(hp, newHp);
+		//cout << "not vampire. new hp: " << hp << endl;
+	}
+	// if (isVampire) {
+	// 	hp = newHp;
+	// 	cout << "is Vampire. new hp: " << hp << endl;
+	// }
+	// else {
+	// 	hp = min(hp, newHp);
+	// 	cout << "not vampire. new hp: " << hp << endl;
+	// }
+}
 
 void Character::setAtk(int newAtk) { atk = newAtk; }
 
@@ -29,5 +47,6 @@ Cell* Character::getCurrCell() { return currCell; }
 void Character::setCurrCell(Cell* newCell) {
 	currCell = newCell;
 }
+
 
 Character::~Character() {}
