@@ -66,7 +66,15 @@ bool Floor::enemyMoved(int row, int col, int prevRow, int prevCol, int eIndex){ 
 	//cout << "enemy move called" << endl;
 	//cout << "row, col: " << row <<" "<< col<< endl;
 	//cout << "can enemy attack" << canEnemyAttackPlayer(enemies[eIndex]) << endl;
-	if (canEnemyAttackPlayer(enemies[eIndex])) {enemies[eIndex]->attackPlayer(player); return true;}
+	if (canEnemyAttackPlayer(enemies[eIndex])) {
+		int i = rand() % 2;
+		//cout << "i: " << i << endl;
+		if (i) enemies[eIndex]->attackPlayer(player);
+		else{
+			cout << "Enemy missed its attack! REMOVE THIS STATEMENT" << endl;
+		}
+		return true;
+	}
 	if(grid[row][col]->enemyMoveValid()){
 	//	cout << "inside enemy moved if" << endl;
 		grid[row][col]->occupy(enemies[eIndex]);
@@ -329,15 +337,16 @@ void Floor::printStats(){
 	cout <<"HP: " << player->getHp() << endl;
 	cout <<"Atk: "<< player->getAtk() << endl;
 	cout <<"Def: "<<player->getDef() << endl;
-	//cout << "Action: " << action << endl;
+//	cout << "Action: " << player->getAction() << endl;
 }
 
 string Floor::getAction(){
-	return action;
+	return action + player->getAction();
 }
 
 void Floor::setAction(string ac){
-	action = ac;
+	action = "";
+	player->setAction(ac);
 }
 
 

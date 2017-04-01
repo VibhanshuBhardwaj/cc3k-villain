@@ -24,6 +24,7 @@ void Game::printGame(){
 	floor->printFloor();
 	floor->printStats();
 	cout << "Action: " << action << floor->getAction() << endl;
+	//cout << "Action: " << floor->getAction() << endl;
 	floor->setAction("");
 }
 

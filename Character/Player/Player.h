@@ -9,6 +9,7 @@ class Player: public Character {
 	std::string race;
 	int levelDef;
 	int levelAtk;
+	std::string action;
 
 public:
 	Player(int hp, int atk, int def, std::string race);
@@ -21,6 +22,8 @@ public:
 	void setLevelDef(int levelDef);
 	virtual void attack(Character* victim);
 	void reset(); // when new level begins
+	void setAction(std::string newAction);
+	std::string getAction();
 	std::string getRace();
 
 };

@@ -4,7 +4,7 @@
 
 using namespace std;
 
-Player::Player(int hp, int atk, int def, string race): Character(atk, def, hp, '@'), race(race), levelDef(0), levelAtk(0) {}
+Player::Player(int hp, int atk, int def, string race): Character(atk, def, hp, '@'), race(race), levelDef(0), levelAtk(0), action("") {}
 
 int Player::getLevelDef()  { return levelDef; }
 
@@ -16,6 +16,12 @@ void Player::setLevelAtk(int newlevelAtk) { levelAtk = newlevelAtk; }
 
 string Player::getRace() { return race; }
 
+string Player::getAction() { return action; }
+
+void Player::setAction(string newAction) {
+	action = newAction;
+}
+
 void Player::reset() {
 	//health is permanent
 	levelAtk = 0;
@@ -25,11 +31,11 @@ void Player::reset() {
 void Player::attack(Character* victim) {
 	if (!victim) cout << "No enemy to attack at that position!" << endl;
 	else {
-		float damageDealt = (100/(100 + float(victim->getDef())))* float(this->getAtk());
-		cout << "damage done by " << this->getRace() << " to "<< victim->getSymbol() << " :" << damageDealt << endl;
-		cout << "old victim hp" << victim->getHp() << endl;
-		victim->setHp(victim->getHp() - damageDealt - 50 ); //the 20 is temporary to fasten the death of victim
-		cout << "new victim hp" << victim->getHp() << endl;
+		int damageDealt = ceil((100/(100 + float(victim->getDef())))* float(this->getAtk()));
+		action = getAction() + "Damage done by " + this->getRace() + " to " +victim->getSymbol()+ ": " + to_string(damageDealt) + "HP. ";
+		//cout << "old victim hp" << victim->getHp() << endl;
+		victim->setHp(victim->getHp() - damageDealt); //the 20 is temporary to fasten the death of victim
+		//cout << "new victim hp" << victim->getHp() << endl;
 		if (!victim->isAlive()) {cout << "enemy died" << endl; victim->getCurrCell()->leave();}
 
 	}
