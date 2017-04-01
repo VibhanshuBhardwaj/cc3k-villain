@@ -11,6 +11,9 @@
 #include "Character/Player/Player.h"
 #include "Character/Enemy/Enemy.h"
 #include "Character/Character.h"
+#include "Item/Item.h"
+#include "Item/Potion/Potion.h"
+#include "Item/Gold/Gold.h"
 
 class Game;
 
@@ -20,7 +23,8 @@ class Floor{
 	std::vector<std::vector < Cell* > > grid;
 	Player *player; //pointer to player object
 	std::vector<Enemy*> enemies; //vector of 20 enemies
-	//potions 10
+	std::vector<Potion*> potions;
+	std::vector<Gold*> golds;
 	//gold 10
 	int playerSpawnedChamber;
 	std::string action;
@@ -37,7 +41,9 @@ class Floor{
 	void playerMove(std::string dir);
 	void enemyMove();
 	bool atStairs();
-	/*void usePotion(std::string dir);*/
+	void checkPotion();
+	bool isPotion(int x, int y);
+	void usePotion(std::string dir);
 	void atkDirection(std::string dir);
 	void freezeEnemy();
 	void unfreezeEnemy();
@@ -46,6 +52,8 @@ class Floor{
 	bool isValid(int x, int y);
 	void insertSymbol(int x, int y, char ch);
 	void insertCharacter(int x, int y, Character* ch);
+	void insertPotion(int x, int y, Potion *p);
+	void insertGold(int x, int y, Gold * g);
 	void spawnPlayer();
 	void spawnStairs();
 	void spawnPotions();

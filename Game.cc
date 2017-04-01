@@ -54,11 +54,12 @@ void Game::playerMove(string dir){ //no ,so, ea, we, ne, nw, se, sw
 	}
 }
 
-/*
+
 void Game::usePotion(string dir){
 	floor->usePotion(dir);
+	printGame();
 }
-*/
+
 void Game::atkDirection(string dir){
 	floor->atkDirection(dir);
 	printGame(); //NOT SURE!!!!!!!! ATTENTION

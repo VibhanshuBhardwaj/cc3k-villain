@@ -1,10 +1,12 @@
 #include <iostream>
 #include "Player.h"
-#include "../Character.h"
 
 using namespace std;
 
-Player::Player(int hp, int atk, int def, string race): Character(atk, def, hp, '@'), race(race), levelDef(0), levelAtk(0), action("") {}
+Player::Player(int hp, int atk, int def, string race): Character(atk, def, hp, '@'), race(race), score(0), levelDef(0), levelAtk(0), action("") {}
+int Player::getScore(){ return score; }
+
+void Player::setScore(int newScore){ score = newScore; }
 
 int Player::getLevelDef()  { return levelDef; }
 
@@ -26,6 +28,18 @@ void Player::reset() {
 	//health is permanent
 	levelAtk = 0;
 	levelDef = 0;
+}
+
+string Player::usePotion(Item *it){
+	string result = "";
+	if(it && (it->getType()=="PH" || it->getType()=="RH"||it->getType()=="BA" ||it->getType()=="BD"||it->getType()=="WD"||it->getType()=="WA")){
+		it->use(this); //use potion on this player
+		result = " Potion used. Potion Type: (" + it->getType() +"). ";
+		it->setVisited();
+		Cell *c = it->getCurrCell();
+		c->leave(); //leave the cell 
+	}
+	return result;
 }
 
 void Player::attack(Character* victim) {
