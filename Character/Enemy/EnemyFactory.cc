@@ -36,7 +36,7 @@ Enemy* EnemyFactory::generateEnemy() {
 	}
 	else{
 		//cout << "generating merchant" << endl;
-		thisEnemy = new Enemy(100, 100, 100, 'M', false); //merchant
+		thisEnemy = new Enemy(50, 20, 30, 'M', false); //merchant
 	}
 	return thisEnemy;
 

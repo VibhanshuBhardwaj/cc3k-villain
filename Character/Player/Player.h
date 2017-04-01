@@ -15,6 +15,7 @@ class Player: public Character {
 	int score;
 	int levelDef;
 	int levelAtk;
+	std::string action;
 
 public:
 	Player(int hp, int atk, int def, std::string race);
@@ -30,6 +31,10 @@ public:
 	virtual void attack(Character* victim);
 	std::string usePotion(Item *it);
 	void reset(); // when new level begins
+	void setAction(std::string newAction);
+	virtual void onMove();
+	virtual void onAttack();
+	std::string getAction();
 	std::string getRace();
 
 };
