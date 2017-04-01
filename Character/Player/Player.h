@@ -4,23 +4,37 @@
 #include <vector>
 #include "../Character.h"
 #include <string>
+#include "../../Item/Item.h"
+
+
+class Item;
+class Potion;
 
 class Player: public Character {
 	std::string race;
+	int score;
 	int levelDef;
 	int levelAtk;
+	std::string action;
 
 public:
 	Player(int hp, int atk, int def, std::string race);
 	virtual ~Player();
+	int getScore(); //GOLD PILES
+	void setScore(int newScore);
 
 	int getLevelAtk();
 	int getLevelDef();
 
 	void setLevelAtk(int levelAtk);
 	void setLevelDef(int levelDef);
-
+	virtual void attack(Character* victim);
+	std::string usePotion(Item *it);
 	void reset(); // when new level begins
+	void setAction(std::string newAction);
+	virtual void onMove();
+	virtual void onAttack();
+	std::string getAction();
 	std::string getRace();
 
 };

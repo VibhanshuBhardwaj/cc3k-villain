@@ -10,13 +10,14 @@ Cell::Cell(){
 }
 
 Cell::Cell(int row, int col, char sym, std::string type): row{row}, col{col}, symbol{sym}, type{type}, occupied{false}{
+	whoOccupied = nullptr;
+	it = nullptr;
 }
 
 bool Cell::isOccupied(){
 	///cout << "is occupied:" << occupied << endl;
 	return occupied;
 }
-
 
 void Cell::occupy(Character* ch){
 	//cout << "cell occupied" << endl;
@@ -25,8 +26,36 @@ void Cell::occupy(Character* ch){
 	whoOccupied = ch;
 }
 
+void Cell::occupy(Item *itm){
+	occupied = true;
+	itm->setCurrCell(this);
+	it = itm;
+}
+
+Character* Cell::getCharacter() { if (whoOccupied) return whoOccupied; else return nullptr;}
+
+Item *Cell::getItem() { if(it) return it; else return nullptr;}
+
 void Cell::leave(){
 	occupied = false;
+	whoOccupied = nullptr;
+	it = nullptr;
+}
+
+bool Cell::isPotion(){
+	if(it){
+		if(it->getType()=="PH" || it->getType()=="RH"||it->getType()=="BA" ||it->getType()=="BD"||it->getType()=="WD"||it->getType()=="WA"){
+			return  true;
+		}
+	}
+	return false;
+}
+
+bool Cell::isGold(){
+	if(it){
+		if(!isPotion()) return true;
+	}
+	return false;
 }
 
 bool Cell::atStairs(){
@@ -38,13 +67,20 @@ bool Cell::atStairs(){
 
 char Cell::getSymbol(){
 	if(occupied){
-		return whoOccupied->getSymbol();
+		if(whoOccupied){
+			return whoOccupied->getSymbol();
+		}
+		if(it){
+			//ITEM
+			return it->getSymbol();		
+		}
 	}
 	return symbol;
 }
 
 bool Cell::playerMoveValid(){ // TILE / PATHWAY / STAIR / HWALL / VWALL / DOOR
 	if((type == "TILE" || type == "PATHWAY" || type == "STAIR" || type == "DOOR") && !isOccupied()){
+		//isOccupied()!
 		return true;
 	}
 	return false;

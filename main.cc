@@ -79,12 +79,13 @@ int main(int argc, char *argv[]){
         else if(input == "u"){ //use Potion
             string potionDir; //potion direction
             cin >> potionDir;
-            //game->usePotion(potionDir);
+            game->usePotion(potionDir);
         }
         else if(input == "a"){ //attack
             string atkDir;
             cin >> atkDir;
-            //game->atkDirection(atkDir);
+            //cout << "calling game->atkDirection with " << atkDir << endl;
+            game->atkDirection(atkDir);
         }
         else if(input == "f"){ //freeze enemy
             if(freezeEnemy){
@@ -104,11 +105,12 @@ int main(int argc, char *argv[]){
                 break;
             }
         }
-        
+
         else{
             //invalid input
             cout << "Invalid input. Please enter a valid input"<<endl;
         }
     }
+    if (!game->isAlive()) cout << "Player died! Game over. Press r to start over." << endl;
     delete game;
 }

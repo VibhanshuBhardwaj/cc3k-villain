@@ -5,8 +5,10 @@
 #include <map>
 #include <string>
 #include "Character/Character.h"
+#include "Item/Item.h"
 
 class Character;
+class Item;
 
 class Cell {
 
@@ -17,12 +19,14 @@ class Cell {
 	  bool occupied;
     //char whoOccupied;
     Character * whoOccupied;
+    Item *it;
 
 
   public:
     Cell();
   	Cell(int row, int col, char sym, std::string type);
     void occupy(Character * whoOccupied);
+    void occupy(Item *itm);
     void leave();
   	bool isOccupied();
   	bool setOccupied(bool ev);
@@ -34,6 +38,10 @@ class Cell {
     bool enemyMoveValid();
     int getRow();
     int getCol();
+    bool isGold();
+    bool isPotion();
+    Character * getCharacter();
+    Item * getItem();
 };
 
 
