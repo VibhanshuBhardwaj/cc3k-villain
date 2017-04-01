@@ -197,27 +197,6 @@ void Floor::enemyMove(){
 	//cout <<"end enemyMove" << endl;
 }
 
-//PLAYER MOVEMENT
-bool Floor::playerMoved(int row, int col, int prevRow, int prevCol, string dir){
-	if(grid[row][col]->playerMoveValid()){
-		grid[row][col]->occupy(player);
-		player->setCurrCell(grid[row][col]);
-		grid[prevRow][prevCol]->leave();
-		action = playerRace + " moves " + dir + ".";
-		return true;
-	}
-	else if(grid[row][col]->isGold()){
-		Item *g = grid[row][col]->getItem();
-		g->use(player);
-		action = playerRace + " collects "+g->getType() +". ";
-		grid[row][col]->leave();
-		grid[row][col]->occupy(player);
-		player->setCurrCell(grid[row][col]);
-		grid[prevRow][prevCol]->leave();
-		return true;
-	}
-	return false;
-}
 
 //ATTACK DIRECTION
 void Floor::atkDirection(string dir) {
