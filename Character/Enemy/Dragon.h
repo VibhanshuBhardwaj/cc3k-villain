@@ -10,7 +10,7 @@ class Dragon : public Enemy{
 public: 
 	Gold *hoard;
 	Dragon(int atk = 20, int def = 20, int hp = 180, Gold *dh = nullptr);
-
+	void onDeath(Player * p);
 };
 
 #endif

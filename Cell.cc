@@ -45,8 +45,10 @@ void Cell::leave(){
 	occupied = false;
 	whoOccupied = nullptr;
 	if(!dragonHoard){
-		occupied = true;
 		it = nullptr;
+	}
+	if(dragonHoard){
+		occupied = true;
 	}
 }
 

@@ -20,12 +20,11 @@ class Cell {
     //char whoOccupied;
     Character * whoOccupied;
     Item *it;
-    bool dragonHoard;
-
 
   public:
     Cell();
   	Cell(int row, int col, char sym, std::string type);
+    bool dragonHoard;
     void occupy(Character * whoOccupied);
     void occupy(Item *itm);
     void leave();

@@ -168,6 +168,7 @@ bool Floor::playerMoved(int row, int col, int prevRow, int prevCol, string dir){
 			grid[row][col]->occupy(player);
 			player->setCurrCell(grid[row][col]);
 			grid[prevRow][prevCol]->leave();
+			return true;
 		}
 	}
 	return false;
@@ -293,7 +294,7 @@ void Floor::enemyMove(){
 			}
 		}
 	}
-	//cout <<"end enemyMove" << endl;
+	checkDragonAttack();
 }
 
 
