@@ -10,6 +10,8 @@
 class Item;
 class Potion;
 
+//class Merchant;
+
 class Player: public Character {
 	std::string race;
 	int score;

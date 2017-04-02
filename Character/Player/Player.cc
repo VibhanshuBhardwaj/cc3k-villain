@@ -37,7 +37,7 @@ string Player::usePotion(Item *it){
 		result = " Potion used. Potion Type: (" + it->getType() +"). ";
 		it->setVisited();
 		Cell *c = it->getCurrCell();
-		c->leave(); //leave the cell 
+		c->leave(); //leave the cell
 	}
 	return result;
 }
@@ -46,8 +46,13 @@ void Player::attack(Character* victim) {
 	int i = rand() % 2;
 	if (!victim) action = getAction() + "No enemy to attack at that position! ";
 
-	else if (victim->getSymbol() == 'L' && i) {action = getAction() + "Player missed its attack on Halfling"; return; }
+	else if (victim->getSymbol() == 'L' && i) {action = getAction() + "Player missed its attack on Halfling. "; return; }
+
 	else {
+		if (victim->getSymbol() == 'M') {
+			victim->makeHostile();
+			cout << "Merchants are now hostile. " << endl;
+		}
 		int damageDealt = ceil((100/(100 + float(victim->getDef())))* float(this->getAtk()));
 		action = getAction() + "Damage done by " + this->getRace() + " to " +victim->getSymbol()+ ": " + to_string(damageDealt) + "HP. ";
 		//cout << "old victim hp" << victim->getHp() << endl;

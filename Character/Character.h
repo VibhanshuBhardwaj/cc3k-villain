@@ -30,6 +30,7 @@ public:
 	void setCurrCell(Cell* newCell);
 	//virtual void move(std::string dir) = 0;
 	virtual ~Character();
+	virtual void makeHostile(); //POOR DESIGN!!!!!!
 	virtual std::string getRace() = 0;
 
 };
