@@ -20,6 +20,7 @@ class Cell {
     //char whoOccupied;
     Character * whoOccupied;
     Item *it;
+    bool dragonHoard;
 
 
   public:

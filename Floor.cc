@@ -144,6 +144,34 @@ vector<int> Floor::neighbourPos(int x, int y){
 		return neighbourPos(x, y);
 	}
 }
+//PLAYER MOVEMENT
+bool Floor::playerMoved(int row, int col, int prevRow, int prevCol, string dir){
+	if(grid[row][col]->playerMoveValid()){
+		grid[row][col]->occupy(player);
+		player->setCurrCell(grid[row][col]);
+		grid[prevRow][prevCol]->leave();
+		action = playerRace + " moves " + dir + ".";
+		return true;
+	}
+	else if(grid[row][col]->isGold()){
+		if(grid[row][col]->getItem()->isAvailable()){
+			Item *g = grid[row][col]->getItem();
+			g->use(player);
+			action = playerRace + " collects "+g->getType() +". ";
+			grid[row][col]->leave();
+			grid[row][col]->occupy(player);
+			player->setCurrCell(grid[row][col]);
+			grid[prevRow][prevCol]->leave();
+			return true;
+		}
+		else{ //gold not available, i.e. Dragon hoard and dragon is alive
+			grid[row][col]->occupy(player);
+			player->setCurrCell(grid[row][col]);
+			grid[prevRow][prevCol]->leave();
+		}
+	}
+	return false;
+}
 
 //CREATE AND INSERTS GOLD ON THE GRID
 void Floor::spawnGold(){
@@ -339,31 +367,7 @@ void Floor::usePotion(string dir){
 
 }
 
-//PLAYER MOVEMENT
-bool Floor::playerMoved(int row, int col, int prevRow, int prevCol, string dir){
-	if(grid[row][col]->playerMoveValid()){
-		grid[row][col]->occupy(player);
-		player->setCurrCell(grid[row][col]);
-		grid[prevRow][prevCol]->leave();
-		action = playerRace + " moves " + dir + ".";
-		return true;
-	}
-	else if(grid[row][col]->isGold()){
-		if(grid[row][col]->getItem()->isAvailable()){
-			Item *g = grid[row][col]->getItem();
-			g->use(player);
-			action = playerRace + " collects "+g->getType() +". ";
-			grid[row][col]->leave();
-			grid[row][col]->occupy(player);
-			player->setCurrCell(grid[row][col]);
-			grid[prevRow][prevCol]->leave();
-			return true;
-		}
-		//else{ //gold not available, i.e. Dragon hoard and dragon is alive
-		//}
-	}
-	return false;
-}
+
 
 void Floor::playerMove(string dir){ //no ,so, ea, we, ne, nw, se, sw
 	Cell* currCell = player->getCurrCell();
