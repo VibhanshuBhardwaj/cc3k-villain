@@ -15,6 +15,8 @@ class Potion : public Item {
     void use(Player *pc) override;
     bool getVisited() override;
     void setVisited() override;
+    bool isAvailable() override;
+    void setAvailable() override;
     //std::string getType();
 };
 

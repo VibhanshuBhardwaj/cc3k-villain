@@ -76,6 +76,9 @@ int main(int argc, char *argv[]){
             game = new Game(playerRace, fileName);
             freezeEnemy = false;
         }
+        //else if (input == "rhealthmax"){
+        //    game->restoreHealth();
+        //}
         else if(input == "u"){ //use Potion
             string potionDir; //potion direction
             cin >> potionDir;

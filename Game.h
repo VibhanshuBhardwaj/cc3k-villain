@@ -4,7 +4,12 @@
 #include <iostream>
 #include "Floor.h"
 #include "Chamber.h"
-//#include "players.h"
+#include "Character/Player/Player.h"
+#include "Character/Player/Shade.h"
+#include "Character/Player/Drow.h"
+#include "Character/Player/Goblin.h"
+#include "Character/Player/Vampire.h"
+#include "Character/Player/Troll.h"
 //class Chamber;
 
 class Game{
@@ -13,7 +18,7 @@ class Game{
 	int floorLevel;
 	Floor *floor;
 	std::string action;
-	//Player *player; //reference to a player object
+	Player *player; //reference to a player object
 
   public:
   	Game();

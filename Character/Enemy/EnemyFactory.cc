@@ -38,7 +38,9 @@ Enemy* EnemyFactory::generateEnemy() {
 	}
 	else{
 		//cout << "generating merchant" << endl;
+
 		thisEnemy = new Merchant(); //merchant
+
 	}
 	return thisEnemy;
 

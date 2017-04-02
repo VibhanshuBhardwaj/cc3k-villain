@@ -13,8 +13,8 @@ class GoldFactory;
 
 using namespace std;
 
-
-Floor::Floor(string file, string pRace, int fLevel){
+Floor::Floor(string file, string pRace, Player *p, int fLevel){
+	player = p;
 	playerRace = pRace;
 	floorLevel = fLevel;
 	string line;
@@ -69,9 +69,7 @@ void Floor::spawnPlayer(){
 	//after character class is completely initialized,
 	//we will have a pointer to player character
 	int id = rand() % 5; //generates random number between 0 to 5.
-	PlayerFactory pf = PlayerFactory();
 	vector<int> pos = getRandPos(id);
-	player = pf.generatePlayer(playerRace);
 	insertCharacter(pos[0], pos[1], player); //playerrace is a string/character. will be replaced with 'player character'
 	playerSpawnedChamber = id;
 }
@@ -98,6 +96,55 @@ void Floor::spawnPotions(){
 	}
 }
 
+//GET NEIGHBOURING POSITION
+vector<int> Floor::neighbourPos(int x, int y){
+	int dir = rand() % 8; //0-7
+	vector<int> pos;
+	if(dir == 0 && isValid(x, y-1)){//north
+		pos.emplace_back(x);
+		pos.emplace_back(y-1);
+		return pos;
+	}
+	else if(dir == 1 && isValid(x, y+1)){ //south
+		pos.emplace_back(x);
+		pos.emplace_back(y+1);
+		return pos;
+	}
+	else if(dir == 2 && isValid(x+1, y)){ //east
+		pos.emplace_back(x+1);
+		pos.emplace_back(y);
+		return pos;
+	}
+	else if(dir == 3 && isValid(x-1, y)){ //west
+		pos.emplace_back(x-1);
+		pos.emplace_back(y);
+		return pos;
+	}
+	else if(dir == 4 && isValid(x+1, y-1)){ //nort east
+		pos.emplace_back(x+1);
+		pos.emplace_back(y-1);
+		return pos;
+	}
+	else if(dir == 5 && isValid(x-1, y-1)){ //north west
+		pos.emplace_back(x-1);
+		pos.emplace_back(y-1);
+		return pos;
+	}
+	else if(dir == 6 && isValid(x+1, y+1)){ //south east
+		pos.emplace_back(x+1);
+		pos.emplace_back(y+1);
+		return pos;
+	}
+	else if(dir == 7 && isValid(x-1, y+1)){ //south west
+		pos.emplace_back(x-1);
+		pos.emplace_back(y+1);
+		return pos;
+	}
+	else{ //not a valid pos generated
+		return neighbourPos(x, y);
+	}
+}
+
 //CREATE AND INSERTS GOLD ON THE GRID
 void Floor::spawnGold(){
 	for(int i = 0; i < 10; i++){
@@ -105,6 +152,13 @@ void Floor::spawnGold(){
 		int id = rand() % 5;
 		vector<int> pos = getRandPos(id);
 		Gold *thisGold = goldFac.generateGold();
+		if(thisGold->getType() == " Dragon Hoard. "){
+   			//dragon hoard
+			vector<int> nPos = neighbourPos(pos[0], pos[1]); //pos[0] = x pos[1] = y
+			Dragon *d = new Dragon(20, 20, 180, thisGold);
+			dragons.emplace_back(d);
+			insertCharacter(nPos[0], nPos[1], d); //INSERT DRAGON
+		}
 		insertGold(pos[0], pos[1], thisGold);
 		golds.emplace_back(thisGold);
 	}
@@ -146,6 +200,23 @@ bool Floor::enemyMoved(int row, int col, int prevRow, int prevCol, int eIndex){ 
 	}
 	//cout << "ret false" << endl;
 	return false;
+}
+
+void Floor::checkDragonAttack(){
+	int s = dragons.size();
+	for(int i = 0; i < s; i++){
+		if(dragons[i]->isAlive() && canDragonAttackPlayer(dragons[i])){
+			int j = rand() % 2;
+			if(j) dragons[i]->attackPlayer(player);
+			//ELSE IT MISSES
+		}
+	}
+}
+
+bool Floor::canDragonAttackPlayer(Dragon *d){
+	bool da = pow((d->getCurrCell()->getRow() - player->getCurrCell()->getRow()), 2) + pow((d->getCurrCell()->getCol() - player->getCurrCell()->getCol()), 2) <= 2;
+	bool ng = pow((d->hoard->getCurrCell()->getRow() - player->getCurrCell()->getRow()), 2) + pow((d->hoard->getCurrCell()->getCol() - player->getCurrCell()->getCol()), 2) <= 2;
+	return da || ng; //near GOLD or DRAGON
 }
 
 bool Floor::canEnemyAttackPlayer(Enemy* enemy) {
@@ -278,14 +349,18 @@ bool Floor::playerMoved(int row, int col, int prevRow, int prevCol, string dir){
 		return true;
 	}
 	else if(grid[row][col]->isGold()){
-		Item *g = grid[row][col]->getItem();
-		g->use(player);
-		action = playerRace + " collects "+g->getType() +". ";
-		grid[row][col]->leave();
-		grid[row][col]->occupy(player);
-		player->setCurrCell(grid[row][col]);
-		grid[prevRow][prevCol]->leave();
-		return true;
+		if(grid[row][col]->getItem()->isAvailable()){
+			Item *g = grid[row][col]->getItem();
+			g->use(player);
+			action = playerRace + " collects "+g->getType() +". ";
+			grid[row][col]->leave();
+			grid[row][col]->occupy(player);
+			player->setCurrCell(grid[row][col]);
+			grid[prevRow][prevCol]->leave();
+			return true;
+		}
+		//else{ //gold not available, i.e. Dragon hoard and dragon is alive
+		//}
 	}
 	return false;
 }
@@ -324,6 +399,7 @@ void Floor::playerMove(string dir){ //no ,so, ea, we, ne, nw, se, sw
 		enemyMove(); //MOVE ENEMIES
 	}
 	checkPotion();
+	checkDragonAttack();
 }
 
 //TRUE IF THE PLAYER HAS REACHED THE STAIRS
@@ -385,13 +461,6 @@ void Floor::unfreezeEnemy(){
 	freeze = false;
 }
 
-
-
-Floor::~Floor(){ //once we have a player pointer, delete it while destructing}
-	delete player;
-}
-
-
 //PRINTS LAST 5 LINES OF THE DISPLAY
 void Floor::printStats(){
 	//cout << "Race: "<<playerRace << " Gold: "<< player->getScore() ;
@@ -427,3 +496,7 @@ void Floor::printFloor(){
 bool Floor::isPlayerAlive() {
 	return player->getHp() > 0;
 }
+
+Floor::~Floor(){ //once we have a player pointer, delete it while destructing}
+}
+

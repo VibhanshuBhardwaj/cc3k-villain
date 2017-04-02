@@ -17,6 +17,8 @@ class Item{
   	virtual void use(Player *pc) = 0;
     virtual bool getVisited() = 0;
     virtual void setVisited() = 0;
+    virtual bool isAvailable() = 0;
+    virtual void setAvailable() = 0;
 	Cell * getCurrCell();
 	std::string getType(); 
 	void setCurrCell(Cell* newCell); //USE ITEM ON PLAYER CHARACTER 
