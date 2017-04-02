@@ -53,6 +53,7 @@ void Game::playerMove(string dir){ //no ,so, ea, we, ne, nw, se, sw
 			delete floor;
 			string s = to_string(floorLevel);
 			action = "Floor " + s + " Generated! ";
+			player->reset();
 			floor = new Floor(fileName, playerRace, player, floorLevel);
 		}
 		if(floorLevel == 6){

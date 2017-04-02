@@ -10,7 +10,7 @@
 class Enemy : public Character {
 	bool isHostile;
 	public:
-		void attackPlayer(Character *);
+		virtual void attackPlayer(Player *);
 		Enemy(int atk, int def, int hp, char symbol, bool isHostile);
 		//bool isPlayerNearby();
 
