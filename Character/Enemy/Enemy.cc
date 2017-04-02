@@ -31,4 +31,11 @@ string Enemy::getRace() {
 	return "Enemy";
 }
 void Enemy::makeHostile() {}
+
+void Enemy::onDeath(Player* player) {
+	getCurrCell()->leave();
+	int i  = rand() % 2;
+	if (i) player->setScore(player->getScore() + 1);
+	else player->setScore(player->getScore() + 2);
+}
 Enemy::~Enemy() {}

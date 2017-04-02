@@ -36,6 +36,7 @@ public:
 	void setAction(std::string newAction);
 	virtual void onMove();
 	virtual void onAttack();
+	virtual void onDeath(Player * p) override;
 	std::string getAction();
 	std::string getRace();
 

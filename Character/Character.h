@@ -7,6 +7,7 @@
 #include "../Cell.h"
 
 class Cell;
+class Player;
 
 class Character {
 	int maxHp;
@@ -32,6 +33,7 @@ public:
 	virtual ~Character();
 	virtual void makeHostile(); //POOR DESIGN!!!!!!
 	virtual std::string getRace() = 0;
+	virtual void onDeath(Player* p);
 
 };
 

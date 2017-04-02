@@ -58,13 +58,14 @@ void Player::attack(Character* victim) {
 		//cout << "old victim hp" << victim->getHp() << endl;
 		victim->setHp(victim->getHp() - damageDealt); //the 20 is temporary to fasten the death of victim
 		//cout << "new victim hp" << victim->getHp() << endl;
-		if (!victim->isAlive()) {cout << "enemy died" << endl; victim->getCurrCell()->leave();}
+		if (!victim->isAlive()) {victim->onDeath(this);}
 
 	}
 }
 void Player::onMove() {
 
 }
+void Player::onDeath(Player * p) {}
 void Player::onAttack() {}
 
 Player::~Player() {}

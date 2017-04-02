@@ -15,6 +15,7 @@ class Enemy : public Character {
 		std::string getRace();
 		virtual void makeHostile();
 		virtual bool isEnemyHostile();
+		virtual void onDeath(Player* player) override;
 		virtual ~Enemy();
 };
 #endif
