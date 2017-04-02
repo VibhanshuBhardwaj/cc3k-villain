@@ -11,6 +11,8 @@ using namespace std;
 Enemy::Enemy(int atk, int def, int hp, char symbol, bool isHostile): Character(atk, def, hp, symbol), isHostile(isHostile) {}
 
 bool Enemy::isEnemyHostile() { return isHostile; }
+
+
 void Enemy::attackPlayer(Player* player) {
 
 	if (!player) {}//cout << "No enemy to attack at that position!" << endl;
@@ -27,5 +29,13 @@ void Enemy::attackPlayer(Player* player) {
 }
 string Enemy::getRace() {
 	return "Enemy";
+}
+void Enemy::makeHostile() {}
+
+void Enemy::onDeath(Player* player) {
+	getCurrCell()->leave();
+	int i  = rand() % 2;
+	if (i) player->setScore(player->getScore() + 1);
+	else player->setScore(player->getScore() + 2);
 }
 Enemy::~Enemy() {}

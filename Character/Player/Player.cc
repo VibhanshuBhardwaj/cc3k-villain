@@ -46,7 +46,7 @@ string Player::usePotion(Item *it){
 		result = " Potion used. Potion Type: (" + it->getType() +"). ";
 		it->setVisited();
 		Cell *c = it->getCurrCell();
-		c->leave(); //leave the cell 
+		c->leave(); //leave the cell
 	}
 	return result;
 }
@@ -55,25 +55,33 @@ void Player::attack(Character* victim) {
 	int i = rand() % 2;
 	if (!victim) action = getAction() + "No enemy to attack at that position! ";
 
-	else if (victim->getSymbol() == 'L' && i) {action = getAction() + "Player missed its attack on Halfling"; return; }
+	else if (victim->getSymbol() == 'L' && i) {action = getAction() + "Player missed its attack on Halfling. "; return; }
+
 	else {
+		if (victim->getSymbol() == 'M') {
+			victim->makeHostile();
+			cout << "Merchants are now hostile. " << endl;
+		}
 		int damageDealt = ceil((100/(100 + float(victim->getDef())))* float(this->getAtk()));
 		action = getAction() + "Damage done by " + this->getRace() + " to " +victim->getSymbol()+ ": " + to_string(damageDealt) + "HP. ";
 		//cout << "old victim hp" << victim->getHp() << endl;
 		victim->setHp(victim->getHp() - damageDealt); //the 20 is temporary to fasten the death of victim
 		//cout << "new victim hp" << victim->getHp() << endl;
+
 		if (!victim->isAlive()) {
-			if(this->getRace() == "Goblin"){
-				this->setScore(this->getScore() + 5);
+      if(this->getRace() == "Goblin"){
+				this->setScore(this->getScore() + 5); //NOTE CONFIRM
 			}
-			//cout << "enemy died" << endl;
-			 victim->getCurrCell()->leave();
-		}
+      victim->onDeath(this);
+      
+    }
+
 	}
 }
 
 void Player::onMove() {
 }
+void Player::onDeath(Player * p) {}
 void Player::onAttack() {}
 
 Player::~Player() {}

@@ -45,6 +45,7 @@ void Character::setHp(int newHp, bool isVampire) {
 	// 	cout << "not vampire. new hp: " << hp << endl;
 	// }
 }
+void Character::makeHostile() {}
 
 void Character::setAtk(int newAtk) { atk = newAtk; }
 
@@ -57,6 +58,6 @@ Cell* Character::getCurrCell() { return currCell; }
 void Character::setCurrCell(Cell* newCell) {
 	currCell = newCell;
 }
-
+void Character::onDeath(Player * p) {}
 
 Character::~Character() {}

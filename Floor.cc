@@ -87,8 +87,8 @@ void Floor::spawnStairs(){
 //CREATE AND INSERTS POTIONS ON THE GRID
 void Floor::spawnPotions(){
 	for(int i = 0; i < 10; i++){
-		PotionFactory potFac = PotionFactory(); 
-		int id = rand() % 5; 
+		PotionFactory potFac = PotionFactory();
+		int id = rand() % 5;
 		vector<int> pos = getRandPos(id);
 		Potion *thisPotion = potFac.generatePotion();
 		insertPotion(pos[0], pos[1], thisPotion);
@@ -185,8 +185,8 @@ bool Floor::enemyMoved(int row, int col, int prevRow, int prevCol, int eIndex){ 
 		int i = rand() % 2;
 		//cout << "i: " << i << endl;
 		if (i) enemies[eIndex]->attackPlayer(player);
-		else{
-			cout << "Enemy missed its attack! REMOVE THIS STATEMENT" << endl;
+		else if (enemies[eIndex]->getSymbol()!= 'M' || enemies[eIndex]->isEnemyHostile()){
+			player->setAction(player->getAction() + " " +enemies[eIndex]->getSymbol() + " missed its attack! ");
 		}
 		return true;
 	}
@@ -282,7 +282,7 @@ void Floor::atkDirection(string dir) {
 	else if (dir == "nw") player->attack(grid[y-1][x-1]->getCharacter());
 	else if (dir == "se") player->attack(grid[y+1][x+1]->getCharacter());
 	else if (dir == "sw") player->attack(grid[y+1][x-1]->getCharacter());
-	
+
 	if(!freeze){ //Always runs
 		enemyMove(); //MOVE ENEMIES
 	}
@@ -300,7 +300,7 @@ void Floor::checkPotion(){
 	int x = currCell->getCol();
 	int y = currCell->getRow();
 	Item *p = nullptr;
-	if(isPotion(x, y-1)) p = grid[y-1][x]->getItem(); 
+	if(isPotion(x, y-1)) p = grid[y-1][x]->getItem();
 	else if(isPotion(x, y+1)) p = grid[y+1][x]->getItem();
 	else if(isPotion(x-1, y)) p = grid[y][x-1]->getItem();
 	else if(isPotion(x+1, y)) p = grid[y][x+1]->getItem();
@@ -308,7 +308,7 @@ void Floor::checkPotion(){
 	else if(isPotion(x-1, y-1)) p = grid[y-1][x-1]->getItem();
 	else if(isPotion(x+1, y+1)) p = grid[y+1][x+1]->getItem();
 	else if(isPotion(x-1, y+1)) p = grid[y+1][x-1]->getItem();
-	
+
 	if(p){ //P IS A POTION
 		if(p->getVisited()) action += " Sees a Potion of Type: "+ p->getType() +".";
 		if(!p->getVisited()) action += " Sees a Potion of Unknown Type. " ;
@@ -440,7 +440,7 @@ bool Floor::isValid(int x, int y){ //y is row and x is column
 }
 
 //GENERATES A RANDOM VALID POSITION
-vector<int> Floor::getRandPos(int chamberId){      
+vector<int> Floor::getRandPos(int chamberId){
 	vector<int> pos = chambers[chamberId].generateRandPos();
 	int x = pos[0];
 	int y = pos[1];

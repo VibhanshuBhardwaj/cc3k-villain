@@ -5,7 +5,9 @@
 #include "Halfling.h"
 #include "Human.h"
 #include "Orc.h"
-#include "string"
+#include "Merchant.h"
+#include <string>
+
 
 #include <stdexcept>
 
@@ -36,7 +38,9 @@ Enemy* EnemyFactory::generateEnemy() {
 	}
 	else{
 		//cout << "generating merchant" << endl;
-		thisEnemy = new Enemy(70, 5, 30, 'M', false); //merchant
+
+		thisEnemy = new Merchant(); //merchant
+
 	}
 	return thisEnemy;
 
