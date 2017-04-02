@@ -10,12 +10,13 @@ class Gold : public Item {
 	bool available;
   public:			
   	Gold();
-    Gold(std::string type, int value);     
+    Gold(std::string type, int value, bool available);     
     char getSymbol() override; 
     void use(Player *pc) override;
     bool getVisited() override;
     void setVisited() override;
-    bool isAvailable();
+    bool isAvailable() override;
+    void setAvailable() override;
     //std::string getType();
 };
 
@@ -32,6 +33,11 @@ public:
 class merchantHoard : public Gold{
   public: 
 	merchantHoard();
+};
+
+class humanPile : public Gold{
+public:
+  humanPile();
 };
 
 class dragonHoard : public Gold{

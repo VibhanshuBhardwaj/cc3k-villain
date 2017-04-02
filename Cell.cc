@@ -88,7 +88,7 @@ bool Cell::playerMoveValid(){ // TILE / PATHWAY / STAIR / HWALL / VWALL / DOOR
 
 bool Cell::enemyMoveValid(){
 	//cout << "inside cell" << endl;
-	if(type == "TILE" && !isOccupied()){
+	if(type == "TILE" && symbol != '/' && !isOccupied()){
 		return true;
 	}
 	return false;
