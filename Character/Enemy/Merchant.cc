@@ -1,5 +1,6 @@
 #include <string>
 #include "Merchant.h"
+#include "../../Item/Gold/Gold.h"
 
 using namespace std;
 bool Merchant::areHostile = false;
@@ -22,3 +23,9 @@ void Merchant::attackPlayer(Player * player) {
 	}
 }
 
+void Merchant::onDeath(Player * p) {
+
+	this->getCurrCell()->leave();
+	Gold * g = new merchantHoard();
+	getCurrCell()->occupy(g);
+}

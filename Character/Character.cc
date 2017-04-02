@@ -58,6 +58,6 @@ Cell* Character::getCurrCell() { return currCell; }
 void Character::setCurrCell(Cell* newCell) {
 	currCell = newCell;
 }
-
+void Character::onDeath(Player * p) {}
 
 Character::~Character() {}

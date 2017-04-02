@@ -1,8 +1,9 @@
 #include "Game.h"
-#include "Floor.h"
 #include <string>
 #include <iostream>
+#include "Character/Player/PlayerFactory.h"
 using namespace std;
+
 
 //class Floor;
 //class Chamber;
@@ -11,12 +12,24 @@ Game::Game(){}
 Game::Game(string pRace, string fName){ //initialize a new game
 	floorLevel = 1;
 	fileName = fName;
-	if(pRace == "s"){playerRace = "Shade";}
-	else if(pRace == "d"){playerRace = "Drow";}
-	else if(pRace == "v"){ playerRace = "Vampire";}
-	else if(pRace == "t"){playerRace = "Troll";}
-	else {playerRace = "Goblin";}
-	floor = new Floor(fileName, playerRace, floorLevel); //(fileName, replace with player*)
+	PlayerFactory pf = PlayerFactory();
+	if(pRace == "s"){
+		playerRace = "Shade";
+	}
+	else if(pRace == "d"){
+		playerRace = "Drow";
+	}
+	else if(pRace == "v"){ 
+		playerRace = "Vampire";
+	}
+	else if(pRace == "t"){
+		playerRace = "Troll";
+	}
+	else {
+		playerRace = "Goblin";
+	}
+	player = pf.generatePlayer(playerRace);
+	floor = new Floor(fileName, playerRace, player, floorLevel); //(fileName, replace with player*)
 	printGame();
 }
 
@@ -26,27 +39,28 @@ void Game::printGame(){
 	cout << "Action: " << action << floor->getAction() << endl;
 	//cout << "Action: " << floor->getAction() << endl;
 	floor->setAction("");
+
+	//cout << "PLAYER STAT HP: " << player->getHp();
 }
 
 void Game::playerMove(string dir){ //no ,so, ea, we, ne, nw, se, sw
 	floor->playerMove(dir);
+	cout << "in game player move health: " << player->getHp() << endl;
 	if(floor->atStairs()){
-		cout << "at stairs" << endl;
-		cout << floorLevel << endl;
 		//player reached the stairs
 		if(floorLevel < 6){
 			floorLevel++;
 			delete floor;
 			string s = to_string(floorLevel);
 			action = "Floor " + s + " Generated! ";
-			floor = new Floor(fileName, playerRace, floorLevel);
+			player->reset();
+			floor = new Floor(fileName, playerRace, player, floorLevel);
 		}
 		if(floorLevel == 6){
 			//reached the stairs of last level;
 			cout << "Cc3K GaMe WoN. " << endl;
 			cout << "CoNgRaTuLaTiOnS!!!"<< endl;
 		}
-
 	}
 	if(floorLevel < 6){
 		printGame();
@@ -94,4 +108,5 @@ bool Game::isAlive(){
 
 Game::~Game(){
 	delete floor;
+	delete player;
 }

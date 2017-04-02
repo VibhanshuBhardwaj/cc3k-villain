@@ -16,7 +16,8 @@ void Potion::use(Player *pc){}
 char Potion::getSymbol(){
 	return 'P'; 
 }
-
+bool Potion::isAvailable(){return true;}
+void Potion::setAvailable(){}
 void Potion::setVisited(){}
 
 //RESTORE HEALTH
@@ -32,6 +33,9 @@ void rHealth::setVisited(){
 }
 void rHealth::use(Player *pc){
 	pc->setHp(pc->getHp() + 10);
+	if(pc->getRace() == "Drow"){
+		pc->setHp(pc->getHp() + 5);
+	}
 }
 
 //BOOST ATTACK
@@ -47,6 +51,9 @@ void bAttack::setVisited(){
 }
 void bAttack::use(Player *pc){
 	pc->setAtk(pc->getAtk() + 5);
+	if(pc->getRace() == "Drow"){
+		pc->setAtk(pc->getAtk() + 3);
+	}
 }
 
 //BOOST DEFENCE
@@ -62,6 +69,9 @@ void bDefence::setVisited(){
 }
 void bDefence::use(Player *pc){
 	pc->setDef(pc->getDef() + 5);
+	if(pc->getRace() == "Drow"){
+		pc->setDef(pc->getDef() + 3);
+	}
 }
 
 //POISON HEALTH
@@ -77,6 +87,9 @@ void pHealth::setVisited(){
 }
 void pHealth::use(Player * pc){
 	pc->setHp(pc->getHp() - 10);
+	if(pc->getRace() == "Drow"){
+		pc->setHp(pc->getHp() - 5);
+	}
 }
 
 //WOUND ATTACK
@@ -92,6 +105,9 @@ void wAttack::setVisited(){
 }
 void wAttack::use(Player *pc){
 	pc->setAtk(pc->getAtk() - 5);
+	if(pc->getRace() == "Drow"){
+		pc->setAtk(pc->getAtk() - 3);
+	}
 }
 
 //WOUND DEFENCE
@@ -108,6 +124,9 @@ void wDefence::setVisited(){
 }
 void wDefence::use(Player *pc){
 	pc->setDef(pc->getDef() - 5);
+	if(pc->getRace() == "Drow"){
+		pc->setDef(pc->getDef() - 3);
+	}
 }
 
 

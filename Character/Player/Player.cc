@@ -3,7 +3,13 @@
 
 using namespace std;
 
-Player::Player(int hp, int atk, int def, string race): Character(atk, def, hp, '@'), race(race), score(0), levelDef(0), levelAtk(0), action("") {}
+Player::Player(int hp, int atk, int def, string race): Character(atk, def, hp, '@'), race(race) {
+	levelDef = def;
+	levelAtk = atk;
+	action = "";
+	score = 0;
+}
+
 int Player::getScore(){ return score; }
 
 void Player::setScore(int newScore){ score = newScore; }
@@ -26,13 +32,16 @@ void Player::setAction(string newAction) {
 
 void Player::reset() {
 	//health is permanent
-	levelAtk = 0;
-	levelDef = 0;
+	setAtk(levelAtk); //Level Attack is the value of attack which is 
+					  //DEFAULT value at the start of every level
+	setDef(levelDef);//Level Defence is the value of defence which is 
+					  //DEFAULT value at the start of every level
 }
 
 string Player::usePotion(Item *it){
 	string result = "";
 	if(it && (it->getType()=="PH" || it->getType()=="RH"||it->getType()=="BA" ||it->getType()=="BD"||it->getType()=="WD"||it->getType()=="WA")){
+
 		it->use(this); //use potion on this player
 		result = " Potion used. Potion Type: (" + it->getType() +"). ";
 		it->setVisited();
@@ -58,13 +67,21 @@ void Player::attack(Character* victim) {
 		//cout << "old victim hp" << victim->getHp() << endl;
 		victim->setHp(victim->getHp() - damageDealt); //the 20 is temporary to fasten the death of victim
 		//cout << "new victim hp" << victim->getHp() << endl;
-		if (!victim->isAlive()) {cout << "enemy died" << endl; victim->getCurrCell()->leave();}
+
+		if (!victim->isAlive()) {
+      if(this->getRace() == "Goblin"){
+				this->setScore(this->getScore() + 5); //NOTE CONFIRM
+			}
+      victim->onDeath(this);
+      
+    }
 
 	}
 }
-void Player::onMove() {
 
+void Player::onMove() {
 }
+void Player::onDeath(Player * p) {}
 void Player::onAttack() {}
 
 Player::~Player() {}

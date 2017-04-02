@@ -13,6 +13,7 @@
 #include "Character/Character.h"
 #include "Item/Item.h"
 #include "Item/Potion/Potion.h"
+#include "Character/Enemy/Dragon.h"
 #include "Item/Gold/Gold.h"
 
 class Game;
@@ -22,6 +23,7 @@ class Floor{
 					     // map accurately represents the Floor
 	std::vector<std::vector < Cell* > > grid;
 	Player *player; //pointer to player object
+	std::vector<Dragon*> dragons;
 	std::vector<Enemy*> enemies; //vector of 20 enemies
 	std::vector<Potion*> potions;
 	std::vector<Gold*> golds;
@@ -35,7 +37,7 @@ class Floor{
 	Cell* findCell(int row, int col);
 
   public:
-	Floor(std::string file, std::string playerRace, int fLevel); //replace string playerRace with Player reference
+	Floor(std::string file, std::string playerRace, Player *p, int fLevel); //replace string playerRace with Player reference
 	bool enemyMoved(int row, int col, int prevRow, int prevCol, int eIndex);
 	bool playerMoved(int row, int col, int prevRow, int prevCol, std::string dir);
 	void playerMove(std::string dir);
@@ -49,6 +51,7 @@ class Floor{
 	void unfreezeEnemy();
 	bool isPlayerAlive();
 	std::vector<int> getRandPos(int chamberId);
+	std::vector<int> neighbourPos(int x, int y);
 	bool isValid(int x, int y);
 	void insertSymbol(int x, int y, char ch);
 	void insertCharacter(int x, int y, Character* ch);
@@ -59,6 +62,8 @@ class Floor{
 	void spawnPotions();
 	void spawnGold();
 	void spawnEnemies();
+	void checkDragonAttack();
+	bool canDragonAttackPlayer(Dragon *d);
 	void printStats();
 	bool canEnemyAttackPlayer(Enemy *);
 	std::string getAction();
