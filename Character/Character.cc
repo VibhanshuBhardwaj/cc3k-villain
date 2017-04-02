@@ -45,6 +45,7 @@ void Character::setHp(int newHp, bool isVampire) {
 	// 	cout << "not vampire. new hp: " << hp << endl;
 	// }
 }
+void Character::makeHostile() {}
 
 void Character::setAtk(int newAtk) { atk = newAtk; }
 

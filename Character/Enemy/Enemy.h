@@ -13,6 +13,7 @@ class Enemy : public Character {
 		Enemy(int atk, int def, int hp, char symbol, bool isHostile);
 		//bool isPlayerNearby();
 		std::string getRace();
+		virtual void makeHostile();
 		virtual bool isEnemyHostile();
 		virtual ~Enemy();
 };
