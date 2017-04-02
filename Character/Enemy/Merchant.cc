@@ -11,6 +11,10 @@ void Merchant::makeHostile() {
 	areHostile = true;
 }
 
+bool Merchant::isEnemyHostile() {
+	return areHostile;
+}
+
 void Merchant::attackPlayer(Player * player) {
 	if (!areHostile) return;
 	else {

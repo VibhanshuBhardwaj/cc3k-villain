@@ -6,6 +6,7 @@
 class Merchant: public Enemy {
 	static bool areHostile;
 public:
+	bool isEnemyHostile();
 	Merchant(int atk = 70, int def = 5, int hp = 30);
 	void attackPlayer(Player * player) override;
 	void makeHostile() override;
