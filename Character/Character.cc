@@ -36,14 +36,6 @@ void Character::setHp(int newHp, bool isVampire) {
 		hp = newHp;
 		//cout << "not vampire. new hp: " << hp << endl;
 	}
-	// if (isVampire) {
-	// 	hp = newHp;
-	// 	cout << "is Vampire. new hp: " << hp << endl;
-	// }
-	// else {
-	// 	hp = min(hp, newHp);
-	// 	cout << "not vampire. new hp: " << hp << endl;
-	// }
 }
 void Character::makeHostile() {}
 
@@ -51,6 +43,7 @@ void Character::setAtk(int newAtk) { atk = newAtk; }
 
 void Character::setDef(int newDef) { def = newDef; }
 
+bool Character::isEnemyHostile(){return false;}
 char Character::getSymbol() { return symbol; }
 
 Cell* Character::getCurrCell() { return currCell; }

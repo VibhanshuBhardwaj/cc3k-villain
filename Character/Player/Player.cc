@@ -59,8 +59,10 @@ void Player::attack(Character* victim) {
 
 	else {
 		if (victim->getSymbol() == 'M') {
-			victim->makeHostile();
-			cout << "Merchants are now hostile. " << endl;
+			if(!victim->isEnemyHostile()){
+				victim->makeHostile();
+				action += "Merchants are now hostile. " ;
+			}
 		}
 		int damageDealt = ceil((100/(100 + float(victim->getDef())))* float(this->getAtk()));
 		action = getAction() + "Damage done by " + this->getRace() + " to " +victim->getSymbol()+ ": " + to_string(damageDealt) + "HP. ";

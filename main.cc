@@ -104,7 +104,6 @@ int main(int argc, char *argv[]){
         else if((input == "no") || (input == "so") || (input == "we") || (input == "ea") || (input == "nw") || (input == "ne") || (input == "se") || (input == "sw")){
             game->playerMove(input);
             if(game->isWon()){ //to check if the game is won. Runs after every user input.
-                cout << "ending..." << endl;
                 break;
             }
         }
@@ -114,6 +113,6 @@ int main(int argc, char *argv[]){
             cout << "Invalid input. Please enter a valid input"<<endl;
         }
     }
-    if (!game->isAlive()) cout << "Player died! Game over. Press r to start over." << endl;
+    if (!game->isAlive()) cout << "Player died! Game over." << endl;
     delete game;
 }
