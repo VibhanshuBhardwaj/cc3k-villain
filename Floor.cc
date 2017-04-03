@@ -49,22 +49,22 @@ Floor::Floor(string file, string pRace, Player *p, int fLevel){
 		}
 		grid.emplace_back(row);
 	}
-
 	freeze = false;
 	//initialize chambers
 	for(int i = 0; i < 5; i ++){
 		chambers[i] = Chamber(i);
 	}
 
-	if(file == "board.txt" || fLevel > 1){
+	if(file == "board.txt"){
 		spawnPlayer();
 		spawnStairs();
 		spawnPotions();
 		spawnGold();
 		spawnEnemies();
 	}
-	if(file != "board.txt"  && fLevel == 1){
+	if(file != "board.txt"){
 		generateCustomFloor();
+		cout << "called "<< endl;
 	}
 	action = playerRace + " EnTeRs tHe DuNgEoN! ";
 }
@@ -76,6 +76,7 @@ void Floor::generateCustomFloor(){
 	if(!infile){
 		cout<< "cannot open the given file."<< endl;
 	}
+	for(int a = 0; a < 25*(floorLevel-1); a++){getline(infile, line);}
 	for(int i = 0; i < 25; i++){
 		getline(infile, line);
 		Enemy *thisEnemy;
@@ -85,7 +86,6 @@ void Floor::generateCustomFloor(){
 		PotionFactory potFac = PotionFactory();
 		GoldFactory goldFac = GoldFactory();
 		for(int j = 0; j < 79; j++){
-
 			if(line[j] == 'H'){
 				thisEnemy = ef.generateEnemy('H'); //factory method call
 				insertCharacter(j, i, thisEnemy);

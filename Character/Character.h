@@ -33,6 +33,7 @@ public:
 	//virtual void move(std::string dir) = 0;
 	virtual ~Character();
 	virtual void makeHostile();
+	virtual bool isEnemyHostile();
 	virtual std::string getRace() = 0;
 	virtual void onDeath(Player* p);
 

@@ -10,7 +10,7 @@ void Orc::attackPlayer(Player* player) {
 		int damageDealt = ceil((100/(100 + float(player->getDef())))* float(this->getAtk()));
 		if (player->getRace() =="Goblin") { //orcs do 50% more damage to goblins
 			damageDealt = 1.5 * damageDealt;
-			cout << "orc attacking goblin" << endl;
+			//cout << "orc attacking goblin" << endl;
 		}
 		string newAction = player->getAction() + "Damage done by " + this->getSymbol() + " to " + player->getSymbol() + ": " +  to_string(damageDealt) + "HP. ";
 		player->setAction(newAction);
