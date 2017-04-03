@@ -6,7 +6,6 @@
 #include <string>
 #include "Character/Character.h"
 #include "Item/Item.h"
-#include "Item/Gold/Gold.h"
 
 class Character;
 class Item;

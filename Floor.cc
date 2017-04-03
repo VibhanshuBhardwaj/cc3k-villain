@@ -183,7 +183,7 @@ void Floor::generateCustomFloor(){
 		}
 		//grid.emplace_back(row);
 	}
-//	dhAssign();
+	dhAssign();
 }
 
 void Floor::dhAssign(){
@@ -200,6 +200,7 @@ void Floor::dhAssign(){
 		else if(grid[r-1][c-1]->isGold() && grid[r-1][c-1]->getItem()->getType() == " Dragon Hoard. ") {dragons[i]->hoard = grid[r-1][c-1]->getItem(); return;}
 		else if(grid[r+1][c-1]->isGold() && grid[r+1][c-1]->getItem()->getType() == " Dragon Hoard. ") {dragons[i]->hoard = grid[r+1][c-1]->getItem(); return;}
 	}
+
 }
 
 // CREATE PLAYER CHARACTER AND SPAWNS ON THE GRID
@@ -367,6 +368,7 @@ bool Floor::enemyMoved(int row, int col, int prevRow, int prevCol, int eIndex){ 
 void Floor::checkDragonAttack(){
 	int s = dragons.size();
 	for(int i = 0; i < s; i++){
+
 		if(dragons[i]->isAlive() && canDragonAttackPlayer(dragons[i])){
 			int j = rand() % 2;
 			if(j) dragons[i]->attackPlayer(player);
@@ -376,7 +378,9 @@ void Floor::checkDragonAttack(){
 }
 
 bool Floor::canDragonAttackPlayer(Dragon *d){
+	cout << "adress: " << d << endl;
 	bool da = pow((d->getCurrCell()->getRow() - player->getCurrCell()->getRow()), 2) + pow((d->getCurrCell()->getCol() - player->getCurrCell()->getCol()), 2) <= 2;
+	cout <<" d done "<< endl;
 	bool ng = pow((d->hoard->getCurrCell()->getRow() - player->getCurrCell()->getRow()), 2) + pow((d->hoard->getCurrCell()->getCol() - player->getCurrCell()->getCol()), 2) <= 2;
 	return da || ng; //near GOLD or DRAGON
 }
@@ -537,7 +541,6 @@ void Floor::playerMove(string dir){ //no ,so, ea, we, ne, nw, se, sw
 		enemyMove(); //MOVE ENEMIES
 	}
 	checkPotion();
-	checkDragonAttack();
 }
 
 //TRUE IF THE PLAYER HAS REACHED THE STAIRS
