@@ -89,7 +89,6 @@ void Floor::generateCustomFloor(){
 			if(line[j] == 'H'){
 				thisEnemy = ef.generateEnemy('H'); //factory method call
 				insertCharacter(j, i, thisEnemy);
-				cout <<"emplacing" << endl;
 				enemies.emplace_back(thisEnemy);
 			}
 			else if(line[j] == 'W'){
@@ -287,7 +286,7 @@ bool Floor::playerMoved(int row, int col, int prevRow, int prevCol, string dir){
 		grid[row][col]->occupy(player);
 		player->setCurrCell(grid[row][col]);
 		grid[prevRow][prevCol]->leave();
-		action = playerRace + " moves " + dir + ".";
+		action = playerRace + " moves " + dir + ". ";
 		return true;
 	}
 	else if(grid[row][col]->isGold()){
@@ -345,11 +344,7 @@ void Floor::spawnEnemies(){
 // ENEMY MOVEMENT
 bool Floor::enemyMoved(int row, int col, int prevRow, int prevCol, int eIndex){ //rename this to sth more appropriate
 	if (canEnemyAttackPlayer(enemies[eIndex])) {
-		int i = rand() % 2;
-		if (i) enemies[eIndex]->attackPlayer(player);
-		else{
-			cout << "Enemy missed its attack! REMOVE THIS STATEMENT" << endl;
-		}
+		enemies[eIndex]->attackPlayer(player);
 		return true;
 	}
 	if(grid[row][col]->enemyMoveValid()){
@@ -368,9 +363,7 @@ void Floor::checkDragonAttack(){
 	for(int i = 0; i < s; i++){
 
 		if(dragons[i]->isAlive() && canDragonAttackPlayer(dragons[i])){
-			int j = rand() % 2;
-			if(j) dragons[i]->attackPlayer(player);
-			//ELSE IT MISSES
+			dragons[i]->attackPlayer(player);
 		}
 	}
 }
