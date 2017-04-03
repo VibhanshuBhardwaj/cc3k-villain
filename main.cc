@@ -137,7 +137,7 @@ int main(int argc, char *argv[]){
             game->printGame();
         }
         else if (isDlcEnabled && (input == "boostDefence" ||input == "boostdefence")){
-            game->boostPlayerDef(20);
+            game->boostPlayerDef(15);
             game->setPlayerAction(game->getPlayerAction() + "Boosted defence by 15 points! ");
             game->printGame();
         }
