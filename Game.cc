@@ -72,7 +72,7 @@ void Game::usePotion(string dir){
 
 void Game::atkDirection(string dir){
 	floor->atkDirection(dir);
-	printGame(); //NOT SURE!!!!!!!! ATTENTION
+	printGame();
 }
 
 

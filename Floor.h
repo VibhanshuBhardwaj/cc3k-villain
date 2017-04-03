@@ -42,6 +42,7 @@ class Floor{
 	bool enemyMoved(int row, int col, int prevRow, int prevCol, int eIndex);
 	void generateCustomFloor();
 	void dhAssign();
+	void trollUpdate();
 	bool playerMoved(int row, int col, int prevRow, int prevCol, std::string dir);
 	void playerMove(std::string dir);
 	void enemyMove();

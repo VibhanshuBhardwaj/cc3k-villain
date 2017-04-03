@@ -178,7 +178,6 @@ void Floor::generateCustomFloor(){
 				insertCharacter(j, i, player);
 			}
 		}
-		//grid.emplace_back(row);
 	}
 	dhAssign();
 }
@@ -382,7 +381,6 @@ bool Floor::canEnemyAttackPlayer(Enemy* enemy) {
 void Floor::enemyMove(){
 	int size = enemies.size();
 	for(int i = 0; i < size; i++){
-	//	cout << "ith enemy sym: " << enemies[i]->getSymbol() << endl;
 		if(enemies[i]->isAlive()){
 			//cout << "can enemy attack" << canEnemyAttackPlayer(enemies[i]) << endl;
 			Cell* currCell = enemies[i]->getCurrCell();
@@ -442,6 +440,7 @@ void Floor::atkDirection(string dir) {
 	if(!freeze){ //Always runs
 		enemyMove(); //MOVE ENEMIES
 	}
+	if(player->getRace() == "Troll") trollUpdate();
 }
 
 
@@ -492,9 +491,12 @@ void Floor::usePotion(string dir){
 	if(!freeze){ //Always runs
 		enemyMove(); //MOVE ENEMIES
 	}
-
+	if(player->getRace() == "Troll") trollUpdate();
 }
 
+void Floor::trollUpdate(){
+	player->setHp(player->getHp() + 5);
+}
 
 void Floor::playerMove(string dir){ //no ,so, ea, we, ne, nw, se, sw
 	Cell* currCell = player->getCurrCell();
@@ -529,6 +531,7 @@ void Floor::playerMove(string dir){ //no ,so, ea, we, ne, nw, se, sw
 	if(!freeze){ //Always runs
 		enemyMove(); //MOVE ENEMIES
 	}
+	if(player->getRace() == "Troll") trollUpdate();
 	checkPotion();
 }
 
@@ -557,7 +560,9 @@ void Floor::insertGold(int x, int y, Gold * g){
 void Floor::insertCharacter(int x, int y, Character* ch){ //x is left margin, y is Top margin
 	//cout << ch->getSymbol() << endl;
 	if (ch && ch->isAlive()) {
-		grid[y][x]->occupy(ch);}
+
+		grid[y][x]->occupy(ch);
+  }
 	//else if (!ch->isAlive()) {cout << "enemy died" << endl; grid[y][x]->leave(); insertSymbol(x, y, 'G'); }//maybe add the dropped gold here
 }
 
