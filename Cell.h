@@ -6,6 +6,7 @@
 #include <string>
 #include "Character/Character.h"
 #include "Item/Item.h"
+#include "Item/Gold/Gold.h"
 
 class Character;
 class Item;
@@ -20,7 +21,6 @@ class Cell {
     //char whoOccupied;
     Character * whoOccupied;
     Item *it;
-
   public:
     Cell();
   	Cell(int row, int col, char sym, std::string type);

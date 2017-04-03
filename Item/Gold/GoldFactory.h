@@ -11,6 +11,7 @@ class dragonHoard;
 class GoldFactory{
 public:
 	Gold * generateGold();
+	Gold * generateGold(char id);
 };
 
 

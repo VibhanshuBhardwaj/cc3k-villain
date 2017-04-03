@@ -29,6 +29,7 @@ class Floor{
 	std::vector<Gold*> golds;
 	//gold 10
 	int playerSpawnedChamber;
+	std::string fileName;
 	std::string action;
 	std::string playerRace;
 	int floorLevel;
@@ -39,6 +40,8 @@ class Floor{
   public:
 	Floor(std::string file, std::string playerRace, Player *p, int fLevel); //replace string playerRace with Player reference
 	bool enemyMoved(int row, int col, int prevRow, int prevCol, int eIndex);
+	void generateCustomFloor();
+	void dhAssign();
 	bool playerMoved(int row, int col, int prevRow, int prevCol, std::string dir);
 	void playerMove(std::string dir);
 	void enemyMove();

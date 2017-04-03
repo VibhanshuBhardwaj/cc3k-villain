@@ -37,10 +37,7 @@ void Game::printGame(){
 	floor->printFloor();
 	floor->printStats();
 	cout << "Action: " << action << floor->getAction() << endl;
-	//cout << "Action: " << floor->getAction() << endl;
 	floor->setAction("");
-
-	//cout << "PLAYER STAT HP: " << player->getHp();
 }
 
 void Game::playerMove(string dir){ //no ,so, ea, we, ne, nw, se, sw

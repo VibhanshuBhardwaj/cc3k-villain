@@ -39,7 +39,12 @@ void Cell::occupy(Item *itm){
 
 Character* Cell::getCharacter() { if (whoOccupied) return whoOccupied; else return nullptr;}
 
-Item *Cell::getItem() { if(it) return it; else return nullptr;}
+Item *Cell::getItem() { 
+	if(it) {
+		
+		return it;
+	}
+	 else return nullptr;}
 
 void Cell::leave(){
 	occupied = false;
