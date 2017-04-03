@@ -17,9 +17,7 @@ void Enemy::attackPlayer(Player* player) {
 		int damageDealt = ceil((100/(100 + float(player->getDef())))* float(this->getAtk()));
 		newAction = player->getAction() + "Damage done by " + this->getSymbol() + " to " + player->getSymbol() + ": " +  to_string(damageDealt) + "HP. ";
 		player->setAction(newAction);
-		//cout << "old player hp" << player->getHp() << endl;
 		player->setHp(player->getHp() - damageDealt );
-		//cout << "new player hp" << player->getHp() << endl;
 	}
 	else{
 			newAction = player->getAction() + " " + this->getSymbol()+ " missed its attack! ";

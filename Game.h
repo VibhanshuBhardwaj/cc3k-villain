@@ -31,6 +31,11 @@ class Game{
 	void unFreezeEnemy(); //free the enemies. Allow them to move freely
 	bool isWon(); // player has won the game.
 	~Game();
+	void setPlayerAction(std::string newAction);
+	void boostPlayerAtk(int boost);
+	void boostPlayerDef(int boost);
+	void setPlayerHp(int newHp);
+	std::string getPlayerAction();
 	bool isAlive();
 };
 

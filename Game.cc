@@ -40,6 +40,22 @@ void Game::printGame(){
 	floor->setAction("");
 }
 
+void Game::setPlayerHp(int newHp) {
+	player->setHp(newHp, true);
+}
+void Game::setPlayerAction( string newAction) {
+	player->setAction(newAction);
+}
+string Game::getPlayerAction() {
+	return player->getAction();
+}
+
+void Game::boostPlayerAtk(int boost) {
+	player->setAtk(player->getAtk() + boost);
+}
+void Game::boostPlayerDef(int boost) {
+	player->setDef(player->getDef() + boost);
+}
 void Game::playerMove(string dir){ //no ,so, ea, we, ne, nw, se, sw
 	floor->playerMove(dir);
 	if(floor->atStairs()){

@@ -6,7 +6,8 @@
 #include <sstream>
 #include <cstdlib>
 #include <time.h>
-
+#include <climits>
+#include <limits>
 class Game;
 
 using namespace std;
@@ -16,7 +17,7 @@ string getPlayerRace(){
     cout << "s - Shade" << endl <<"d - Drow" << endl << "v - Vampire" << endl << "g - Goblin" << endl <<"t - Troll" << endl;
     string input;
     cin >> input;
-    if(input == "q"){
+    if(input == "q" || cin.eof()){
         return "q";
     }
     else if(input != "s" && input != "d"  && input != "v"  && input != "g"  && input != "t" ){
@@ -46,19 +47,35 @@ int main(int argc, char *argv[]){
         cout << "Game quit..." <<endl;
         return 0;
     }
+    bool isDlcEnabled = false;
+    char dlc;
+    cout << "Enter Y/N to enable/disable DLCs. " << endl;
+    cin >> dlc;;
+    if (dlc == 'y' || dlc == 'Y') {
+        isDlcEnabled = true;
+    }
+    else if (dlc == 'n' || dlc == 'N') {
+        isDlcEnabled = false;
+    }
     Game *game = new Game(playerRace, fileName);
+
+    if (isDlcEnabled) cout << "DLC enabled! " << endl;
+    else cout << "DLC disabled! " << endl;
     bool freezeEnemy = false;
+
+  //  game->printGame(); //to print after user's DLC choice
     string input;
 
     while(game->isAlive()){
         cin >>input;
-
-        if(cin.fail()){
-            delete game;
+        if(cin.fail() || cin.eof()){
+            cout << "Game quit... " << endl;;
+           // delete game;
             break;
         }
         //check if health is 0 or won
-        else if(input == "q"){
+      //  cout << "cin eof" << cin.eof() << endl;
+        if(input == "q" ){
             delete game;
             cout << "Game quit..." <<endl;
             return 0;
@@ -108,6 +125,22 @@ int main(int argc, char *argv[]){
             }
         }
 
+        else if (isDlcEnabled && (input == "maxHealth" ||input == "maxhealth")){
+            int maxInt = numeric_limits<int>::max();
+            game->setPlayerHp(maxInt);
+            game->setPlayerAction(game->getPlayerAction() + "Set health to maximum possible value! ");
+            game->printGame();
+        }
+        else if (isDlcEnabled && (input == "boostAttack" ||input == "boostattack")){
+            game->boostPlayerAtk(20);
+            game->setPlayerAction(game->getPlayerAction() + "Boosted attack by 20 points! ");
+            game->printGame();
+        }
+        else if (isDlcEnabled && (input == "boostDefence" ||input == "boostdefence")){
+            game->boostPlayerDef(20);
+            game->setPlayerAction(game->getPlayerAction() + "Boosted defence by 15 points! ");
+            game->printGame();
+        }
         else{
             //invalid input
             cout << "Invalid input. Please enter a valid input"<<endl;
