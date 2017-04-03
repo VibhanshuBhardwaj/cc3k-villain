@@ -56,14 +56,14 @@ Floor::Floor(string file, string pRace, Player *p, int fLevel){
 		chambers[i] = Chamber(i);
 	}
 
-	if(file == "board.txt"){
+	if(file == "board.txt" || fLevel > 1){
 		spawnPlayer();
 		spawnStairs();
 		spawnPotions();
 		spawnGold();
 		spawnEnemies();
 	}
-	if(file != "board.txt"){
+	if(file != "board.txt"  && fLevel == 1){
 		generateCustomFloor();
 	}
 	action = playerRace + " EnTeRs tHe DuNgEoN! ";
