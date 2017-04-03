@@ -10,17 +10,21 @@ bool Enemy::isEnemyHostile() { return isHostile; }
 
 
 void Enemy::attackPlayer(Player* player) {
-
+	int i = rand() % 2;
+	string newAction;
 	if (!player) {}//cout << "No enemy to attack at that position!" << endl;
-	else {
+	else if (i) {
 		int damageDealt = ceil((100/(100 + float(player->getDef())))* float(this->getAtk()));
-		string newAction = player->getAction() + "Damage done by " + this->getSymbol() + " to " + player->getSymbol() + ": " +  to_string(damageDealt) + "HP. ";
+		newAction = player->getAction() + "Damage done by " + this->getSymbol() + " to " + player->getSymbol() + ": " +  to_string(damageDealt) + "HP. ";
 		player->setAction(newAction);
 		//cout << "old player hp" << player->getHp() << endl;
 		player->setHp(player->getHp() - damageDealt );
 		//cout << "new player hp" << player->getHp() << endl;
-
 	}
+	else{
+			newAction = player->getAction() + " " + this->getSymbol()+ " missed its attack! ";
+			player->setAction(newAction);
+		}
 
 }
 string Enemy::getRace() {

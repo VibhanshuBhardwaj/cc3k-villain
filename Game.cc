@@ -19,7 +19,7 @@ Game::Game(string pRace, string fName){ //initialize a new game
 	else if(pRace == "d"){
 		playerRace = "Drow";
 	}
-	else if(pRace == "v"){ 
+	else if(pRace == "v"){
 		playerRace = "Vampire";
 	}
 	else if(pRace == "t"){
@@ -42,7 +42,6 @@ void Game::printGame(){
 
 void Game::playerMove(string dir){ //no ,so, ea, we, ne, nw, se, sw
 	floor->playerMove(dir);
-	cout << "in game player move health: " << player->getHp() << endl;
 	if(floor->atStairs()){
 		//player reached the stairs
 		if(floorLevel < 6){

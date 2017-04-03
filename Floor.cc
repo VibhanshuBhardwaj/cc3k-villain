@@ -82,14 +82,13 @@ void Floor::generateCustomFloor(){
 		Potion *thisPotion;
 		Gold *thisGold;
 		EnemyFactory ef = EnemyFactory();
-		PotionFactory potFac = PotionFactory(); 
+		PotionFactory potFac = PotionFactory();
 		GoldFactory goldFac = GoldFactory();
 		for(int j = 0; j < 79; j++){
 
 			if(line[j] == 'H'){
 				thisEnemy = ef.generateEnemy('H'); //factory method call
 				insertCharacter(j, i, thisEnemy);
-				cout <<"emplacing" << endl;
 				enemies.emplace_back(thisEnemy);
 			}
 			else if(line[j] == 'W'){
@@ -125,32 +124,32 @@ void Floor::generateCustomFloor(){
 			else if(line[j] == '0'){//RH
 				thisPotion = potFac.generatePotion('0');
 				insertPotion(j, i, thisPotion);
-				potions.emplace_back(thisPotion); 
+				potions.emplace_back(thisPotion);
 			}
 			else if(line[j] == '1'){//RH
 				thisPotion = potFac.generatePotion('1');
 				insertPotion(j, i, thisPotion);
-				potions.emplace_back(thisPotion); 
+				potions.emplace_back(thisPotion);
 			}
 			else if(line[j] == '2'){//RH
 				thisPotion = potFac.generatePotion('2');
 				insertPotion(j, i, thisPotion);
-				potions.emplace_back(thisPotion); 
+				potions.emplace_back(thisPotion);
 			}
 			else if(line[j] == '3'){//RH
 				thisPotion = potFac.generatePotion('3');
 				insertPotion(j, i, thisPotion);
-				potions.emplace_back(thisPotion); 
+				potions.emplace_back(thisPotion);
 			}
 			else if(line[j] == '4'){//RH
 				thisPotion = potFac.generatePotion('4');
 				insertPotion(j, i, thisPotion);
-				potions.emplace_back(thisPotion); 
+				potions.emplace_back(thisPotion);
 			}
 			else if(line[j] == '5'){//RH
 				thisPotion = potFac.generatePotion('5');
 				insertPotion(j, i, thisPotion);
-				potions.emplace_back(thisPotion); 
+				potions.emplace_back(thisPotion);
 			}
 			else if(line[j] == '6'){ //normal pile
 				thisGold = goldFac.generateGold('6');
@@ -223,8 +222,8 @@ void Floor::spawnStairs(){
 //CREATE AND INSERTS POTIONS ON THE GRID
 void Floor::spawnPotions(){
 	for(int i = 0; i < 10; i++){
-		PotionFactory potFac = PotionFactory(); 
-		int id = rand() % 5; 
+		PotionFactory potFac = PotionFactory();
+		int id = rand() % 5;
 		vector<int> pos = getRandPos(id);
 		Potion *thisPotion = potFac.generatePotion();
 		insertPotion(pos[0], pos[1], thisPotion);
@@ -286,7 +285,7 @@ bool Floor::playerMoved(int row, int col, int prevRow, int prevCol, string dir){
 		grid[row][col]->occupy(player);
 		player->setCurrCell(grid[row][col]);
 		grid[prevRow][prevCol]->leave();
-		action = playerRace + " moves " + dir + ".";
+		action = playerRace + " moves " + dir + ". ";
 		return true;
 	}
 	else if(grid[row][col]->isGold()){
@@ -344,11 +343,7 @@ void Floor::spawnEnemies(){
 // ENEMY MOVEMENT
 bool Floor::enemyMoved(int row, int col, int prevRow, int prevCol, int eIndex){ //rename this to sth more appropriate
 	if (canEnemyAttackPlayer(enemies[eIndex])) {
-		int i = rand() % 2;
-		if (i) enemies[eIndex]->attackPlayer(player);
-		else{
-			cout << "Enemy missed its attack! REMOVE THIS STATEMENT" << endl;
-		}
+		enemies[eIndex]->attackPlayer(player);
 		return true;
 	}
 	if(grid[row][col]->enemyMoveValid()){
@@ -367,17 +362,13 @@ void Floor::checkDragonAttack(){
 	for(int i = 0; i < s; i++){
 
 		if(dragons[i]->isAlive() && canDragonAttackPlayer(dragons[i])){
-			int j = rand() % 2;
-			if(j) dragons[i]->attackPlayer(player);
-			//ELSE IT MISSES
+			dragons[i]->attackPlayer(player);
 		}
 	}
 }
 
 bool Floor::canDragonAttackPlayer(Dragon *d){
-	cout << "adress: " << d << endl;
 	bool da = pow((d->getCurrCell()->getRow() - player->getCurrCell()->getRow()), 2) + pow((d->getCurrCell()->getCol() - player->getCurrCell()->getCol()), 2) <= 2;
-	cout <<" d done "<< endl;
 	bool ng = pow((d->hoard->getCurrCell()->getRow() - player->getCurrCell()->getRow()), 2) + pow((d->hoard->getCurrCell()->getCol() - player->getCurrCell()->getCol()), 2) <= 2;
 	return da || ng; //near GOLD or DRAGON
 }
@@ -445,7 +436,7 @@ void Floor::atkDirection(string dir) {
 	else if (dir == "nw") player->attack(grid[y-1][x-1]->getCharacter());
 	else if (dir == "se") player->attack(grid[y+1][x+1]->getCharacter());
 	else if (dir == "sw") player->attack(grid[y+1][x-1]->getCharacter());
-	
+
 	if(!freeze){ //Always runs
 		enemyMove(); //MOVE ENEMIES
 	}
@@ -464,7 +455,7 @@ void Floor::checkPotion(){
 	int x = currCell->getCol();
 	int y = currCell->getRow();
 	Item *p = nullptr;
-	if(isPotion(x, y-1)) p = grid[y-1][x]->getItem(); 
+	if(isPotion(x, y-1)) p = grid[y-1][x]->getItem();
 	else if(isPotion(x, y+1)) p = grid[y+1][x]->getItem();
 	else if(isPotion(x-1, y)) p = grid[y][x-1]->getItem();
 	else if(isPotion(x+1, y)) p = grid[y][x+1]->getItem();
@@ -472,7 +463,7 @@ void Floor::checkPotion(){
 	else if(isPotion(x-1, y-1)) p = grid[y-1][x-1]->getItem();
 	else if(isPotion(x+1, y+1)) p = grid[y+1][x+1]->getItem();
 	else if(isPotion(x-1, y+1)) p = grid[y+1][x-1]->getItem();
-	
+
 	if(p){ //P IS A POTION
 		if(p->getVisited()) action += " Sees a Potion of Type: "+ p->getType() +".";
 		if(!p->getVisited()) action += " Sees a Potion of Unknown Type. " ;
@@ -568,14 +559,11 @@ void Floor::insertGold(int x, int y, Gold * g){
 
 void Floor::insertCharacter(int x, int y, Character* ch){ //x is left margin, y is Top margin
 	//cout << ch->getSymbol() << endl;
-	cout << " insertChar called "<< endl;
-	cout << "grid: " << grid[y][x] <<endl;
 	if (ch && ch->isAlive()) {
-		cout << "alive not null." << endl;
+
 		grid[y][x]->occupy(ch);
-	}
+  }
 	//else if (!ch->isAlive()) {cout << "enemy died" << endl; grid[y][x]->leave(); insertSymbol(x, y, 'G'); }//maybe add the dropped gold here
-	cout << "exiting" << endl;
 }
 
 
@@ -588,7 +576,7 @@ bool Floor::isValid(int x, int y){ //y is row and x is column
 }
 
 //GENERATES A RANDOM VALID POSITION
-vector<int> Floor::getRandPos(int chamberId){      
+vector<int> Floor::getRandPos(int chamberId){
 	vector<int> pos = chambers[chamberId].generateRandPos();
 	int x = pos[0];
 	int y = pos[1];
