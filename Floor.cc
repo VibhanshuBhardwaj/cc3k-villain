@@ -64,7 +64,6 @@ Floor::Floor(string file, string pRace, Player *p, int fLevel){
 	}
 	if(file != "board.txt"){
 		generateCustomFloor();
-		cout << "called "<< endl;
 	}
 	action = playerRace + " EnTeRs tHe DuNgEoN! ";
 }
