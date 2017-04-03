@@ -1,12 +1,11 @@
 #ifndef _ENEMY_H_
 #define _ENEMY_H_
 #include "../Character.h"
-
-
 #include <string>
 #include "../Player/Player.h"
 #include <vector>
 
+class Player;
 class Enemy : public Character {
 	bool isHostile;
 	public:

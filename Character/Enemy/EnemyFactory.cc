@@ -6,6 +6,7 @@
 #include "Human.h"
 #include "Orc.h"
 #include "Merchant.h"
+#include "Dragon.h"
 #include <string>
 
 
@@ -41,6 +42,38 @@ Enemy* EnemyFactory::generateEnemy() {
 
 		thisEnemy = new Merchant(); //merchant
 
+	}
+	return thisEnemy;
+
+}
+
+Enemy* EnemyFactory::generateEnemy(char e) {
+	Enemy *thisEnemy;
+	if(e == 'H'){
+		//cout << "generating human" << endl;
+		thisEnemy = new Human();
+	}
+	else if(e == 'W'){
+		//cout << "generating dawrf" << endl;
+		thisEnemy = new Dwarf();
+	}
+	else if(e == 'L'){
+		//cout << "generating halfling" << endl;
+		thisEnemy = new Halfling();
+	}
+	else if(e == 'E'){
+		//cout << "generating elf" << endl;
+		thisEnemy = new Elf();
+	}
+	else if(e == 'O'){
+		//cout << "generating orc" << endl;
+		thisEnemy = new Orc();
+	}
+	else if(e == 'M'){
+		thisEnemy = new Merchant(); //merchant
+	}
+	else if(e == 'D'){//DRAGON
+		thisEnemy = new Dragon();
 	}
 	return thisEnemy;
 

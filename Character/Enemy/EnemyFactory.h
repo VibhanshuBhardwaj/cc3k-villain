@@ -5,6 +5,7 @@
 class EnemyFactory {
 public:
 	Enemy * generateEnemy();
+	Enemy * generateEnemy(char e);
 };
 
 #endif

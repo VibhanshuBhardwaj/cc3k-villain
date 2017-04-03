@@ -14,6 +14,7 @@ class wDefence;
 class PotionFactory{
 public: 
 	Potion *generatePotion();
+	Potion *generatePotion(char potId);
 };
 
 

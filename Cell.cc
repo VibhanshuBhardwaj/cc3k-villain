@@ -12,6 +12,7 @@ Cell::Cell(){
 Cell::Cell(int row, int col, char sym, std::string type): row{row}, col{col}, symbol{sym}, type{type}, occupied{false}{
 	whoOccupied = nullptr;
 	it = nullptr;
+	dragonHoard = false;
 }
 
 bool Cell::isOccupied(){
@@ -30,16 +31,30 @@ void Cell::occupy(Item *itm){
 	occupied = true;
 	itm->setCurrCell(this);
 	it = itm;
+	if(!itm->isAvailable()){
+		//a DRAGON HOARD
+		dragonHoard = true;
+	}
 }
 
 Character* Cell::getCharacter() { if (whoOccupied) return whoOccupied; else return nullptr;}
 
-Item *Cell::getItem() { if(it) return it; else return nullptr;}
+Item *Cell::getItem() { 
+	if(it) {
+		
+		return it;
+	}
+	 else return nullptr;}
 
 void Cell::leave(){
 	occupied = false;
 	whoOccupied = nullptr;
-	it = nullptr;
+	if(!dragonHoard){
+		it = nullptr;
+	}
+	if(dragonHoard){
+		occupied = true;
+	}
 }
 
 bool Cell::isPotion(){

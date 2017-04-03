@@ -16,10 +16,11 @@ using namespace std;
 Floor::Floor(string file, string pRace, Player *p, int fLevel){
 	player = p;
 	playerRace = pRace;
+	fileName = file;
 	floorLevel = fLevel;
 	string line;
 	//cout << file << endl;
-	ifstream infile(file);
+	ifstream infile("board.txt");
 	if(!infile){
 		cout<< "cannot open the given file."<< endl;
 	}
@@ -42,26 +43,162 @@ Floor::Floor(string file, string pRace, Player *p, int fLevel){
 			else if(line[j] == '#'){
 				row.emplace_back(new Cell(i, j, '#', "PATHWAY"));
 			}
-			else{ //emplty space
+			else if(line[j] == ' '){ //empty space
 				row.emplace_back(new Cell(i, j, ' ', "SPACE"));
 			}
 		}
 		grid.emplace_back(row);
 	}
+
 	freeze = false;
 	//initialize chambers
 	for(int i = 0; i < 5; i ++){
 		chambers[i] = Chamber(i);
 	}
 
-	//spawn all characters and items randomly on the floor
-	//cout << "before spawn player" << endl;
-	spawnPlayer();
-	spawnStairs();
-	spawnPotions();
-	spawnGold();
-	spawnEnemies();
+	if(file == "board.txt"){
+		spawnPlayer();
+		spawnStairs();
+		spawnPotions();
+		spawnGold();
+		spawnEnemies();
+	}
+	if(file != "board.txt"){
+		generateCustomFloor();
+	}
 	action = playerRace + " EnTeRs tHe DuNgEoN! ";
+}
+
+void Floor::generateCustomFloor(){
+	string line;
+	//cout << file << endl;
+	ifstream infile(fileName);
+	if(!infile){
+		cout<< "cannot open the given file."<< endl;
+	}
+	for(int i = 0; i < 25; i++){
+		getline(infile, line);
+		Enemy *thisEnemy;
+		Potion *thisPotion;
+		Gold *thisGold;
+		EnemyFactory ef = EnemyFactory();
+		PotionFactory potFac = PotionFactory();
+		GoldFactory goldFac = GoldFactory();
+		for(int j = 0; j < 79; j++){
+
+			if(line[j] == 'H'){
+				thisEnemy = ef.generateEnemy('H'); //factory method call
+				insertCharacter(j, i, thisEnemy);
+				cout <<"emplacing" << endl;
+				enemies.emplace_back(thisEnemy);
+			}
+			else if(line[j] == 'W'){
+				thisEnemy = ef.generateEnemy('W'); //factory method call
+				insertCharacter(j, i, thisEnemy);
+				enemies.emplace_back(thisEnemy);
+			}
+			else if(line[j] == 'E'){
+				thisEnemy = ef.generateEnemy('E'); //factory method call
+				insertCharacter(j, i, thisEnemy);
+				enemies.emplace_back(thisEnemy);
+			}
+			else if(line[j] == 'O'){
+				thisEnemy = ef.generateEnemy('O'); //factory method call
+				insertCharacter(j, i, thisEnemy);
+				enemies.emplace_back(thisEnemy);
+			}
+			else if(line[j] == 'M'){
+				thisEnemy = ef.generateEnemy('M'); //factory method call
+				insertCharacter(j, i, thisEnemy);
+				enemies.emplace_back(thisEnemy);
+			}
+			else if(line[j] == 'L'){
+				thisEnemy = ef.generateEnemy('L'); //factory method call
+				insertCharacter(j, i, thisEnemy);
+				enemies.emplace_back(thisEnemy);
+			}
+			else if(line[j] == 'D'){
+				Dragon *d = new Dragon(20, 20, 180, nullptr);
+				insertCharacter(j, i, d);
+				dragons.emplace_back(d);
+			}
+			else if(line[j] == '0'){//RH
+				thisPotion = potFac.generatePotion('0');
+				insertPotion(j, i, thisPotion);
+				potions.emplace_back(thisPotion);
+			}
+			else if(line[j] == '1'){//RH
+				thisPotion = potFac.generatePotion('1');
+				insertPotion(j, i, thisPotion);
+				potions.emplace_back(thisPotion);
+			}
+			else if(line[j] == '2'){//RH
+				thisPotion = potFac.generatePotion('2');
+				insertPotion(j, i, thisPotion);
+				potions.emplace_back(thisPotion);
+			}
+			else if(line[j] == '3'){//RH
+				thisPotion = potFac.generatePotion('3');
+				insertPotion(j, i, thisPotion);
+				potions.emplace_back(thisPotion);
+			}
+			else if(line[j] == '4'){//RH
+				thisPotion = potFac.generatePotion('4');
+				insertPotion(j, i, thisPotion);
+				potions.emplace_back(thisPotion);
+			}
+			else if(line[j] == '5'){//RH
+				thisPotion = potFac.generatePotion('5');
+				insertPotion(j, i, thisPotion);
+				potions.emplace_back(thisPotion);
+			}
+			else if(line[j] == '6'){ //normal pile
+				thisGold = goldFac.generateGold('6');
+				insertGold(j, i, thisGold);
+				golds.emplace_back(thisGold);
+			}
+			else if(line[j] == '7'){ //normal pile
+				thisGold = goldFac.generateGold('7');
+				insertGold(j, i, thisGold);
+				golds.emplace_back(thisGold);
+			}
+			else if(line[j] == '8'){ //normal pile
+				thisGold = goldFac.generateGold('8');
+				insertGold(j, i, thisGold);
+				golds.emplace_back(thisGold);
+			}
+			else if(line[j] == '9'){ //normal pile
+				thisGold = goldFac.generateGold('9');
+				insertGold(j, i, thisGold);
+				golds.emplace_back(thisGold);
+			}
+			else if(line[j] =='/'){
+				insertSymbol(j, i, '/');
+			}
+			else if(line[j] == '@'){ //normal pile
+				insertCharacter(j, i, player);
+			}
+		}
+		//grid.emplace_back(row);
+	}
+	dhAssign();
+}
+
+void Floor::dhAssign(){
+	int size = dragons.size();
+	for(int i = 0; i < size; i++){
+		int r = dragons[i]->getCurrCell()->getRow();
+		int c = dragons[i]->getCurrCell()->getCol();
+		if(grid[r][c-1]->isGold() && grid[r][c-1]->getItem()->getType() == " Dragon Hoard. ") { dragons[i]->hoard = grid[r][c-1]->getItem(); return;}
+		else if(grid[r][c+1]->isGold() && grid[r][c+1]->getItem()->getType() == " Dragon Hoard. ") {dragons[i]->hoard = grid[r][c+1]->getItem(); return;}
+		else if(grid[r-1][c]->isGold() && grid[r-1][c]->getItem()->getType() == " Dragon Hoard. ") {dragons[i]->hoard = grid[r-1][c]->getItem(); return;}
+		else if(grid[r+1][c]->isGold() && grid[r+1][c]->getItem()->getType() == " Dragon Hoard. ") {dragons[i]->hoard = grid[r+1][c]->getItem(); return;}
+		else if(grid[r-1][c+1]->isGold() && grid[r-1][c+1]->getItem()->getType() == " Dragon Hoard. ") {dragons[i]->hoard = grid[r-1][c+1]->getItem(); return;}
+		else if(grid[r+1][c+1]->isGold() && grid[r+1][c+1]->getItem()->getType() == " Dragon Hoard. ") {dragons[i]->hoard = grid[r+1][c+1]->getItem(); return;}
+		else if(grid[r-1][c-1]->isGold() && grid[r-1][c-1]->getItem()->getType() == " Dragon Hoard. ") {dragons[i]->hoard = grid[r-1][c-1]->getItem(); return;}
+		else if(grid[r+1][c-1]->isGold() && grid[r+1][c-1]->getItem()->getType() == " Dragon Hoard. ") {dragons[i]->hoard = grid[r+1][c-1]->getItem(); return;}
+	}
+
 }
 
 // CREATE PLAYER CHARACTER AND SPAWNS ON THE GRID
@@ -87,8 +224,8 @@ void Floor::spawnStairs(){
 //CREATE AND INSERTS POTIONS ON THE GRID
 void Floor::spawnPotions(){
 	for(int i = 0; i < 10; i++){
-		PotionFactory potFac = PotionFactory(); 
-		int id = rand() % 5; 
+		PotionFactory potFac = PotionFactory();
+		int id = rand() % 5;
 		vector<int> pos = getRandPos(id);
 		Potion *thisPotion = potFac.generatePotion();
 		insertPotion(pos[0], pos[1], thisPotion);
@@ -144,6 +281,35 @@ vector<int> Floor::neighbourPos(int x, int y){
 		return neighbourPos(x, y);
 	}
 }
+//PLAYER MOVEMENT
+bool Floor::playerMoved(int row, int col, int prevRow, int prevCol, string dir){
+	if(grid[row][col]->playerMoveValid()){
+		grid[row][col]->occupy(player);
+		player->setCurrCell(grid[row][col]);
+		grid[prevRow][prevCol]->leave();
+		action = playerRace + " moves " + dir + ".";
+		return true;
+	}
+	else if(grid[row][col]->isGold()){
+		if(grid[row][col]->getItem()->isAvailable()){
+			Item *g = grid[row][col]->getItem();
+			g->use(player);
+			action = playerRace + " collects "+g->getType() +". ";
+			grid[row][col]->leave();
+			grid[row][col]->occupy(player);
+			player->setCurrCell(grid[row][col]);
+			grid[prevRow][prevCol]->leave();
+			return true;
+		}
+		else{ //gold not available, i.e. Dragon hoard and dragon is alive
+			grid[row][col]->occupy(player);
+			player->setCurrCell(grid[row][col]);
+			grid[prevRow][prevCol]->leave();
+			return true;
+		}
+	}
+	return false;
+}
 
 //CREATE AND INSERTS GOLD ON THE GRID
 void Floor::spawnGold(){
@@ -178,12 +344,8 @@ void Floor::spawnEnemies(){
 
 // ENEMY MOVEMENT
 bool Floor::enemyMoved(int row, int col, int prevRow, int prevCol, int eIndex){ //rename this to sth more appropriate
-	//cout << "enemy move called" << endl;
-	//cout << "row, col: " << row <<" "<< col<< endl;
-	//cout << "can enemy attack" << canEnemyAttackPlayer(enemies[eIndex]) << endl;
 	if (canEnemyAttackPlayer(enemies[eIndex])) {
 		int i = rand() % 2;
-		//cout << "i: " << i << endl;
 		if (i) enemies[eIndex]->attackPlayer(player);
 		else{
 			cout << "Enemy missed its attack! REMOVE THIS STATEMENT" << endl;
@@ -195,7 +357,6 @@ bool Floor::enemyMoved(int row, int col, int prevRow, int prevCol, int eIndex){ 
 		grid[row][col]->occupy(enemies[eIndex]);
 		enemies[eIndex]->setCurrCell(grid[row][col]);
 		grid[prevRow][prevCol]->leave();
-	//	cout << "ret true" << endl;
 		return true;
 	}
 	//cout << "ret false" << endl;
@@ -205,6 +366,7 @@ bool Floor::enemyMoved(int row, int col, int prevRow, int prevCol, int eIndex){ 
 void Floor::checkDragonAttack(){
 	int s = dragons.size();
 	for(int i = 0; i < s; i++){
+
 		if(dragons[i]->isAlive() && canDragonAttackPlayer(dragons[i])){
 			int j = rand() % 2;
 			if(j) dragons[i]->attackPlayer(player);
@@ -225,7 +387,8 @@ bool Floor::canEnemyAttackPlayer(Enemy* enemy) {
 }
 
 void Floor::enemyMove(){
-	for(int i = 0; i < 20; i++){
+	int size = enemies.size();
+	for(int i = 0; i < size; i++){
 	//	cout << "ith enemy sym: " << enemies[i]->getSymbol() << endl;
 		if(enemies[i]->isAlive()){
 			//cout << "can enemy attack" << canEnemyAttackPlayer(enemies[i]) << endl;
@@ -265,7 +428,7 @@ void Floor::enemyMove(){
 			}
 		}
 	}
-	//cout <<"end enemyMove" << endl;
+	checkDragonAttack();
 }
 
 
@@ -282,7 +445,7 @@ void Floor::atkDirection(string dir) {
 	else if (dir == "nw") player->attack(grid[y-1][x-1]->getCharacter());
 	else if (dir == "se") player->attack(grid[y+1][x+1]->getCharacter());
 	else if (dir == "sw") player->attack(grid[y+1][x-1]->getCharacter());
-	
+
 	if(!freeze){ //Always runs
 		enemyMove(); //MOVE ENEMIES
 	}
@@ -300,7 +463,7 @@ void Floor::checkPotion(){
 	int x = currCell->getCol();
 	int y = currCell->getRow();
 	Item *p = nullptr;
-	if(isPotion(x, y-1)) p = grid[y-1][x]->getItem(); 
+	if(isPotion(x, y-1)) p = grid[y-1][x]->getItem();
 	else if(isPotion(x, y+1)) p = grid[y+1][x]->getItem();
 	else if(isPotion(x-1, y)) p = grid[y][x-1]->getItem();
 	else if(isPotion(x+1, y)) p = grid[y][x+1]->getItem();
@@ -308,7 +471,7 @@ void Floor::checkPotion(){
 	else if(isPotion(x-1, y-1)) p = grid[y-1][x-1]->getItem();
 	else if(isPotion(x+1, y+1)) p = grid[y+1][x+1]->getItem();
 	else if(isPotion(x-1, y+1)) p = grid[y+1][x-1]->getItem();
-	
+
 	if(p){ //P IS A POTION
 		if(p->getVisited()) action += " Sees a Potion of Type: "+ p->getType() +".";
 		if(!p->getVisited()) action += " Sees a Potion of Unknown Type. " ;
@@ -339,31 +502,6 @@ void Floor::usePotion(string dir){
 
 }
 
-//PLAYER MOVEMENT
-bool Floor::playerMoved(int row, int col, int prevRow, int prevCol, string dir){
-	if(grid[row][col]->playerMoveValid()){
-		grid[row][col]->occupy(player);
-		player->setCurrCell(grid[row][col]);
-		grid[prevRow][prevCol]->leave();
-		action = playerRace + " moves " + dir + ".";
-		return true;
-	}
-	else if(grid[row][col]->isGold()){
-		if(grid[row][col]->getItem()->isAvailable()){
-			Item *g = grid[row][col]->getItem();
-			g->use(player);
-			action = playerRace + " collects "+g->getType() +". ";
-			grid[row][col]->leave();
-			grid[row][col]->occupy(player);
-			player->setCurrCell(grid[row][col]);
-			grid[prevRow][prevCol]->leave();
-			return true;
-		}
-		//else{ //gold not available, i.e. Dragon hoard and dragon is alive
-		//}
-	}
-	return false;
-}
 
 void Floor::playerMove(string dir){ //no ,so, ea, we, ne, nw, se, sw
 	Cell* currCell = player->getCurrCell();
@@ -399,7 +537,6 @@ void Floor::playerMove(string dir){ //no ,so, ea, we, ne, nw, se, sw
 		enemyMove(); //MOVE ENEMIES
 	}
 	checkPotion();
-	checkDragonAttack();
 }
 
 //TRUE IF THE PLAYER HAS REACHED THE STAIRS
@@ -426,7 +563,8 @@ void Floor::insertGold(int x, int y, Gold * g){
 
 void Floor::insertCharacter(int x, int y, Character* ch){ //x is left margin, y is Top margin
 	//cout << ch->getSymbol() << endl;
-	if (ch && ch->isAlive()) grid[y][x]->occupy(ch);
+	if (ch && ch->isAlive()) {
+		grid[y][x]->occupy(ch);}
 	//else if (!ch->isAlive()) {cout << "enemy died" << endl; grid[y][x]->leave(); insertSymbol(x, y, 'G'); }//maybe add the dropped gold here
 }
 
@@ -440,7 +578,7 @@ bool Floor::isValid(int x, int y){ //y is row and x is column
 }
 
 //GENERATES A RANDOM VALID POSITION
-vector<int> Floor::getRandPos(int chamberId){      
+vector<int> Floor::getRandPos(int chamberId){
 	vector<int> pos = chambers[chamberId].generateRandPos();
 	int x = pos[0];
 	int y = pos[1];

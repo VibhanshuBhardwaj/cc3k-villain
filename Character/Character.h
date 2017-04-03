@@ -8,6 +8,7 @@
 
 class Cell;
 class Player;
+class Character;
 
 class Character {
 	int maxHp;

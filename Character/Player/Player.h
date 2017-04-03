@@ -4,12 +4,11 @@
 #include <vector>
 #include "../Character.h"
 #include <string>
-#include "../../Item/Item.h"
 
 
 class Item;
 class Potion;
-
+class Character;
 //class Merchant;
 
 class Player: public Character {
