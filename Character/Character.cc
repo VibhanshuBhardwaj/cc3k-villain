@@ -21,14 +21,19 @@ int Character::getDef() { return def; }
 
 bool Character::isAlive() { return hp > 0; }
 
-void Character::setHp(int newHp, bool isVampire) {
-  if( newHp < 0){
+void Character::setHp(int newHp, bool isDlcEnabled) {
+    if( newHp < 0){
 		hp = 0;
+	}
+	if (isDlcEnabled) {
+		maxHp = newHp;
+		hp = newHp;
 	}
 	else if (currCell->getCharacter()->getRace() == "Vampire") {
 		hp = newHp;
 		//cout << "is Vampire. new hp: " << hp << endl;
 	}
+
   else if(newHp > maxHp){
 		hp = maxHp;
 	}

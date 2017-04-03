@@ -22,7 +22,7 @@ public:
 	Character(int atk, int def, int hp, char symbol);
 	bool isAlive();
 	char getSymbol();
-	void setHp(int newHp, bool isVampire = false);
+	void setHp(int newHp, bool cheating = false);
 	void setAtk(int newAtk);
 	void setDef(int newDef);
 	int getHp();
