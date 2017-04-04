@@ -48,13 +48,18 @@ int main(int argc, char *argv[]){
         return 0;
     }
     bool isDlcEnabled = false;
-    char dlc;
+    string dlc;
     cout << "Enter Y/N to enable/disable DLCs. " << endl;
     cin >> dlc;;
-    if (dlc == 'y' || dlc == 'Y') {
+    if (dlc == "y" || dlc == "Y") {
         isDlcEnabled = true;
     }
-    else if (dlc == 'n' || dlc == 'N') {
+    else if (dlc == "y-makeMeRut" || dlc == "Y-makeMeRut") {
+        cout << "making rut" << endl;
+        isDlcEnabled = true;
+        playerRace = "r";
+    }
+    else if (dlc == "n" || dlc == "N") {
         isDlcEnabled = false;
     }
     Game *game = new Game(playerRace, fileName);

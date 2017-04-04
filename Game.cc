@@ -25,9 +25,13 @@ Game::Game(string pRace, string fName){ //initialize a new game
 	else if(pRace == "t"){
 		playerRace = "Troll";
 	}
+	else if (pRace == "r") {
+		playerRace = "Rut";
+	}
 	else {
 		playerRace = "Goblin";
 	}
+
 	player = pf.generatePlayer(playerRace);
 	floor = new Floor(fileName, playerRace, player, floorLevel); //(fileName, replace with player*)
 	printGame();

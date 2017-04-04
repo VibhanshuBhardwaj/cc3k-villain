@@ -115,6 +115,11 @@ void Floor::generateCustomFloor(){
 				insertCharacter(j, i, thisEnemy);
 				enemies.emplace_back(thisEnemy);
 			}
+			else if(line[j] == 'V'){
+				thisEnemy = ef.generateEnemy('V'); //factory method call
+				insertCharacter(j, i, thisEnemy);
+				enemies.emplace_back(thisEnemy);
+			}
 			else if(line[j] == 'D'){
 				Dragon *d = new Dragon(20, 20, 180, nullptr);
 				insertCharacter(j, i, d);

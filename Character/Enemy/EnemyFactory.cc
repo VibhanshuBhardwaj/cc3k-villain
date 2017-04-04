@@ -7,6 +7,7 @@
 #include "Orc.h"
 #include "Merchant.h"
 #include "Dragon.h"
+#include "Vib.h"
 #include <string>
 
 
@@ -16,7 +17,7 @@ using namespace std;
 
 Enemy* EnemyFactory::generateEnemy() {
 	Enemy *thisEnemy;
-	int rn = rand() % 18;
+	int rn = (rand() % 19) + 1;
 	if(rn >= 1 && rn <= 4){
 		//cout << "generating human" << endl;
 		thisEnemy = new Human();
@@ -37,11 +38,13 @@ Enemy* EnemyFactory::generateEnemy() {
 		//cout << "generating orc" << endl;
 		thisEnemy = new Orc();
 	}
-	else{
+	else if(rn >= 17 && rn <= 18){
 		//cout << "generating merchant" << endl;
-
 		thisEnemy = new Merchant(); //merchant
 
+	}
+	else {
+		thisEnemy =  new Vib(); //muawhahahahaha
 	}
 	return thisEnemy;
 
@@ -74,6 +77,9 @@ Enemy* EnemyFactory::generateEnemy(char e) {
 	}
 	else if(e == 'D'){//DRAGON
 		thisEnemy = new Dragon();
+	}
+	else if (e == 'V') {//Vib
+		thisEnemy = new Vib();
 	}
 	return thisEnemy;
 

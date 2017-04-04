@@ -5,6 +5,7 @@
 #include "Shade.h"
 #include "Troll.h"
 #include "Vampire.h"
+#include "Rut.h"
 #include "string"
 
 #include <stdexcept>
@@ -26,6 +27,9 @@ Player* PlayerFactory::generatePlayer(string race) {
 	}
 	else if (race ==  "Vampire") {
 		return new Vampire();
+	}
+	else if (race  == "Rut") {
+		return new Rut();
 	}
 	else throw invalid_argument("race for generating player does not exist. Exiting"); //should NEVER happen
 
