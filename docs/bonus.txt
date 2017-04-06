@@ -1,0 +1,23 @@
+1.	Implemented a new Enemy Character- Vib 
+		Hp: 200,
+		def: 50,
+ 		Atk: 50 
+
+2.	Implemented a special hidden Player Character (user can be this player character when they type in y-makeMeRut when askedd for dlc)- Rut
+		Hp: 190 
+		def: 40
+		Atk: 70
+
+3.	Implemented cheat codes:
+	* 	maxhealth: (increases the HP of the player to maximum int)
+	* 	boostattack: (boost attack by 20)
+	* 	boostdefence: (boost attack by 15)
+
+
+
+
+
+
+
+
+
