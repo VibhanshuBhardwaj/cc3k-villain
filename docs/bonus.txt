@@ -11,7 +11,7 @@
 3.	Implemented cheat codes:
 	* 	maxhealth: (increases the HP of the player to maximum int)
 	* 	boostattack: (boost attack by 20)
-	* 	boostdefence: (boost attack by 15)
+	* 	boostdefence: (boost defence by 15)
 
 
 
